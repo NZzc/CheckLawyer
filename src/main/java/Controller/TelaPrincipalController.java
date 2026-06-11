@@ -24,7 +24,7 @@ public class TelaPrincipalController{
 
             TelaClientesView clienteView = new TelaClientesView();
 
-            new ClienteController(clienteView);
+            //new ClienteController(clienteView);
 
             clienteView.setVisible(true);
         });
