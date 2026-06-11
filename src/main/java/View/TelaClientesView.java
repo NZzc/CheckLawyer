@@ -27,7 +27,7 @@ public class TelaClientesView extends javax.swing.JFrame {
         excluirClienteBTN = new javax.swing.JButton();
         addClienteBTN = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         //voltarTelaPrincipalBTN.setText("Tela Principal");
 
