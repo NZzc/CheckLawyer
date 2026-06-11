@@ -1,10 +1,20 @@
 package View;
 
+import javax.swing.*;
+
 public class TelaPrincipalView extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
 
     public TelaPrincipalView() {
+        TelaPrincipalView tela = new TelaPrincipalView();
+
+        tela.setTitle("Tela Principal");
+        tela.setSize(800, 600);
+        tela.setResizable(false);
+        tela.setLocationRelativeTo(null);
+        tela.setVisible(true);
+
         initComponents();
     }
 
@@ -68,6 +78,22 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         );
 
         pack();
+    }
+
+    public JButton getAudicenciaBTN() {
+        return AudicenciaBTN;
+    }
+
+    public JButton getProcessosBTN() {
+        return ProcessosBTN;
+    }
+
+    public JButton getFinanceiroBTN() {
+        return financeiroBTN;
+    }
+
+    public JButton getClienteBTN() {
+        return ClienteBTN;
     }
 
 

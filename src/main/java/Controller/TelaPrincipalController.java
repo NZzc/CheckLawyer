@@ -1,18 +1,33 @@
 package Controller;
 
+import View.TelaClientesView;
 import View.TelaPrincipalView;
 
-import javax.swing.*;
+public class TelaPrincipalController{
+    private TelaPrincipalView view;
 
-public class TelaPrincipalController extends JFrame {
-    public static void main(String[] args) {
-        TelaPrincipalView tela = new TelaPrincipalView();
+    public TelaPrincipalController(TelaPrincipalView view) {
+        this.view = view;
 
-        tela.setTitle("Tela Principal");
-        tela.setSize(800, 600);
-        tela.setResizable(false);
-        tela.setLocationRelativeTo(null);
-
-        tela.setVisible(true);
+        configurarEventos();
     }
+
+    private void configurarEventos() {
+
+        // Eventos dos botões
+        abrirTelaClientes();
+    }
+
+    private void abrirTelaClientes() {
+
+        view.getClienteBTN().addActionListener(e -> {
+
+            TelaClientesView clienteView = new TelaClientesView();
+
+            new ClienteController(clienteView);
+
+            clienteView.setVisible(true);
+        });
+    }
+
 }
