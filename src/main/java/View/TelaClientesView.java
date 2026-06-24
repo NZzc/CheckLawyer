@@ -1,82 +1,80 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class TelaClientesView extends javax.swing.JFrame {
+public class TelaClientesView extends JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaClientesView.class.getName());
+    private JTable tabelaClientes;
+
+    private JButton addClienteBTN;
+    private JButton excluirClienteBTN;
 
     public TelaClientesView() {
-        setTitle("Tela Clientes");
-        setSize(800, 600);
+
+        setTitle("Clientes");
+        setSize(900, 600);
         setResizable(false);
         setLocationRelativeTo(null);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         initComponents();
+        setVisible(true);
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        excluirClienteBTN = new javax.swing.JButton();
-        addClienteBTN = new javax.swing.JButton();
+        // ================= FONTES =================
+        Font tituloFont = new Font("Arial", Font.BOLD, 28);
+        Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
+        // ================= TÍTULO =================
+        JLabel titulo = new JLabel("Clientes");
+        titulo.setFont(tituloFont);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        JPanel painelTitulo = new JPanel();
+        painelTitulo.add(titulo);
 
-        excluirClienteBTN.setText("Excluir Cliente");
-
-        addClienteBTN.setText("Adicionar Cliente");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                                        .addGroup(layout.createSequentialGroup()
-                                                //.addComponent(voltarTelaPrincipalBTN)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(addClienteBTN))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(excluirClienteBTN)))
-                                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(excluirClienteBTN)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        //.addComponent(voltarTelaPrincipalBTN)
-                                        .addComponent(addClienteBTN))
-                                .addContainerGap())
+        // ================= TABELA =================
+        tabelaClientes = new JTable(
+                new javax.swing.table.DefaultTableModel(
+                        new Object[][]{},
+                        new String[]{
+                                "ID", "Nome", "CPF/CNPJ", "Telefone", "Email"
+                        }
+                )
         );
 
-        pack();
+        tabelaClientes.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabelaClientes.setRowHeight(22);
+
+        JScrollPane scrollTabela = new JScrollPane(tabelaClientes);
+
+        // ================= BOTÕES =================
+        addClienteBTN = new JButton("Adicionar Cliente");
+        excluirClienteBTN = new JButton("Excluir Cliente");
+
+        addClienteBTN.setFont(buttonFont);
+        excluirClienteBTN.setFont(buttonFont);
+
+        addClienteBTN.setPreferredSize(new Dimension(180, 40));
+        excluirClienteBTN.setPreferredSize(new Dimension(180, 40));
+
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        painelBotoes.add(excluirClienteBTN);
+        painelBotoes.add(addClienteBTN);
+
+        // ================= LAYOUT PRINCIPAL =================
+        JPanel main = new JPanel(new BorderLayout());
+
+        main.add(painelTitulo, BorderLayout.NORTH);
+        main.add(scrollTabela, BorderLayout.CENTER);
+        main.add(painelBotoes, BorderLayout.SOUTH);
+
+        setContentPane(main);
     }
 
+    // ================= GETTERS =================
     public JButton getAddClienteBTN() {
         return addClienteBTN;
     }
@@ -85,12 +83,7 @@ public class TelaClientesView extends javax.swing.JFrame {
         return excluirClienteBTN;
     }
 
-    public JTable getJTable1() {
-        return jTable1;
+    public JTable getTabelaClientes() {
+        return tabelaClientes;
     }
-
-    private javax.swing.JButton addClienteBTN;
-    private javax.swing.JButton excluirClienteBTN;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
 }
