@@ -3,12 +3,12 @@ package Controller;
 import View.TelaAddClienteView;
 import View.TelaClientesView;
 
-public class ClienteController {
+public class TelaClienteController {
     private TelaClientesView telaClientesView;
     private TelaAddClienteView telaAddClienteView;
 
 
-    public ClienteController() {
+    public TelaClienteController() {
         configurarEventos();
     }
 
