@@ -1,83 +1,80 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class TelaPrincipalView extends javax.swing.JFrame {
+public class TelaPrincipalView extends JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPrincipalView.class.getName());
+    private JButton AudicenciaBTN;
+    private JButton ClienteBTN;
+    private JButton ProcessosBTN;
+    private JButton financeiroBTN;
+    private JLabel jLabel1;
 
     public TelaPrincipalView() {
-        TelaPrincipalView tela = new TelaPrincipalView();
-
-        tela.setTitle("Tela Principal");
-        tela.setSize(800, 600);
-        tela.setResizable(false);
-        tela.setLocationRelativeTo(null);
-        tela.setVisible(true);
-
         initComponents();
+
+        setTitle("CheckLawyer");
+        setSize(800, 600);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        ClienteBTN = new javax.swing.JButton();
-        AudicenciaBTN = new javax.swing.JButton();
-        ProcessosBTN = new javax.swing.JButton();
-        financeiroBTN = new javax.swing.JButton();
+        jLabel1 = new JLabel("CheckLawyer");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        ClienteBTN = new JButton("Clientes");
+        AudicenciaBTN = new JButton("Audiências");
+        ProcessosBTN = new JButton("Processos");
+        financeiroBTN = new JButton("Financeiro");
 
-        jLabel1.setText("CheckLawyer");
+        // Fonte do título
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 32));
 
-        ClienteBTN.setText("Clientes");
+        // Fonte dos botões
+        Font fonteBotoes = new Font("Arial", Font.BOLD, 18);
 
-        AudicenciaBTN.setText("Audiências");
+        ClienteBTN.setFont(fonteBotoes);
+        AudicenciaBTN.setFont(fonteBotoes);
+        ProcessosBTN.setFont(fonteBotoes);
+        financeiroBTN.setFont(fonteBotoes);
 
-        ProcessosBTN.setText("Processos");
+        // Tamanho dos botões
+        Dimension tamanhoBotao = new Dimension(220, 100);
 
-        financeiroBTN.setText("Financeiro");
+        ClienteBTN.setPreferredSize(tamanhoBotao);
+        AudicenciaBTN.setPreferredSize(tamanhoBotao);
+        ProcessosBTN.setPreferredSize(tamanhoBotao);
+        financeiroBTN.setPreferredSize(tamanhoBotao);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(149, 149, 149)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(ProcessosBTN)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
-                                                                .addComponent(financeiroBTN))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(ClienteBTN)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(AudicenciaBTN))))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(341, 341, 341)
-                                                .addComponent(jLabel1)))
-                                .addGap(174, 174, 174))
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel1)
-                                .addGap(156, 156, 156)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(ClienteBTN)
-                                        .addComponent(AudicenciaBTN))
-                                .addGap(146, 146, 146)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(financeiroBTN)
-                                        .addComponent(ProcessosBTN))
-                                .addContainerGap(209, Short.MAX_VALUE))
-        );
+        // Painel principal
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BorderLayout());
 
-        pack();
+        // Painel do título
+        JPanel painelTitulo = new JPanel();
+        painelTitulo.add(jLabel1);
+
+        // Painel dos botões (2x2 centralizado)
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.setLayout(new GridLayout(2, 2, 40, 40));
+
+        painelBotoes.add(ClienteBTN);
+        painelBotoes.add(AudicenciaBTN);
+        painelBotoes.add(ProcessosBTN);
+        painelBotoes.add(financeiroBTN);
+
+        // Painel central para centralizar os botões
+        JPanel painelCentro = new JPanel(new GridBagLayout());
+        painelCentro.add(painelBotoes);
+
+        painelPrincipal.add(painelTitulo, BorderLayout.NORTH);
+        painelPrincipal.add(painelCentro, BorderLayout.CENTER);
+
+        setContentPane(painelPrincipal);
     }
 
     public JButton getAudicenciaBTN() {
@@ -95,11 +92,4 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     public JButton getClienteBTN() {
         return ClienteBTN;
     }
-
-
-    private javax.swing.JButton AudicenciaBTN;
-    private javax.swing.JButton ClienteBTN;
-    private javax.swing.JButton ProcessosBTN;
-    private javax.swing.JButton financeiroBTN;
-    private javax.swing.JLabel jLabel1;
 }

@@ -1,33 +1,47 @@
 package Controller;
 
-import View.TelaClientesView;
-import View.TelaPrincipalView;
+import View.*;
 
-public class TelaPrincipalController{
-    private TelaPrincipalView view;
+public class TelaPrincipalController {
+    private TelaPrincipalView principalView;
+    private TelaClientesView telaClientesView;
+    private TelaFinanceiroView telaFinanceiroView;
+    private TelaProcessosView telaProcessosView;
+    private TelaAudienciaView telaAudienciaView;
 
-    public TelaPrincipalController(TelaPrincipalView view) {
-        this.view = view;
 
+    public TelaPrincipalController() {
+        principalView = new TelaPrincipalView();
         configurarEventos();
     }
 
     private void configurarEventos() {
+        //tela clientes
+        principalView.getClienteBTN().addActionListener(e -> {
+            //permite instanciar apenas 1 tela por vez
+            if (telaClientesView == null) {
+                telaClientesView = new TelaClientesView();
 
-        // Eventos dos botões
-        abrirTelaClientes();
-    }
-
-    private void abrirTelaClientes() {
-
-        view.getClienteBTN().addActionListener(e -> {
-
-            TelaClientesView clienteView = new TelaClientesView();
-
-            //new ClienteController(clienteView);
-
-            clienteView.setVisible(true);
+                //seta a variavel de controle para null, para poder abrir tela denovo depois
+                telaClientesView.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent e) {
+                        telaClientesView = null;
+                    }
+                });
+            }
         });
+
+        //tela audiencia
+
+
+        //tela processos
+
+
+        //tela financeiro
+
+
     }
+
 
 }

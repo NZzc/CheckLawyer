@@ -7,13 +7,12 @@ public class TelaClientesView extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaClientesView.class.getName());
 
     public TelaClientesView() {
-        TelaPrincipalView tela = new TelaPrincipalView();
-
-        tela.setTitle("Tela Clientes");
-        tela.setSize(800, 600);
-        tela.setResizable(false);
-        tela.setLocationRelativeTo(null);
-        tela.setVisible(true);
+        setTitle("Tela Clientes");
+        setSize(800, 600);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         initComponents();
     }
@@ -21,15 +20,11 @@ public class TelaClientesView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        //voltarTelaPrincipalBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         excluirClienteBTN = new javax.swing.JButton();
         addClienteBTN = new javax.swing.JButton();
 
-        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        //voltarTelaPrincipalBTN.setText("Tela Principal");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
@@ -90,9 +85,12 @@ public class TelaClientesView extends javax.swing.JFrame {
         return excluirClienteBTN;
     }
 
+    public JTable getJTable1() {
+        return jTable1;
+    }
+
     private javax.swing.JButton addClienteBTN;
     private javax.swing.JButton excluirClienteBTN;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    //private javax.swing.JButton voltarTelaPrincipalBTN;
 }
