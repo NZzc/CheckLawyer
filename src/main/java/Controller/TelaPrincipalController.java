@@ -5,16 +5,12 @@ import View.*;
 public class TelaPrincipalController {
     private TelaPrincipalView principalView;
 
-    //private TelaClientesView telaClientesView;
     private TelaClienteController telaClienteController;
 
-    //private TelaFinanceiroView telaFinanceiroView;
     private TelaFinanceiroController telaFinanceiroController;
 
-    //private TelaProcessosView telaProcessosView;
     private TelaProcessoController telaProcessoController;
 
-    //private TelaAudienciaView telaAudienciaView;
     private TelaAudienciaController telaAudienciaController;
 
 
