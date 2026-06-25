@@ -12,17 +12,27 @@ public class ClienteDAO {
         listaClientes.add(cliente);
     }
 
-    public void excluirCliente(int ID) {
-        for (ClienteModel cliente : listaClientes) {
-            if (cliente.getID() == ID) {
-                listaClientes.remove(cliente);
-            }
-        }
+    public void excluirCliente(int id) {
+        listaClientes.removeIf(cliente -> cliente.getID() == id);
     }
 
     public List<ClienteModel> getListaClientes() {
         return listaClientes;
     }
 
+    public boolean verificaCpfCnpjRepetido(String cpfCnpj){
+        /*
+        if(listaClientes.isEmpty()){
+            return false;
+        }
+        */
+
+        for (ClienteModel cliente : listaClientes){
+            if (cpfCnpj.equals(cliente.getCpf_cnpj())){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

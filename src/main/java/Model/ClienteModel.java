@@ -2,7 +2,7 @@ package Model;
 
 public class ClienteModel {
     private String nome;
-    private final String cpf;
+    private final String cpf_cnpj;
     private String telefone;
     private String email;
     private EnderecoModel endereco;
@@ -12,7 +12,7 @@ public class ClienteModel {
 
     public ClienteModel(String nome, String cpf, String telefone, String email, EnderecoModel endereco) {
         this.nome = nome;
-        this.cpf = cpf;
+        this.cpf_cnpj = cpf;
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
@@ -27,8 +27,8 @@ public class ClienteModel {
         return nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCpf_cnpj() {
+        return cpf_cnpj;
     }
 
     public String getTelefone() {

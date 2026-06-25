@@ -12,12 +12,14 @@ public class TelaClienteController {
     private ClienteDAO clienteDAO;
     private TelaClientesView telaClientesView;
 
-    private TelaAddClienteView telaAddClienteView;
-    private TelaAddClienteController telaAddClienteController;
+    //private TelaAddClienteView telaAddClienteView;
+    //private TelaAddClienteController telaAddClienteController;
 
     public TelaClienteController() {
         telaClientesView = new TelaClientesView();
         clienteDAO = new ClienteDAO();
+
+        atualizarTabela();
 
         configurarEventos();
     }
@@ -32,7 +34,7 @@ public class TelaClienteController {
             int linha = telaClientesView.getTabelaClientes().getSelectedRow();
 
             if (linha == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione um cliente!");
+                exibirMensagem("Selecione um cliente!");
                 return;
             }
 
@@ -55,7 +57,7 @@ public class TelaClienteController {
             model.addRow(new Object[]{
                     cliente.getID(),
                     cliente.getNome(),
-                    cliente.getCpf(),
+                    cliente.getCpf_cnpj(),
                     cliente.getTelefone(),
                     cliente.getEmail(),
                     cliente.getEndereco().getRua(),
@@ -67,6 +69,10 @@ public class TelaClienteController {
             });
         }
 
+    }
+
+    public void exibirMensagem(String msg){
+        JOptionPane.showMessageDialog(null, msg);
     }
 
 
