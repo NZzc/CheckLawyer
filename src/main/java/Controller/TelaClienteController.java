@@ -19,21 +19,7 @@ public class TelaClienteController {
     private void configurarEventos() {
 
         telaClientesView.getAddClienteBTN().addActionListener(e -> {
-
-            if (telaAddClienteController == null) {
-
-                telaAddClienteController = new TelaAddClienteController();
-
-                /*
-                telaAddClienteController.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosed(java.awt.event.WindowEvent e) {
-                        telaAddClienteView = null;
-                    }
-                });
-
-                 */
-            }
+            new TelaAddClienteController();
         });
     }
 }
