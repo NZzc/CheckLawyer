@@ -1,6 +1,6 @@
 package Model;
 
-public class Cliente {
+public class ClienteModel {
     private String nome;
     private String cpf;
     private String telefone;
@@ -8,7 +8,7 @@ public class Cliente {
     private EnderecoModel endereco;
 
 
-    public Cliente(String nome, String cpf, String telefone, String email, EnderecoModel endereco) {
+    public ClienteModel(String nome, String cpf, String telefone, String email, EnderecoModel endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
