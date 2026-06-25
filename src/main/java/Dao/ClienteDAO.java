@@ -12,8 +12,14 @@ public class ClienteDAO {
         listaClientes.add(cliente);
     }
 
-    public void removeCliente(ClienteModel cliente){
-        listaClientes.remove(cliente);
+    public boolean excluirCliente(int  ID){
+        for (ClienteModel cliente : listaClientes) {
+            if(cliente.getID() == ID ) {
+                listaClientes.remove(cliente);
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<ClienteModel> getListaClientes() {

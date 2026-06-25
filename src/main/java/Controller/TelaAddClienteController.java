@@ -8,20 +8,25 @@ import View.TelaAddClienteView;
 public class TelaAddClienteController {
     private TelaAddClienteView telaAddClienteView;
     private ClienteDAO clienteDAO;
+    private TelaClienteController telaClienteController;
 
 
-    public TelaAddClienteController() {
+    public TelaAddClienteController(TelaClienteController telaClienteController) {
         telaAddClienteView = new TelaAddClienteView();
         clienteDAO = new ClienteDAO();
+        this.telaClienteController = telaClienteController;
 
         configurarEventos();
     }
 
     public void configurarEventos() {
-
+        telaAddClienteView.getAddClienteBTN().addActionListener(e -> {
+            cadastrarCliente();
+        });
     }
 
     public void cadastrarCliente() {
+        try{
         String nome = telaAddClienteView.getNomeClienteInput().getText();
         String cpf = telaAddClienteView.getCpfClienteInput().getText();
         String telefone = telaAddClienteView.getTelefoneClienteInput().getText();
@@ -39,6 +44,10 @@ public class TelaAddClienteController {
         ClienteModel cliente = new ClienteModel(nome, cpf, telefone, email, endereco);
 
         clienteDAO.addCliente(cliente);
+
+        telaClienteController.atualizarTabela();
+        }
+        catch(Exception e){}
     }
 
 

@@ -40,7 +40,17 @@ public class TelaClientesView extends JFrame {
                 new javax.swing.table.DefaultTableModel(
                         new Object[][]{},
                         new String[]{
-                                "ID", "Nome", "CPF/CNPJ", "Telefone", "Email"
+                                "ID",
+                                "Nome",
+                                "CPF/CNPJ",
+                                "Telefone",
+                                "Email",
+                                "Rua",
+                                "Número",
+                                "Bairro",
+                                "Cidade",
+                                "UF",
+                                "CEP"
                         }
                 )
         );
