@@ -2,13 +2,11 @@ package Controller;
 
 import Dao.ClienteDAO;
 import Model.ClienteModel;
-import Model.EnderecoModel;
 import View.TelaAddClienteView;
 import View.TelaClientesView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.List;
 
 public class TelaClienteController {
     private ClienteDAO clienteDAO;
@@ -39,14 +37,14 @@ public class TelaClienteController {
             }
 
             String IDstr = telaClientesView.getTabelaClientes().getValueAt(linha, 0).toString();
-            int ID =  Integer.parseInt(IDstr);
+            int ID = Integer.parseInt(IDstr);
 
             clienteDAO.excluirCliente(ID);
             atualizarTabela();
         });
     }
 
-    public void atualizarTabela(){
+    public void atualizarTabela() {
 
 
         DefaultTableModel model = (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();

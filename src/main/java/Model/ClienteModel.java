@@ -2,11 +2,11 @@ package Model;
 
 public class ClienteModel {
     private String nome;
-    private String cpf;
+    private final String cpf;
     private String telefone;
     private String email;
     private EnderecoModel endereco;
-    private int ID;
+    private final int ID;
     private static int geraID;
 
 
