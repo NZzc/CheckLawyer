@@ -6,20 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
-    private static List<ClienteModel> listaClientes = new ArrayList<ClienteModel>();
+    private static List<ClienteModel> listaClientes = new ArrayList<>();
 
-    public void addCliente(ClienteModel cliente){
+    public void addCliente(ClienteModel cliente) {
         listaClientes.add(cliente);
     }
 
-    public boolean excluirCliente(int  ID){
+    public void excluirCliente(int ID) {
         for (ClienteModel cliente : listaClientes) {
-            if(cliente.getID() == ID ) {
+            if (cliente.getID() == ID) {
                 listaClientes.remove(cliente);
-                return true;
             }
         }
-        return false;
     }
 
     public List<ClienteModel> getListaClientes() {
