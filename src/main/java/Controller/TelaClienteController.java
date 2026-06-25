@@ -1,10 +1,12 @@
 package Controller;
 
+import Dao.ClienteDAO;
+import Model.EnderecoModel;
 import View.TelaAddClienteView;
 import View.TelaClientesView;
 
 public class TelaClienteController {
-
+    private ClienteDAO clienteDAO;
     private TelaClientesView telaClientesView;
 
     private TelaAddClienteView telaAddClienteView;
@@ -12,6 +14,7 @@ public class TelaClienteController {
 
     public TelaClienteController() {
         telaClientesView = new TelaClientesView();
+        clienteDAO = new ClienteDAO();
 
         configurarEventos();
     }
@@ -22,4 +25,10 @@ public class TelaClienteController {
             new TelaAddClienteController();
         });
     }
+
+    public void atualizarTabela(){
+
+    }
+
+
 }
