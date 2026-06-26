@@ -6,13 +6,9 @@ public class TelaPrincipalController {
     private TelaPrincipalView principalView;
 
     private TelaClienteController telaClienteController;
-
     private TelaFinanceiroController telaFinanceiroController;
-
     private TelaProcessoController telaProcessoController;
-
     private TelaAudienciaController telaAudienciaController;
-
 
     public TelaPrincipalController() {
         principalView = new TelaPrincipalView();
@@ -20,21 +16,25 @@ public class TelaPrincipalController {
     }
 
     private void configurarEventos() {
-        //tela clientes
+
+        // tela clientes
         principalView.getClienteBTN().addActionListener(e -> {
             new TelaClienteController();
         });
 
-        //tela audiencia
+        // tela audiencia
+        principalView.getAudicenciaBTN().addActionListener(e -> {
+            new TelaAudienciaController();
+        });
 
+        // tela processos
+        principalView.getProcessosBTN().addActionListener(e -> {
+            new TelaProcessoController();
+        });
 
-        //tela processos
-
-
-        //tela financeiro
-
-
+        // tela financeiro
+        principalView.getFinanceiroBTN().addActionListener(e -> {
+            new TelaFinanceiroController();
+        });
     }
-
-
 }
