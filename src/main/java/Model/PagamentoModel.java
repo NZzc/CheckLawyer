@@ -2,7 +2,7 @@ package Model;
 
 public class PagamentoModel {
 
-    public String Cagar(){
-        return "Preciso cagar";
+    public String transar(){
+        return "Preciso transar";
     }
 }
