@@ -36,9 +36,9 @@ public class TelaAddClienteController {
         String telefone = telaAddClienteView.getTelefoneClienteInput().getText();
         String email = telaAddClienteView.getEmailClienteInput().getText();
 
-        boolean dadosClienteValido = verificaDadosClientes(nome, cpf,cnpj, telefone, email);
+        boolean dadosClienteValido = verificaDadosClientes(nome, cpf, cnpj, telefone, email);
 
-        if(clienteDAO.verificaCpfCnpjRepetido(cpf)){
+        if (clienteDAO.verificaCpfCnpjRepetido(cpf)) {
             exibirMensagem("CPF/CNPJ ja Cadastrado, por favor insira outro");
             return;
         }
@@ -68,7 +68,7 @@ public class TelaAddClienteController {
         JOptionPane.showMessageDialog(null, msg);
     }
 
-    public boolean verificaDadosClientes(String nome, String cpf,String cnpj, String telefone, String email) {
+    public boolean verificaDadosClientes(String nome, String cpf, String cnpj, String telefone, String email) {
         if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
             exibirMensagem("Campo(s) de clientes invalidos");
             return false;
