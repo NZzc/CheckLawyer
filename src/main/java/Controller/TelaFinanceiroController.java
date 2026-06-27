@@ -1,6 +1,7 @@
 package Controller;
 
 import Dao.PagamentoDAO;
+import Exception.SelecionarItemException;
 import Model.PagamentoModel;
 import View.TelaFinanceiroView;
 
@@ -14,46 +15,50 @@ public class TelaFinanceiroController {
     public TelaFinanceiroController() {
         telaFinanceiroView = new TelaFinanceiroView();
         pagamentoDAO = new PagamentoDAO();
-
         atualizarTabela();
         configurarEventos();
     }
 
     private void configurarEventos() {
 
-        telaFinanceiroView.getAddPagamentoBTN().addActionListener(e -> {
-            new TelaAddPagamentoController(this);
-        });
+        telaFinanceiroView.getAddPagamentoBTN().addActionListener(e -> new TelaAddPagamentoController(this));
 
         telaFinanceiroView.getExcluirPagamentoBTN().addActionListener(e -> {
-            int linha = telaFinanceiroView.getTabelaPagamentos().getSelectedRow();
+            try {
+                int linha = telaFinanceiroView.getTabelaPagamentos().getSelectedRow();
+                if (linha == -1) throw new SelecionarItemException("pagamento");
 
-            if (linha == -1) {
-                exibirMensagem("Selecione um pagamento!");
-                return;
+                int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este pagamento?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+                if (confirmacao != JOptionPane.YES_OPTION) return;
+
+                int ID = Integer.parseInt(telaFinanceiroView.getTabelaPagamentos().getValueAt(linha, 0).toString());
+                pagamentoDAO.excluirPagamento(ID);
+                atualizarTabela();
+                exibirSucesso("Pagamento excluído com sucesso!");
+
+            } catch (SelecionarItemException ex) {
+                exibirErro(ex.getMessage());
+            } catch (Exception ex) {
+                exibirErro("Erro inesperado: " + ex.getMessage());
             }
-
-            String IDstr = telaFinanceiroView.getTabelaPagamentos().getValueAt(linha, 0).toString();
-            int ID = Integer.parseInt(IDstr);
-
-            pagamentoDAO.excluirPagamento(ID);
-            atualizarTabela();
         });
     }
 
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
         model.setRowCount(0);
-
         for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
             model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getIdCliente()});
         }
-
         double saldo = pagamentoDAO.calcularSaldo();
         telaFinanceiroView.getSaldoLabel().setText(String.format("Saldo: R$ %.2f", saldo));
     }
 
-    public void exibirMensagem(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 }
