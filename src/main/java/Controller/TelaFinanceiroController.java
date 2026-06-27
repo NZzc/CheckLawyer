@@ -48,7 +48,13 @@ public class TelaFinanceiroController {
         DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
         model.setRowCount(0);
         for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
-            model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getIdCliente()});
+            model.addRow(new Object[]{
+                    p.getID(),
+                    p.getDescricao(),
+                    String.format("%.2f", p.getValor()),
+                    p.getData(),
+                    p.getTipo(),
+                    p.getIdCliente()});
         }
         double saldo = pagamentoDAO.calcularSaldo();
         telaFinanceiroView.getSaldoLabel().setText(String.format("Saldo: R$ %.2f", saldo));
