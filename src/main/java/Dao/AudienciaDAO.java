@@ -13,7 +13,7 @@ public class AudienciaDAO {
     }
 
     public void excluirAudiencia(int id) {
-        listaAudiencias.removeIf(a -> a.getID() == id);
+        listaAudiencias.removeIf(audiencia -> audiencia.getID() == id);
     }
 
     public List<AudienciaModel> getListaAudiencias() {

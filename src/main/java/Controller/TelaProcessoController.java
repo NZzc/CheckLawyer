@@ -2,7 +2,7 @@ package Controller;
 
 import Dao.ProcessoDAO;
 import Model.ProcessoModel;
-import View.TelaAddProcessoView;
+//import View.TelaAddProcessoView;
 import View.TelaProcessosView;
 
 import javax.swing.*;
@@ -47,7 +47,12 @@ public class TelaProcessoController {
         model.setRowCount(0);
 
         for (ProcessoModel processo : processoDAO.getListaProcessos()) {
-            model.addRow(new Object[]{processo.getID(), processo.getNumero(), processo.getDescricao(), processo.getStatus(), processo.getIdCliente()});
+            model.addRow(new Object[]{
+                    processo.getID(),
+                    processo.getNumero(),
+                    processo.getDescricao(),
+                    processo.getStatus(),
+                    processo.getIdCliente()});
         }
     }
 

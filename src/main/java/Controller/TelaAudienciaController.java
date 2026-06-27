@@ -2,7 +2,7 @@ package Controller;
 
 import Dao.AudienciaDAO;
 import Model.AudienciaModel;
-import View.TelaAddAudienciaView;
+//import View.TelaAddAudienciaView;
 import View.TelaAudienciaView;
 
 import javax.swing.*;
@@ -47,7 +47,13 @@ public class TelaAudienciaController {
         model.setRowCount(0);
 
         for (AudienciaModel audiencia : audienciaDAO.getListaAudiencias()) {
-            model.addRow(new Object[]{audiencia.getID(), audiencia.getData(), audiencia.getHora(), audiencia.getLocal(), audiencia.getDescricao(), audiencia.getIdProcesso()});
+            model.addRow(new Object[]{
+                    audiencia.getID(),
+                    audiencia.getData(),
+                    audiencia.getHora(),
+                    audiencia.getLocal(),
+                    audiencia.getDescricao(),
+                    audiencia.getIdProcesso()});
         }
     }
 

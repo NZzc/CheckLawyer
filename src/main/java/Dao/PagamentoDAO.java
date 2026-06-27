@@ -13,7 +13,7 @@ public class PagamentoDAO {
     }
 
     public void excluirPagamento(int id) {
-        listaPagamentos.removeIf(p -> p.getID() == id);
+        listaPagamentos.removeIf(pagamento -> pagamento.getID() == id);
     }
 
     public List<PagamentoModel> getListaPagamentos() {

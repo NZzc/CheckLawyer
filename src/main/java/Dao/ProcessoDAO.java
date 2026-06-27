@@ -13,7 +13,7 @@ public class ProcessoDAO {
     }
 
     public void excluirProcesso(int id) {
-        listaProcessos.removeIf(p -> p.getID() == id);
+        listaProcessos.removeIf(processo -> processo.getID() == id);
     }
 
     public List<ProcessoModel> getListaProcessos() {
