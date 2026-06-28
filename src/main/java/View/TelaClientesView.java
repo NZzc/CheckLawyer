@@ -45,6 +45,7 @@ public class TelaClientesView extends JFrame {
                                 "CPF/CNPJ",
                                 "Telefone",
                                 "Email",
+                                "Observacao",
                                 "Rua",
                                 "Número",
                                 "Bairro",

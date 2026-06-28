@@ -24,7 +24,7 @@ public class TelaAddClienteView extends JFrame {
     private JTextField observacaoPFInput;
 
     // ===== CAMPOS PESSOA JURÍDICA =====
-    private JTextField nomeFantasiaInput;
+    private JTextField NomeEmpresaInput;
     private JTextField cnpjInput;
     private JTextField telefonePJInput;
     private JTextField emailPJInput;
@@ -178,13 +178,13 @@ public class TelaAddClienteView extends JFrame {
     // FORMULÁRIO PESSOA JURÍDICA
     // =====================================================
     private JPanel criarPainelPessoaJuridica() {
-        nomeFantasiaInput = new JTextField(18);
+        NomeEmpresaInput = new JTextField(18);
         cnpjInput         = new JTextField(18);
         telefonePJInput   = new JTextField(18);
         emailPJInput      = new JTextField(18);
         observacaoPJInput = new JTextField(18);
 
-        aplicarFonteInputs(nomeFantasiaInput, cnpjInput,
+        aplicarFonteInputs(NomeEmpresaInput, cnpjInput,
                 telefonePJInput, emailPJInput, observacaoPJInput);
 
         JPanel painel = new JPanel(new GridBagLayout());
@@ -192,7 +192,7 @@ public class TelaAddClienteView extends JFrame {
         int y = 0;
 
         y = adicionarSubtitulo(painel, gbc, y, "Dados do Cliente");
-        y = adicionarCampo(painel, gbc, y, "Nome Fantasia:",  nomeFantasiaInput);
+        y = adicionarCampo(painel, gbc, y, "Nome Fantasia:",  NomeEmpresaInput);
         y = adicionarCampo(painel, gbc, y, "CNPJ:",           cnpjInput);
         y = adicionarCampo(painel, gbc, y, "Telefone:",       telefonePJInput);
         y = adicionarCampo(painel, gbc, y, "Email:",          emailPJInput);
@@ -329,7 +329,7 @@ public class TelaAddClienteView extends JFrame {
     public JTextField getObservacaoPFInput() { return observacaoPFInput; }
 
     // ===== GETTERS — PESSOA JURÍDICA =====
-    public JTextField getNomeFantasiaInput() { return nomeFantasiaInput; }
+    public JTextField getNomeEmpresaInput() { return NomeEmpresaInput; }
     public JTextField getCnpjInput()         { return cnpjInput; }
     public JTextField getTelefonePJInput()   { return telefonePJInput; }
     public JTextField getEmailPJInput()      { return emailPJInput; }

@@ -1,7 +1,5 @@
 package Dao;
 
-import Model.ClienteFisicoModel;
-import Model.ClienteJuridicoModel;
 import Model.ClienteModel;
 
 import java.util.ArrayList;

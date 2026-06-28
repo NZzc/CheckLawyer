@@ -78,7 +78,7 @@ public class TelaAddClienteController {
     // =====================================================================
 
     private void cadastrarPessoaJuridica(EnderecoModel endereco) {
-        String nomeFantasia = telaAddClienteView.getNomeFantasiaInput().getText().trim();
+        String nomeFantasia = telaAddClienteView.getNomeEmpresaInput().getText().trim();
         String cnpj = telaAddClienteView.getCnpjInput().getText().trim();
         String telefone = telaAddClienteView.getTelefonePJInput().getText().trim();
         String email = telaAddClienteView.getEmailPJInput().getText().trim();

@@ -57,6 +57,7 @@ public class TelaClienteController {
                     cliente.getDocumento(),
                     cliente.getTelefone(),
                     cliente.getEmail(),
+                    cliente.getObservacao(),
                     cliente.getEndereco().getRua(),
                     cliente.getEndereco().getNumero(),
                     cliente.getEndereco().getBairro(),

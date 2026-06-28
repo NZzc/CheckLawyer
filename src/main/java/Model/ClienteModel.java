@@ -40,4 +40,8 @@ public abstract class ClienteModel {
     }
 
     public abstract String getDocumento();
+
+    public String getObservacao() {
+        return observacao;
+    }
 }
