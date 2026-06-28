@@ -41,7 +41,7 @@ public class TelaClientesView extends JFrame {
                         new Object[][]{},
                         new String[]{
                                 "ID",
-                                "Nome",
+                                "Nome / Empresa",
                                 "CPF/CNPJ",
                                 "Telefone",
                                 "Email",

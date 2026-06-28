@@ -1,5 +1,7 @@
 package Dao;
 
+import Model.ClienteFisicoModel;
+import Model.ClienteJuridicoModel;
 import Model.ClienteModel;
 
 import java.util.ArrayList;
@@ -20,13 +22,17 @@ public class ClienteDAO {
         return listaClientes;
     }
 
-    public boolean verificaCpfCnpjRepetido(String cpfCnpj){
+
+    public boolean verificaCpfCnpjRepetido(String cpf){
         for (ClienteModel cliente : listaClientes){
-            if (cpfCnpj.equals(cliente.getCpf_cnpj())){
+            if (cpf.equals(cliente.getDocumento())){
                 return true;
             }
         }
         return false;
     }
+
+
+
 
 }

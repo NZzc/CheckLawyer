@@ -12,9 +12,6 @@ public class TelaClienteController {
     private ClienteDAO clienteDAO;
     private TelaClientesView telaClientesView;
 
-    //private TelaAddClienteView telaAddClienteView;
-    //private TelaAddClienteController telaAddClienteController;
-
     public TelaClienteController() {
         telaClientesView = new TelaClientesView();
         clienteDAO = new ClienteDAO();
@@ -57,7 +54,7 @@ public class TelaClienteController {
             model.addRow(new Object[]{
                     cliente.getID(),
                     cliente.getNome(),
-                    cliente.getCpf_cnpj(),
+                    cliente.getDocumento(),
                     cliente.getTelefone(),
                     cliente.getEmail(),
                     cliente.getEndereco().getRua(),

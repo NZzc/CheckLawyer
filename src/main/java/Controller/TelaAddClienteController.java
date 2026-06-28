@@ -1,17 +1,18 @@
 package Controller;
 
 import Dao.ClienteDAO;
-import Model.ClienteModel;
+import Model.ClienteFisicoModel;
+import Model.ClienteJuridicoModel;
 import Model.EnderecoModel;
 import View.TelaAddClienteView;
 
 import javax.swing.*;
 
 public class TelaAddClienteController {
+
     private TelaAddClienteView telaAddClienteView;
     private ClienteDAO clienteDAO;
     private TelaClienteController telaClienteController;
-
 
     public TelaAddClienteController(TelaClienteController telaClienteController) {
         telaAddClienteView = new TelaAddClienteView();
@@ -22,67 +23,116 @@ public class TelaAddClienteController {
     }
 
     public void configurarEventos() {
-        telaAddClienteView.getAddClienteBTN().addActionListener(e -> {
-            cadastrarCliente();
-        });
+        telaAddClienteView.getAddClienteBTN().addActionListener(e -> cadastrarCliente());
     }
 
     public void cadastrarCliente() {
-        String nome = telaAddClienteView.getNomeClienteInput().getText();
-        String cpf = telaAddClienteView.getCpfClienteInput().getText();
 
-        //tem q fazer nao permitir os 2(cpf e cnpj)
-        String cnpj = telaAddClienteView.getCnpjClienteInput().getText();
-        String telefone = telaAddClienteView.getTelefoneClienteInput().getText();
-        String email = telaAddClienteView.getEmailClienteInput().getText();
+        // ── Endereço (comum aos dois tipos) ──────────────────────────────
+        String rua = telaAddClienteView.getRuaInput().getText().trim();
+        String numero = telaAddClienteView.getNumeroInput().getText().trim();
+        String bairro = telaAddClienteView.getBairroInput().getText().trim();
+        String cidade = telaAddClienteView.getCidadeInput().getText().trim();
+        String uf = telaAddClienteView.getUfInput().getText().trim();
+        String cep = telaAddClienteView.getCepInput().getText().trim();
 
-        boolean dadosClienteValido = verificaDadosClientes(nome, cpf, cnpj, telefone, email);
+        if (!verificaDadosEndereco(rua, numero, bairro, cidade, uf, cep)) return;
+
+        EnderecoModel endereco = new EnderecoModel(rua, numero, bairro, cidade, uf, cep);
+
+        // ── Ramifica conforme o tipo selecionado ──────────────────────────
+        if (telaAddClienteView.isPessoaFisica()) {
+            cadastrarPessoaFisica(endereco);
+        } else {
+            cadastrarPessoaJuridica(endereco);
+        }
+    }
+
+    // =====================================================================
+    // PESSOA FÍSICA
+    // =====================================================================
+
+    private void cadastrarPessoaFisica(EnderecoModel endereco) {
+        String nome = telaAddClienteView.getNomeInput().getText().trim();
+        String cpf = telaAddClienteView.getCpfInput().getText().trim();
+        String telefone = telaAddClienteView.getTelefonePFInput().getText().trim();
+        String email = telaAddClienteView.getEmailPFInput().getText().trim();
+        String observacao = telaAddClienteView.getObservacaoPFInput().getText().trim();
+
+        if (!verificaDadosPessoaFisica(nome, cpf, telefone, email)) return;
 
         if (clienteDAO.verificaCpfCnpjRepetido(cpf)) {
-            exibirMensagem("CPF/CNPJ ja Cadastrado, por favor insira outro");
+            exibirMensagem("CPF já cadastrado. Por favor, insira outro.");
             return;
         }
 
-        String rua = telaAddClienteView.getRuaInput().getText();
-        String numero = telaAddClienteView.getNumeroInput().getText();
-        String bairro = telaAddClienteView.getBairroInput().getText();
-        String cidade = telaAddClienteView.getCidadeInput().getText();
-        String uf = telaAddClienteView.getUfInput().getText();
-        String cep = telaAddClienteView.getCepInput().getText();
+        ClienteFisicoModel cliente = new ClienteFisicoModel(nome, telefone, email, observacao, endereco, cpf);
+        clienteDAO.addCliente(cliente);
 
-        boolean dadosEnderecoValido = verificaDadosEndereco(rua, numero, bairro, cidade, uf, cep);
+        telaClienteController.atualizarTabela();
+        exibirMensagem("Cliente (Pessoa Física) cadastrado com sucesso!");
+    }
 
-        if (dadosEnderecoValido && dadosClienteValido) {
+    // =====================================================================
+    // PESSOA JURÍDICA
+    // =====================================================================
 
-            EnderecoModel endereco = new EnderecoModel(rua, numero, bairro, cidade, uf, cep);
+    private void cadastrarPessoaJuridica(EnderecoModel endereco) {
+        String nomeFantasia = telaAddClienteView.getNomeFantasiaInput().getText().trim();
+        String cnpj = telaAddClienteView.getCnpjInput().getText().trim();
+        String telefone = telaAddClienteView.getTelefonePJInput().getText().trim();
+        String email = telaAddClienteView.getEmailPJInput().getText().trim();
+        String observacao = telaAddClienteView.getObservacaoPJInput().getText().trim();
 
-            ClienteModel cliente = new ClienteModel(nome, cpf, telefone, email, endereco);
-
-            clienteDAO.addCliente(cliente);
-
-            telaClienteController.atualizarTabela();
+        if (!verificaDadosPessoaJuridica(cnpj, telefone, email)) {
+            return;
         }
+
+        if (clienteDAO.verificaCpfCnpjRepetido(cnpj)) {
+            exibirMensagem("CNPJ já cadastrado. Por favor, insira outro.");
+            return;
+        }
+
+        ClienteJuridicoModel cliente = new ClienteJuridicoModel(nomeFantasia, telefone, email, observacao, endereco, cnpj);
+        clienteDAO.addCliente(cliente);
+
+        telaClienteController.atualizarTabela();
+        exibirMensagem("Cliente (Pessoa Jurídica) cadastrado com sucesso!");
+    }
+
+    // =====================================================================
+    // VALIDAÇÕES
+    // =====================================================================
+
+    public boolean verificaDadosPessoaFisica(String nome, String cpf,
+                                             String telefone, String email) {
+        if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
+            exibirMensagem("Preencha todos os campos obrigatórios de Pessoa Física.");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verificaDadosPessoaJuridica(String cnpj,
+                                               String telefone, String email) {
+        if (cnpj.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
+            exibirMensagem("Preencha todos os campos obrigatórios de Pessoa Jurídica.");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verificaDadosEndereco(String rua, String numero, String bairro,
+                                         String cidade, String uf, String cep) {
+        if (rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
+                || cidade.isEmpty() || uf.isEmpty() || cep.isEmpty()) {
+            exibirMensagem("Preencha todos os campos de endereço.");
+            return false;
+        }
+        return true;
     }
 
     public void exibirMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
-
-    public boolean verificaDadosClientes(String nome, String cpf, String cnpj, String telefone, String email) {
-        if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-            exibirMensagem("Campo(s) de clientes invalidos");
-            return false;
-        }
-        return true;
-    }
-
-    public boolean verificaDadosEndereco(String rua, String numero, String bairro, String cidade, String uf, String cep) {
-        if (rua.isEmpty() || numero.isEmpty() || bairro.isEmpty() || cidade.isEmpty() || uf.isEmpty() || cep.isEmpty()) {
-            exibirMensagem("Campo(s) de endereço invalido");
-            return false;
-        }
-        return true;
-    }
-
-
 }
