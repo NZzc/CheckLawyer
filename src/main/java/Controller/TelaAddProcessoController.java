@@ -1,7 +1,9 @@
 package Controller;
 
+import Dao.ClienteDAO;
 import Dao.ProcessoDAO;
 import Exception.*;
+import Model.ClienteModel;
 import Model.ProcessoModel;
 import View.TelaAddProcessoView;
 
@@ -10,13 +12,31 @@ import javax.swing.*;
 public class TelaAddProcessoController {
     private TelaAddProcessoView telaAddProcessoView;
     private ProcessoDAO processoDAO;
+    private ClienteDAO clienteDAO;
     private TelaProcessoController telaProcessoController;
 
     public TelaAddProcessoController(TelaProcessoController telaProcessoController) {
         telaAddProcessoView = new TelaAddProcessoView();
         processoDAO = new ProcessoDAO();
+        clienteDAO = new ClienteDAO();
         this.telaProcessoController = telaProcessoController;
+
+        popularComboClientes();
         configurarEventos();
+    }
+
+    /**
+     * Carrega os clientes cadastrados no JComboBox
+     */
+    private void popularComboClientes() {
+        JComboBox<ClienteModel> combo = telaAddProcessoView.getClienteCombo();
+        combo.removeAllItems();
+        for (ClienteModel c : clienteDAO.getListaClientes()) {
+            combo.addItem(c);
+        }
+        if (combo.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado.\nCadastre um cliente antes de adicionar um processo.", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public void configurarEventos() {
@@ -26,41 +46,30 @@ public class TelaAddProcessoController {
     public void cadastrarProcesso() {
         try {
             String numero = telaAddProcessoView.getNumeroInput().getText().trim();
+            String area = (String) telaAddProcessoView.getAreaCombo().getSelectedItem();
+            String vara = telaAddProcessoView.getVaraInput().getText().trim();
             String descricao = telaAddProcessoView.getDescricaoInput().getText().trim();
             String status = (String) telaAddProcessoView.getStatusCombo().getSelectedItem();
-            String idClienteStr = telaAddProcessoView.getIdClienteInput().getText().trim();
+            String dataAbertura = telaAddProcessoView.getDataAberturaInput().getText().trim();
+            ClienteModel clienteSelecionado = (ClienteModel) telaAddProcessoView.getClienteCombo().getSelectedItem();
 
-            // Campos obrigatórios
             if (numero.isEmpty()) throw new CampoVazioException("Número do Processo");
+            if (vara.isEmpty()) throw new CampoVazioException("Vara / Tribunal");
             if (descricao.isEmpty()) throw new CampoVazioException("Descrição");
-            if (idClienteStr.isEmpty()) throw new CampoVazioException("ID do Cliente");
+            if (dataAbertura.isEmpty()) throw new CampoVazioException("Data de Abertura");
+            if (clienteSelecionado == null) throw new CampoVazioException("Cliente");
 
-            // Formato do número do processo (ex: 0000000-00.0000.0.00.0000)
-            if (!numero.matches("\\d{7}-\\d{2}\\.\\d{4}\\.\\d\\.\\d{2}\\.\\d{4}") && numero.length() < 5) {
-                throw new FormatoInvalidoException("Número do Processo", "mínimo 5 caracteres");
-            }
+            if (!dataAbertura.matches("\\d{2}/\\d{2}/\\d{4}"))
+                throw new FormatoInvalidoException("Data de Abertura", "DD/MM/AAAA");
 
-            // ID do cliente deve ser numérico e positivo
-            int idCliente;
-            try {
-                idCliente = Integer.parseInt(idClienteStr);
-            } catch (NumberFormatException ex) {
-                throw new FormatoInvalidoException("ID do Cliente", "número inteiro positivo");
-            }
-            if (idCliente <= 0) throw new ValorNegativoException("ID do Cliente");
+            if (processoDAO.verificaNumeroRepetido(numero)) throw new RegistroDuplicadoException("número", numero);
 
-            // Número de processo duplicado
-            if (processoDAO.verificaNumeroRepetido(numero)) {
-                throw new RegistroDuplicadoException("número", numero);
-            }
-
-            ProcessoModel processo = new ProcessoModel(numero, descricao, status, idCliente);
+            ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado.getID());
             processoDAO.addProcesso(processo);
             telaProcessoController.atualizarTabela();
             exibirSucesso("Processo \"" + numero + "\" cadastrado com sucesso!");
 
-        } catch (CampoVazioException | FormatoInvalidoException | ValorNegativoException |
-                 RegistroDuplicadoException ex) {
+        } catch (CampoVazioException | FormatoInvalidoException | RegistroDuplicadoException ex) {
             exibirErro(ex.getMessage());
         } catch (Exception ex) {
             exibirErro("Erro inesperado: " + ex.getMessage());

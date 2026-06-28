@@ -20,7 +20,6 @@ public class TelaFinanceiroController {
     }
 
     private void configurarEventos() {
-
         telaFinanceiroView.getAddPagamentoBTN().addActionListener(e -> new TelaAddPagamentoController(this));
 
         telaFinanceiroView.getExcluirPagamentoBTN().addActionListener(e -> {
@@ -28,8 +27,8 @@ public class TelaFinanceiroController {
                 int linha = telaFinanceiroView.getTabelaPagamentos().getSelectedRow();
                 if (linha == -1) throw new SelecionarItemException("pagamento");
 
-                int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este pagamento?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-                if (confirmacao != JOptionPane.YES_OPTION) return;
+                int ok = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este pagamento?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+                if (ok != JOptionPane.YES_OPTION) return;
 
                 int ID = Integer.parseInt(telaFinanceiroView.getTabelaPagamentos().getValueAt(linha, 0).toString());
                 pagamentoDAO.excluirPagamento(ID);
@@ -48,13 +47,7 @@ public class TelaFinanceiroController {
         DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
         model.setRowCount(0);
         for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
-            model.addRow(new Object[]{
-                    p.getID(),
-                    p.getDescricao(),
-                    String.format("%.2f", p.getValor()),
-                    p.getData(),
-                    p.getTipo(),
-                    p.getIdCliente()});
+            model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getFormaPagamento(), p.getStatus(), p.getIdCliente(), p.getIdProcesso() == 0 ? "-" : p.getIdProcesso()});
         }
         double saldo = pagamentoDAO.calcularSaldo();
         telaFinanceiroView.getSaldoLabel().setText(String.format("Saldo: R$ %.2f", saldo));

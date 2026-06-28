@@ -1,8 +1,8 @@
 package Controller;
 
 import Dao.ProcessoDAO;
+import Exception.SelecionarItemException;
 import Model.ProcessoModel;
-import View.TelaAddProcessoView;
 import View.TelaProcessosView;
 
 import javax.swing.*;
@@ -15,43 +15,51 @@ public class TelaProcessoController {
     public TelaProcessoController() {
         telaProcessosView = new TelaProcessosView();
         processoDAO = new ProcessoDAO();
-
         atualizarTabela();
         configurarEventos();
     }
 
     private void configurarEventos() {
-
-        telaProcessosView.getAddProcessoBTN().addActionListener(e -> {
-            new TelaAddProcessoController(this);
-        });
+        telaProcessosView.getAddProcessoBTN().addActionListener(e -> new TelaAddProcessoController(this));
 
         telaProcessosView.getExcluirProcessoBTN().addActionListener(e -> {
-            int linha = telaProcessosView.getTabelaProcessos().getSelectedRow();
+            try {
+                int linha = telaProcessosView.getTabelaProcessos().getSelectedRow();
+                if (linha == -1) throw new SelecionarItemException("processo");
 
-            if (linha == -1) {
-                exibirMensagem("Selecione um processo!");
-                return;
+                int ok = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este processo?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+                if (ok != JOptionPane.YES_OPTION) return;
+
+                int ID = Integer.parseInt(telaProcessosView.getTabelaProcessos().getValueAt(linha, 0).toString());
+                processoDAO.excluirProcesso(ID);
+                atualizarTabela();
+                exibirSucesso("Processo excluído com sucesso!");
+
+            } catch (SelecionarItemException ex) {
+                exibirErro(ex.getMessage());
+            } catch (Exception ex) {
+                exibirErro("Erro inesperado: " + ex.getMessage());
             }
-
-            String IDstr = telaProcessosView.getTabelaProcessos().getValueAt(linha, 0).toString();
-            int ID = Integer.parseInt(IDstr);
-
-            processoDAO.excluirProcesso(ID);
-            atualizarTabela();
         });
     }
 
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaProcessosView.getTabelaProcessos().getModel();
         model.setRowCount(0);
-
-        for (ProcessoModel processo : processoDAO.getListaProcessos()) {
-            model.addRow(new Object[]{processo.getID(), processo.getNumero(), processo.getDescricao(), processo.getStatus(), processo.getIdCliente()});
+        for (ProcessoModel p : processoDAO.getListaProcessos()) {
+            model.addRow(new Object[]{p.getID(), p.getNumero(), p.getArea(), p.getVara(), p.getDescricao(), p.getStatus(), p.getDataAbertura(), p.getIdCliente()});
         }
     }
 
-    public void exibirMensagem(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+    public ProcessoDAO getProcessoDAO() {
+        return processoDAO;
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 }
