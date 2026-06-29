@@ -84,9 +84,8 @@ public class TelaAddClienteController {
         String email = telaAddClienteView.getEmailPJInput().getText().trim();
         String observacao = telaAddClienteView.getObservacaoPJInput().getText().trim();
 
-        if (!verificaDadosPessoaJuridica(cnpj, telefone, email)) {
-            return;
-        }
+        if (!verificaDadosPessoaJuridica(cnpj, telefone, email)) return;
+
 
         if (clienteDAO.verificaCpfCnpjRepetido(cnpj)) {
             exibirMensagem("CNPJ já cadastrado. Por favor, insira outro.");
@@ -104,19 +103,41 @@ public class TelaAddClienteController {
     // VALIDAÇÕES
     // =====================================================================
 
-    public boolean verificaDadosPessoaFisica(String nome, String cpf,
-                                             String telefone, String email) {
+    public boolean verificaDadosPessoaFisica(String nome, String cpf, String telefone, String email) {
         if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-            exibirMensagem("Preencha todos os campos obrigatórios de Pessoa Física.");
+            exibirMensagem("Preencha todos os campos de Pessoa Física.");
+            return false;
+        }
+        if(!cpf.matches("\\d{11}$")){
+            exibirMensagem("CPF invalido! \n Padrão: 00000000000 11 digitos.");
+            return false;
+        }
+        if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")){
+            exibirMensagem("Email invalido! \n Padrão: xxxxx@xxxxxxx.com");
+            return false;
+        }
+        if(!telefone.matches("^\\d{10,11}$")){
+            exibirMensagem("Telefone invalido! \n Padrão: 00 000000000");
             return false;
         }
         return true;
     }
 
-    public boolean verificaDadosPessoaJuridica(String cnpj,
-                                               String telefone, String email) {
+    public boolean verificaDadosPessoaJuridica(String cnpj, String telefone, String email) {
         if (cnpj.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-            exibirMensagem("Preencha todos os campos obrigatórios de Pessoa Jurídica.");
+            exibirMensagem("Preencha todos os campos de Pessoa Jurídica.");
+            return false;
+        }
+        if(!cnpj.matches("^\\d{14}$")){
+            exibirMensagem("CNPJ inválido! \n Padrão: xxxxxxxxxxxxxx 14 digitos");
+            return false;
+        }
+        if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")){
+            exibirMensagem("Email inválido! \n Padrão: xxxxx@xxxxxxx.com");
+            return false;
+        }
+        if(!telefone.matches("^\\d{10,11}$")){
+            exibirMensagem("Telefone inválido! \n Padrão: 00 000000000");
             return false;
         }
         return true;
@@ -127,6 +148,10 @@ public class TelaAddClienteController {
         if (rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
                 || cidade.isEmpty() || uf.isEmpty() || cep.isEmpty()) {
             exibirMensagem("Preencha todos os campos de endereço.");
+            return false;
+        }
+        if(!(cep.matches("\\d{8}$"))){
+            exibirMensagem("CEP inválido \n Padrão: 00000000 8 digitos");
             return false;
         }
         return true;

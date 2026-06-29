@@ -2,8 +2,8 @@ package Controller;
 
 import Dao.ClienteDAO;
 import Model.ClienteModel;
-import View.TelaAddClienteView;
 import View.TelaClientesView;
+import Exception.SelecionarItemException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +22,6 @@ public class TelaClienteController {
     }
 
     private void configurarEventos() {
-
         telaClientesView.getAddClienteBTN().addActionListener(e -> {
             new TelaAddClienteController(this);
         });
@@ -41,14 +40,14 @@ public class TelaClienteController {
             clienteDAO.excluirCliente(ID);
             atualizarTabela();
         });
+
     }
 
     public void atualizarTabela() {
-
-
         DefaultTableModel model = (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
 
-        model.setRowCount(0); // limpa
+        // limpa
+        model.setRowCount(0);
 
         for (ClienteModel cliente : clienteDAO.getListaClientes()) {
             model.addRow(new Object[]{
@@ -69,7 +68,7 @@ public class TelaClienteController {
 
     }
 
-    public void exibirMensagem(String msg){
+    public void exibirMensagem(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
 
