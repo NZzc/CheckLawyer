@@ -1,12 +1,28 @@
 package Model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+/**
+ * Subclasse Pessoa Física.
+ *
+ * @DiscriminatorValue("PF") — o valor "PF" é gravado na coluna
+ * "tipo_cliente" para identificar linhas desta subclasse.
+ */
+@Entity
+@DiscriminatorValue("PF")
 public class ClienteFisicoModel extends ClienteModel {
+
+    @Column(unique = true)
     private String cpf;
 
+    public ClienteFisicoModel() {
+    }
 
-    public ClienteFisicoModel(String nome, String telefone, String email,String observacao , EnderecoModel endereco,  String cpf) {
-        this.cpf = cpf;
+    public ClienteFisicoModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco, String cpf) {
         super(nome, telefone, email, observacao, endereco);
+        this.cpf = cpf;
     }
 
     public String getCpf() {
@@ -18,7 +34,7 @@ public class ClienteFisicoModel extends ClienteModel {
     }
 
     @Override
-    public String getDocumento(){
+    public String getDocumento() {
         return cpf;
     }
 }

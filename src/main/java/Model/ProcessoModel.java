@@ -1,30 +1,64 @@
 package Model;
 
+import jakarta.persistence.*;
+
+/**
+ * @Entity — mapeada para a tabela "processos"
+ * @ManyToOne — muitos processos pertencem a um cliente.
+ * Gera a coluna "cliente_id" como FK na tabela processos.
+ */
+@Entity
+@Table(name = "processos")
 public class ProcessoModel {
-    private final int ID;
-    private static int geraID;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false, unique = true)
     private String numero;
-    private String area;       // Cível, Trabalhista, Criminal, Família, etc.
-    private String vara;       // ex: "2ª Vara Cível de SP"
-    private String descricao;
-    private String status;
-    private String dataAbertura;
-    private final int idCliente;
 
-    public ProcessoModel(String numero, String area, String vara, String descricao, String status, String dataAbertura, int idCliente) {
-        this.ID = ++geraID;
+    @Column(nullable = false)
+    private String area;
+
+    @Column(nullable = false)
+    private String vara;
+
+    @Column(columnDefinition = "TEXT")
+    private String descricao;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(name = "data_abertura", nullable = false)
+    private String dataAbertura;
+
+    /**
+     * Relacionamento ManyToOne com ClienteModel.
+     * FetchType.LAZY — o cliente só é carregado do banco quando acessado.
+     *
+     * @JoinColumn — define o nome da FK na tabela processos.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private ClienteModel cliente;
+
+    public ProcessoModel() {
+    }
+
+    public ProcessoModel(String numero, String area, String vara, String descricao,
+                         String status, String dataAbertura, ClienteModel cliente) {
         this.numero = numero;
         this.area = area;
         this.vara = vara;
         this.descricao = descricao;
         this.status = status;
         this.dataAbertura = dataAbertura;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
     }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
     public String getNumero() {
@@ -75,15 +109,20 @@ public class ProcessoModel {
         this.dataAbertura = d;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public ClienteModel getCliente() {
+        return cliente;
     }
 
-    /**
-     * Usado para popular JComboBox
-     */
+    public void setCliente(ClienteModel c) {
+        this.cliente = c;
+    }
+
+    public int getIdCliente() {
+        return (cliente != null) ? cliente.getID() : 0;
+    }
+
     @Override
     public String toString() {
-        return "[" + ID + "] " + numero + " (" + area + ")";
+        return "[" + id + "] " + numero + " (" + area + ")";
     }
 }

@@ -1,11 +1,28 @@
 package Model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+/**
+ * Subclasse Pessoa Jurídica.
+ *
+ * @DiscriminatorValue("PJ") — o valor "PJ" é gravado na coluna
+ * "tipo_cliente" para identificar linhas desta subclasse.
+ */
+@Entity
+@DiscriminatorValue("PJ")
 public class ClienteJuridicoModel extends ClienteModel {
+
+    @Column(unique = true)
     private String cnpj;
 
-    public ClienteJuridicoModel(String nome, String telefone, String email,String observacao , EnderecoModel endereco, String cnpj) {
+    public ClienteJuridicoModel() {
+    }
+
+    public ClienteJuridicoModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco, String cnpj) {
+        super(nome, telefone, email, observacao, endereco);
         this.cnpj = cnpj;
-        super(nome,telefone, email, observacao, endereco);
     }
 
     public String getCnpj() {
@@ -17,7 +34,7 @@ public class ClienteJuridicoModel extends ClienteModel {
     }
 
     @Override
-    public String getDocumento(){
+    public String getDocumento() {
         return cnpj;
     }
 }

@@ -25,9 +25,6 @@ public class TelaAddProcessoController {
         configurarEventos();
     }
 
-    /**
-     * Carrega os clientes cadastrados no JComboBox
-     */
     private void popularComboClientes() {
         JComboBox<ClienteModel> combo = telaAddProcessoView.getClienteCombo();
         combo.removeAllItems();
@@ -64,7 +61,8 @@ public class TelaAddProcessoController {
 
             if (processoDAO.verificaNumeroRepetido(numero)) throw new RegistroDuplicadoException("número", numero);
 
-            ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado.getID());
+            // Passa o objeto ClienteModel diretamente — JPA cuida da FK cliente_id
+            ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado);
             processoDAO.addProcesso(processo);
             telaProcessoController.atualizarTabela();
             exibirSucesso("Processo \"" + numero + "\" cadastrado com sucesso!");

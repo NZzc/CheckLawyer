@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="CheckLawyerPU" transaction-type="RESOURCE_LOCAL">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Apenas as entidades que usam JPA -->
+        <class>Model.ClienteModel</class>
+        <class>Model.ClienteFisicoModel</class>
+        <class>Model.ClienteJuridicoModel</class>
+        <class>Model.ProcessoModel</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+            <property name="jakarta.persistence.jdbc.url"    value="jdbc:sqlite:checklawyer.db"/>
+
+            <property name="hibernate.dialect"
+                      value="org.hibernate.community.dialect.SQLiteDialect"/>
+
+            <!-- Cria/atualiza tabelas automaticamente na primeira execução -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- SQL visível no console — útil para depuração -->
+            <property name="hibernate.show_sql"   value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.connection.pool_size" value="5"/>
+        </properties>
+
+    </persistence-unit>
+
+</persistence>

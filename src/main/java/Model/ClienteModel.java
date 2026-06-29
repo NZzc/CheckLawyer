@@ -1,47 +1,109 @@
 package Model;
 
+import jakarta.persistence.*;
+
+/**
+ * Classe base abstrata para clientes.
+ * Estratégia SINGLE_TABLE: uma única tabela "clientes" armazena
+ * tanto PF quanto PJ. A coluna "tipo_cliente" indica qual subclasse.
+ *
+ * @Inheritance(SINGLE_TABLE) — uma tabela para toda a hierarquia
+ * @DiscriminatorColumn — coluna que distingue PF de PJ
+ */
+@Entity
+@Table(name = "clientes")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_cliente", discriminatorType = DiscriminatorType.STRING)
 public abstract class ClienteModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private String telefone;
+
+    @Column(nullable = false)
     private String email;
-    private EnderecoModel endereco;
+
+    @Column(columnDefinition = "TEXT")
     private String observacao;
-    private final int ID;
-    private static int geraID;
 
+    /**
+     * @Embedded — EnderecoModel é @Embeddable.
+     * As colunas de endereço ficam diretamente na tabela "clientes".
+     */
+    @Embedded
+    private EnderecoModel endereco;
 
-    public ClienteModel(String nome, String telefone, String email,String observacao , EnderecoModel endereco) {
+    /**
+     * Construtor sem argumentos obrigatório pelo JPA
+     */
+    public ClienteModel() {
+    }
+
+    public ClienteModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco) {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
-        this.endereco = endereco;
         this.observacao = observacao;
-        this.ID = ++geraID;
+        this.endereco = endereco;
     }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
     public String getNome() {
         return nome;
     }
 
+    public void setNome(String n) {
+        this.nome = n;
+    }
+
     public String getTelefone() {
         return telefone;
+    }
+
+    public void setTelefone(String t) {
+        this.telefone = t;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String e) {
+        this.email = e;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String o) {
+        this.observacao = o;
+    }
+
     public EnderecoModel getEndereco() {
         return endereco;
     }
 
+    public void setEndereco(EnderecoModel e) {
+        this.endereco = e;
+    }
+
     public abstract String getDocumento();
 
-    public String getObservacao() {
-        return observacao;
+    /**
+     * Usado nos JComboBox dos Controllers
+     */
+    @Override
+    public String toString() {
+        return "[" + id + "] " + nome + " (" + getDocumento() + ")";
     }
 }
