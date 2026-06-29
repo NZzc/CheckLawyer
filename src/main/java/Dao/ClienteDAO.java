@@ -50,7 +50,8 @@ public class ClienteDAO {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             // Verifica CPF em PF e CNPJ em PJ na mesma tabela
-            Long count = em.createQuery("SELECT COUNT(c) FROM ClienteModel c "
+            Long count = em.createQuery(
+                       "SELECT COUNT(c) FROM ClienteModel c "
                             + "WHERE (TYPE(c) = Model.ClienteFisicoModel   AND TREAT(c AS Model.ClienteFisicoModel).cpf   = :doc) "
                             + "   OR (TYPE(c) = Model.ClienteJuridicoModel AND TREAT(c AS Model.ClienteJuridicoModel).cnpj = :doc)"
                     , Long.class).setParameter("doc", cpfCnpj).getSingleResult();
