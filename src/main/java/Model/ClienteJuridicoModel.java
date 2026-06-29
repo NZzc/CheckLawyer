@@ -4,12 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
-/**
- * Subclasse Pessoa Jurídica.
- *
- * @DiscriminatorValue("PJ") — o valor "PJ" é gravado na coluna
- * "tipo_cliente" para identificar linhas desta subclasse.
- */
 @Entity
 @DiscriminatorValue("PJ")
 public class ClienteJuridicoModel extends ClienteModel {

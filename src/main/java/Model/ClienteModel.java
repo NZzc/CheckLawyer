@@ -2,14 +2,6 @@ package Model;
 
 import jakarta.persistence.*;
 
-/**
- * Classe base abstrata para clientes.
- * Estratégia SINGLE_TABLE: uma única tabela "clientes" armazena
- * tanto PF quanto PJ. A coluna "tipo_cliente" indica qual subclasse.
- *
- * @Inheritance(SINGLE_TABLE) — uma tabela para toda a hierarquia
- * @DiscriminatorColumn — coluna que distingue PF de PJ
- */
 @Entity
 @Table(name = "clientes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -32,16 +24,10 @@ public abstract class ClienteModel {
     @Column(columnDefinition = "TEXT")
     private String observacao;
 
-    /**
-     * @Embedded — EnderecoModel é @Embeddable.
-     * As colunas de endereço ficam diretamente na tabela "clientes".
-     */
+    //entidade endereço fica direto na tabela cliente
     @Embedded
     private EnderecoModel endereco;
 
-    /**
-     * Construtor sem argumentos obrigatório pelo JPA
-     */
     public ClienteModel() {
     }
 
@@ -99,9 +85,6 @@ public abstract class ClienteModel {
 
     public abstract String getDocumento();
 
-    /**
-     * Usado nos JComboBox dos Controllers
-     */
     @Override
     public String toString() {
         return "[" + id + "] " + nome + " (" + getDocumento() + ")";
