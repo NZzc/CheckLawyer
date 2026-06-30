@@ -15,7 +15,9 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
             em.persist(cliente);
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             throw e;
         } finally {
             em.close();
@@ -30,7 +32,9 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
             if (c != null) em.remove(c);
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             throw e;
         } finally {
             em.close();
@@ -42,7 +46,7 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
         try {
             return em.createQuery(
                     "SELECT c FROM ClienteModel c", ClienteModel.class
-            ).getResultList(); // sem ORDER BY — ordenação fica no Java
+            ).getResultList();
         } finally {
             em.close();
         }
@@ -62,16 +66,4 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
             em.close();
         }
     }
-
-    /*
-    public ClienteModel buscarPorId(int id) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
-            return em.find(ClienteModel.class, id);
-        } finally {
-            em.close();
-        }
-    }
-
-     */
 }
