@@ -10,7 +10,7 @@ public class JPAUtil {
 
     static {
         try {
-            emf = Persistence.createEntityManagerFactory("CheckLawyerDAO");
+            emf = Persistence.createEntityManagerFactory("CheckLawyerPU");
         } catch (Exception e) {
             throw new ExceptionInInitializerError(
                     "Falha ao inicializar o banco de dados: " + e.getMessage());

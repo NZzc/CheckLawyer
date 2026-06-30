@@ -28,7 +28,7 @@ public class TelaAddClienteController {
 
     public void cadastrarCliente() {
 
-        // ── Endereço (comum aos dois tipos) ──────────────────────────────
+        //Endereço (comum aos dois tipos)
         String rua = telaAddClienteView.getRuaInput().getText().trim();
         String numero = telaAddClienteView.getNumeroInput().getText().trim();
         String bairro = telaAddClienteView.getBairroInput().getText().trim();
@@ -40,17 +40,13 @@ public class TelaAddClienteController {
 
         EnderecoModel endereco = new EnderecoModel(rua, numero, bairro, cidade, uf, cep);
 
-        // ── Ramifica conforme o tipo selecionado ──────────────────────────
+        //Ramifica conforme o tipo selecionado
         if (telaAddClienteView.isPessoaFisica()) {
             cadastrarPessoaFisica(endereco);
         } else {
             cadastrarPessoaJuridica(endereco);
         }
     }
-
-    // =====================================================================
-    // PESSOA FÍSICA
-    // =====================================================================
 
     private void cadastrarPessoaFisica(EnderecoModel endereco) {
         String nome = telaAddClienteView.getNomeInput().getText().trim();
@@ -72,10 +68,6 @@ public class TelaAddClienteController {
         telaClienteController.atualizarTabela();
         exibirMensagem("Cliente (Pessoa Física) cadastrado com sucesso!");
     }
-
-    // =====================================================================
-    // PESSOA JURÍDICA
-    // =====================================================================
 
     private void cadastrarPessoaJuridica(EnderecoModel endereco) {
         String nomeFantasia = telaAddClienteView.getNomeEmpresaInput().getText().trim();
@@ -99,25 +91,21 @@ public class TelaAddClienteController {
         exibirMensagem("Cliente (Pessoa Jurídica) cadastrado com sucesso!");
     }
 
-    // =====================================================================
-    // VALIDAÇÕES
-    // =====================================================================
-
     public boolean verificaDadosPessoaFisica(String nome, String cpf, String telefone, String email) {
         if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
             exibirMensagem("Preencha todos os campos de Pessoa Física.");
             return false;
         }
-        if(!cpf.matches("\\d{11}$")){
-            exibirMensagem("CPF invalido! \n Padrão: 00000000000 11 digitos.");
+        if (!cpf.matches("\\d{11}$")) {
+            exibirMensagem("CPF invalido! \n Padrão: 01234567890 11 digitos.");
             return false;
         }
-        if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")){
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             exibirMensagem("Email invalido! \n Padrão: xxxxx@xxxxxxx.com");
             return false;
         }
-        if(!telefone.matches("^\\d{10,11}$")){
-            exibirMensagem("Telefone invalido! \n Padrão: 00 000000000");
+        if (!telefone.matches("^\\d{10,11}$")) {
+            exibirMensagem("Telefone invalido! \n Padrão: 01234567890 10/11 digitos");
             return false;
         }
         return true;
@@ -128,29 +116,28 @@ public class TelaAddClienteController {
             exibirMensagem("Preencha todos os campos de Pessoa Jurídica.");
             return false;
         }
-        if(!cnpj.matches("^\\d{14}$")){
-            exibirMensagem("CNPJ inválido! \n Padrão: xxxxxxxxxxxxxx 14 digitos");
+        if (!cnpj.matches("^\\d{14}$")) {
+            exibirMensagem("CNPJ inválido! \n Padrão: 01234567891011 14 digitos");
             return false;
         }
-        if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")){
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             exibirMensagem("Email inválido! \n Padrão: xxxxx@xxxxxxx.com");
             return false;
         }
-        if(!telefone.matches("^\\d{10,11}$")){
-            exibirMensagem("Telefone inválido! \n Padrão: 00 000000000");
+        if (!telefone.matches("^\\d{10,11}$")) {
+            exibirMensagem("Telefone inválido! \n Padrão: 01234567890 10/11 digitos");
             return false;
         }
         return true;
     }
 
-    public boolean verificaDadosEndereco(String rua, String numero, String bairro,
-                                         String cidade, String uf, String cep) {
+    public boolean verificaDadosEndereco(String rua, String numero, String bairro, String cidade, String uf, String cep) {
         if (rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
                 || cidade.isEmpty() || uf.isEmpty() || cep.isEmpty()) {
             exibirMensagem("Preencha todos os campos de endereço.");
             return false;
         }
-        if(!(cep.matches("\\d{8}$"))){
+        if (!(cep.matches("\\d{8}$"))) {
             exibirMensagem("CEP inválido \n Padrão: 00000000 8 digitos");
             return false;
         }

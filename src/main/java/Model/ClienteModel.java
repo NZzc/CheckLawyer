@@ -10,6 +10,7 @@ import java.util.Comparator;
 @DiscriminatorColumn(name = "tipo_cliente", discriminatorType = DiscriminatorType.STRING)
 public abstract class ClienteModel implements Comparable<ClienteModel>{
 
+    //chave primaria
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,12 +27,11 @@ public abstract class ClienteModel implements Comparable<ClienteModel>{
     @Column(columnDefinition = "TEXT")
     private String observacao;
 
-    //entidade endereço fica direto na tabela cliente
+    //classe endereco fica direto na tabela cliente
     @Embedded
     private EnderecoModel endereco;
 
-    public ClienteModel() {
-    }
+    public ClienteModel() {} //construtor vazio pro JPA
 
     public ClienteModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco) {
         this.nome = nome.toUpperCase();
@@ -49,40 +49,20 @@ public abstract class ClienteModel implements Comparable<ClienteModel>{
         return nome;
     }
 
-    public void setNome(String n) {
-        this.nome = n;
-    }
-
     public String getTelefone() {
         return telefone;
-    }
-
-    public void setTelefone(String t) {
-        this.telefone = t;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String e) {
-        this.email = e;
-    }
-
     public String getObservacao() {
         return observacao;
     }
 
-    public void setObservacao(String o) {
-        this.observacao = o;
-    }
-
     public EnderecoModel getEndereco() {
         return endereco;
-    }
-
-    public void setEndereco(EnderecoModel e) {
-        this.endereco = e;
     }
 
     public abstract String getDocumento();
