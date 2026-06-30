@@ -3,14 +3,16 @@ package Controller;
 import Dao.ClienteDAO;
 import Model.ClienteModel;
 import View.TelaClientesView;
-import Exception.SelecionarItemException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Collections;
+import java.util.List;
 
 public class TelaClienteController {
     private ClienteDAO clienteDAO;
     private TelaClientesView telaClientesView;
+    private List<ClienteModel> listaAtual;
 
     public TelaClienteController() {
         telaClientesView = new TelaClientesView();
@@ -41,15 +43,28 @@ public class TelaClienteController {
             atualizarTabela();
         });
 
+        telaClientesView.getOrdenarNomeBTN().addActionListener(e -> {
+            Collections.sort(listaAtual);
+            popularTabela(listaAtual);
+        });
+
+        telaClientesView.getOrdenarIdBTN().addActionListener(e -> {
+            listaAtual.sort(ClienteModel.POR_ID);
+            popularTabela(listaAtual);
+        });
+
     }
 
     public void atualizarTabela() {
-        DefaultTableModel model = (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
+        listaAtual = clienteDAO.getLista();
+        popularTabela(listaAtual);
+    }
 
-        // limpa
+    private void popularTabela(List<ClienteModel> lista) {
+        DefaultTableModel model =
+                (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
         model.setRowCount(0);
-
-        for (ClienteModel cliente : clienteDAO.getLista()) {
+        for (ClienteModel cliente : lista) {
             model.addRow(new Object[]{
                     cliente.getID(),
                     cliente.getNome(),
@@ -65,7 +80,6 @@ public class TelaClienteController {
                     cliente.getEndereco().getCep()
             });
         }
-
     }
 
     public void exibirMensagem(String msg) {

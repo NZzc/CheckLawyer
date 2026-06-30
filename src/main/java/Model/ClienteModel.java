@@ -2,11 +2,13 @@ package Model;
 
 import jakarta.persistence.*;
 
+import java.util.Comparator;
+
 @Entity
 @Table(name = "clientes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_cliente", discriminatorType = DiscriminatorType.STRING)
-public abstract class ClienteModel {
+public abstract class ClienteModel implements Comparable<ClienteModel>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +34,10 @@ public abstract class ClienteModel {
     }
 
     public ClienteModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco) {
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
         this.telefone = telefone;
         this.email = email;
-        this.observacao = observacao;
+        this.observacao = observacao.toUpperCase();
         this.endereco = endereco;
     }
 
@@ -89,4 +91,12 @@ public abstract class ClienteModel {
     public String toString() {
         return "[" + id + "] " + nome + " (" + getDocumento() + ")";
     }
+
+    @Override
+    public int compareTo(ClienteModel outro) {
+        return this.nome.compareTo(outro.nome);
+    }
+
+    public static final Comparator<ClienteModel> POR_ID = Comparator.comparingInt(ClienteModel::getID);
+
 }

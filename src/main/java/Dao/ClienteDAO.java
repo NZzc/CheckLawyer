@@ -4,9 +4,10 @@ import Model.ClienteModel;
 import Util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
+import java.util.Collections;
 import java.util.List;
 
-public class ClienteDAO implements PersistivelInterface <ClienteModel> {
+public class ClienteDAO implements PersistivelInterface<ClienteModel> {
 
     public void inserir(ClienteModel cliente) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -40,7 +41,9 @@ public class ClienteDAO implements PersistivelInterface <ClienteModel> {
     public List<ClienteModel> getLista() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT c FROM ClienteModel c ORDER BY c.nome", ClienteModel.class).getResultList();
+            return em.createQuery(
+                    "SELECT c FROM ClienteModel c", ClienteModel.class
+            ).getResultList(); // sem ORDER BY — ordenação fica no Java
         } finally {
             em.close();
         }
@@ -51,7 +54,7 @@ public class ClienteDAO implements PersistivelInterface <ClienteModel> {
         try {
             // Verifica CPF em PF e CNPJ em PJ na mesma tabela
             Long count = em.createQuery(
-                       "SELECT COUNT(c) FROM ClienteModel c "
+                    "SELECT COUNT(c) FROM ClienteModel c "
                             + "WHERE (TYPE(c) = Model.ClienteFisicoModel   AND TREAT(c AS Model.ClienteFisicoModel).cpf   = :doc) "
                             + "   OR (TYPE(c) = Model.ClienteJuridicoModel AND TREAT(c AS Model.ClienteJuridicoModel).cnpj = :doc)"
                     , Long.class).setParameter("doc", cpfCnpj).getSingleResult();

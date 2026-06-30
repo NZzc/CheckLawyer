@@ -9,6 +9,8 @@ public class TelaClientesView extends JFrame {
 
     private JButton addClienteBTN;
     private JButton excluirClienteBTN;
+    private JButton ordenarNomeBTN;
+    private JButton ordenarIdBTN;
 
     public TelaClientesView() {
 
@@ -64,9 +66,13 @@ public class TelaClientesView extends JFrame {
         // ================= BOTÕES =================
         addClienteBTN = new JButton("Adicionar Cliente");
         excluirClienteBTN = new JButton("Excluir Cliente");
+        ordenarNomeBTN = new JButton("Ordenar por Nome");
+        ordenarIdBTN = new JButton("Ordenar por ID");
 
         addClienteBTN.setFont(buttonFont);
         excluirClienteBTN.setFont(buttonFont);
+        ordenarNomeBTN.setFont(buttonFont);
+        ordenarIdBTN.setFont(buttonFont);
 
         addClienteBTN.setPreferredSize(new Dimension(180, 40));
         excluirClienteBTN.setPreferredSize(new Dimension(180, 40));
@@ -74,6 +80,8 @@ public class TelaClientesView extends JFrame {
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         painelBotoes.add(excluirClienteBTN);
         painelBotoes.add(addClienteBTN);
+        painelBotoes.add(ordenarNomeBTN);
+        painelBotoes.add(ordenarIdBTN);
 
         // ================= LAYOUT PRINCIPAL =================
         JPanel main = new JPanel(new BorderLayout());
@@ -96,5 +104,13 @@ public class TelaClientesView extends JFrame {
 
     public JTable getTabelaClientes() {
         return tabelaClientes;
+    }
+
+    public JButton getOrdenarNomeBTN() {
+        return ordenarNomeBTN;
+    }
+
+    public JButton getOrdenarIdBTN() {
+        return ordenarIdBTN;
     }
 }

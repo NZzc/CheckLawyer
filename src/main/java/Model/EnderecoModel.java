@@ -25,7 +25,7 @@ public class EnderecoModel {
         this.bairro = bairro.toUpperCase();
         this.cidade = cidade.toUpperCase();
         this.uf = uf.toUpperCase();
-        this.cep = cep.toUpperCase();
+        this.cep = cep;
     }
 
     public String getRua() {
