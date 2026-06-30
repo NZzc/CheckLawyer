@@ -18,10 +18,10 @@ public class TelaFinanceiroController {
         telaFinanceiroView = new TelaFinanceiroView();
         pagamentoDAO = new PagamentoDAO();
         atualizarTabela();
-        configurarEventos();
+        BtnAddPagamento();
     }
 
-    private void configurarEventos() {
+    private void BtnAddPagamento() {
         telaFinanceiroView.getAddPagamentoBTN().addActionListener(e -> new TelaAddPagamentoController(this));
 
         telaFinanceiroView.getExcluirPagamentoBTN().addActionListener(e -> {
@@ -54,12 +54,12 @@ public class TelaFinanceiroController {
 
         double saldo = pagamentoDAO.calcularSaldo();
 
-        // Map<String, Double>: total de receitas e despesas agrupados por tipo
+        // Map: total de receitas e despesas agrupados por tipo
         Map<String, Double> totalPorTipo = pagamentoDAO.getTotalPorTipo();
         double totalReceitas = totalPorTipo.getOrDefault("RECEITA", 0.0);
         double totalDespesas = totalPorTipo.getOrDefault("DESPESA", 0.0);
 
-        // Set<String>: formas de pagamento distintas já utilizadas
+        // Set: formas de pagamento distintas já utilizadas
         Set<String> formasUtilizadas = pagamentoDAO.getFormasPagamentoUtilizadas();
 
         String texto = String.format("Saldo: R$ %.2f | Receitas: R$ %.2f | Despesas: R$ %.2f | Formas de pagamento: %s", saldo, totalReceitas, totalDespesas, String.join(", ", formasUtilizadas));

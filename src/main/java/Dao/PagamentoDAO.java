@@ -36,7 +36,7 @@ public class PagamentoDAO {
         return saldo;
     }
 
-    // Usa um Map para somar os valores agrupados por tipo (RECEITA / DESPESA)
+    // Usa um Map para somar os valores agrupados por tipo
     public Map<String, Double> getTotalPorTipo() {
         Map<String, Double> totalPorTipo = new HashMap<>();
         for (PagamentoModel p : listaPagamentos) {

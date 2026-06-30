@@ -26,7 +26,7 @@ public class TelaAddPagamentoController {
         this.telaFinanceiroController = telaFinanceiroController;
 
         popularCombos();
-        configurarEventos();
+        BtnAddPagamento();
     }
 
     /**
@@ -45,7 +45,7 @@ public class TelaAddPagamentoController {
             JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado. Cadastre um cliente antes de registrar um pagamento.", "Atenção", JOptionPane.WARNING_MESSAGE);
     }
 
-    public void configurarEventos() {
+    public void BtnAddPagamento() {
         telaAddPagamentoView.getAddPagamentoBTN().addActionListener(e -> cadastrarPagamento());
     }
 
@@ -79,7 +79,7 @@ public class TelaAddPagamentoController {
             }
             if (valor <= 0) throw new ValorNegativoException("Valor");
 
-            // idProcesso = 0 quando não há processo associado (despesa geral)
+            // idProcesso = 0 quando não há processo associado
             int idProcesso = (processoSelecionado != null) ? processoSelecionado.getID() : 0;
 
             PagamentoModel pagamento = new PagamentoModel(descricao, valor, data, tipo, formaPgto, status, clienteSelecionado.getID(), idProcesso);
