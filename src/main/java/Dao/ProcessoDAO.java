@@ -6,9 +6,9 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class ProcessoDAO {
+public class ProcessoDAO implements PersistivelInterface <ProcessoModel> {
 
-    public void addProcesso(ProcessoModel processo) {
+    public void inserir(ProcessoModel processo) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -23,7 +23,7 @@ public class ProcessoDAO {
         }
     }
 
-    public void excluirProcesso(int id) {
+    public void excluir(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -38,7 +38,7 @@ public class ProcessoDAO {
         }
     }
 
-    public List<ProcessoModel> getListaProcessos() {
+    public List<ProcessoModel> getLista() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             // JOIN FETCH carrega o cliente junto para evitar LazyInitializationException

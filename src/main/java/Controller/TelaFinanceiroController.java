@@ -31,7 +31,7 @@ public class TelaFinanceiroController {
                 if (ok != JOptionPane.YES_OPTION) return;
 
                 int ID = Integer.parseInt(telaFinanceiroView.getTabelaPagamentos().getValueAt(linha, 0).toString());
-                pagamentoDAO.excluirPagamento(ID);
+                pagamentoDAO.excluir(ID);
                 atualizarTabela();
                 exibirSucesso("Pagamento excluído com sucesso!");
 
@@ -46,7 +46,7 @@ public class TelaFinanceiroController {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
         model.setRowCount(0);
-        for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
+        for (PagamentoModel p : pagamentoDAO.getLista()) {
             model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getFormaPagamento(), p.getStatus(), p.getIdCliente(), p.getIdProcesso() == 0 ? "-" : p.getIdProcesso()});
         }
         double saldo = pagamentoDAO.calcularSaldo();

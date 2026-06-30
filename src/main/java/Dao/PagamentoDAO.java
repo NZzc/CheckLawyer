@@ -5,18 +5,18 @@ import Model.PagamentoModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagamentoDAO {
+public class PagamentoDAO implements PersistivelInterface <PagamentoModel> {
     private static List<PagamentoModel> listaPagamentos = new ArrayList<>();
 
-    public void addPagamento(PagamentoModel pagamento) {
+    public void inserir(PagamentoModel pagamento) {
         listaPagamentos.add(pagamento);
     }
 
-    public void excluirPagamento(int id) {
+    public void excluir(int id) {
         listaPagamentos.removeIf(pagamento -> pagamento.getID() == id);
     }
 
-    public List<PagamentoModel> getListaPagamentos() {
+    public List<PagamentoModel> getLista() {
         return listaPagamentos;
     }
 

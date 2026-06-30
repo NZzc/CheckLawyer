@@ -31,7 +31,7 @@ public class TelaAudienciaController {
                 if (ok != JOptionPane.YES_OPTION) return;
 
                 int ID = Integer.parseInt(telaAudienciaView.getTabelaAudiencias().getValueAt(linha, 0).toString());
-                audienciaDAO.excluirAudiencia(ID);
+                audienciaDAO.excluir(ID);
                 atualizarTabela();
                 exibirSucesso("Audiência excluída com sucesso!");
 
@@ -46,7 +46,7 @@ public class TelaAudienciaController {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaAudienciaView.getTabelaAudiencias().getModel();
         model.setRowCount(0);
-        for (AudienciaModel a : audienciaDAO.getListaAudiencias()) {
+        for (AudienciaModel a : audienciaDAO.getLista()) {
             model.addRow(new Object[]{a.getID(), a.getData(), a.getHora(), a.getLocal(), a.getTipo(), a.getDescricao(), a.getResultado(), a.getIdProcesso()});
         }
     }

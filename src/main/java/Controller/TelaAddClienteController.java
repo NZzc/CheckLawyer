@@ -67,7 +67,7 @@ public class TelaAddClienteController {
         }
 
         ClienteFisicoModel cliente = new ClienteFisicoModel(nome, telefone, email, observacao, endereco, cpf);
-        clienteDAO.addCliente(cliente);
+        clienteDAO.inserir(cliente);
 
         telaClienteController.atualizarTabela();
         exibirMensagem("Cliente (Pessoa Física) cadastrado com sucesso!");
@@ -93,7 +93,7 @@ public class TelaAddClienteController {
         }
 
         ClienteJuridicoModel cliente = new ClienteJuridicoModel(nomeFantasia, telefone, email, observacao, endereco, cnpj);
-        clienteDAO.addCliente(cliente);
+        clienteDAO.inserir(cliente);
 
         telaClienteController.atualizarTabela();
         exibirMensagem("Cliente (Pessoa Jurídica) cadastrado com sucesso!");

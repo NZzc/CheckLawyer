@@ -31,7 +31,7 @@ public class TelaAddAudienciaController {
     private void popularComboProcessos() {
         JComboBox<ProcessoModel> combo = telaAddAudienciaView.getProcessoCombo();
         combo.removeAllItems();
-        for (ProcessoModel p : processoDAO.getListaProcessos()) {
+        for (ProcessoModel p : processoDAO.getLista()) {
             combo.addItem(p);
         }
         if (combo.getItemCount() == 0) {
@@ -71,7 +71,7 @@ public class TelaAddAudienciaController {
             if (hh > 23 || mm > 59) throw new FormatoInvalidoException("Hora", "entre 00:00 e 23:59");
 
             AudienciaModel audiencia = new AudienciaModel(data, hora, local, tipo, descricao, resultado, processoSelecionado.getID());
-            audienciaDAO.addAudiencia(audiencia);
+            audienciaDAO.inserir(audiencia);
             telaAudienciaController.atualizarTabela();
             exibirSucesso("Audiência cadastrada com sucesso!");
 

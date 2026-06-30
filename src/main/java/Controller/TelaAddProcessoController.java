@@ -28,7 +28,7 @@ public class TelaAddProcessoController {
     private void popularComboClientes() {
         JComboBox<ClienteModel> combo = telaAddProcessoView.getClienteCombo();
         combo.removeAllItems();
-        for (ClienteModel c : clienteDAO.getListaClientes()) {
+        for (ClienteModel c : clienteDAO.getLista()) {
             combo.addItem(c);
         }
         if (combo.getItemCount() == 0) {
@@ -63,7 +63,7 @@ public class TelaAddProcessoController {
 
             // Passa o objeto ClienteModel diretamente — JPA cuida da FK cliente_id
             ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado);
-            processoDAO.addProcesso(processo);
+            processoDAO.inserir(processo);
             telaProcessoController.atualizarTabela();
             exibirSucesso("Processo \"" + numero + "\" cadastrado com sucesso!");
 

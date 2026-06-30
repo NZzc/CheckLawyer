@@ -37,7 +37,7 @@ public class TelaClienteController {
             String IDstr = telaClientesView.getTabelaClientes().getValueAt(linha, 0).toString();
             int ID = Integer.parseInt(IDstr);
 
-            clienteDAO.excluirCliente(ID);
+            clienteDAO.excluir(ID);
             atualizarTabela();
         });
 
@@ -49,7 +49,7 @@ public class TelaClienteController {
         // limpa
         model.setRowCount(0);
 
-        for (ClienteModel cliente : clienteDAO.getListaClientes()) {
+        for (ClienteModel cliente : clienteDAO.getLista()) {
             model.addRow(new Object[]{
                     cliente.getID(),
                     cliente.getNome(),

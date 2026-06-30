@@ -6,9 +6,9 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class ClienteDAO {
+public class ClienteDAO implements PersistivelInterface <ClienteModel> {
 
-    public void addCliente(ClienteModel cliente) {
+    public void inserir(ClienteModel cliente) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -22,7 +22,7 @@ public class ClienteDAO {
         }
     }
 
-    public void excluirCliente(int id) {
+    public void excluir(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -37,7 +37,7 @@ public class ClienteDAO {
         }
     }
 
-    public List<ClienteModel> getListaClientes() {
+    public List<ClienteModel> getLista() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery("SELECT c FROM ClienteModel c ORDER BY c.nome", ClienteModel.class).getResultList();

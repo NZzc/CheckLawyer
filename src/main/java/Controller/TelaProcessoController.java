@@ -31,7 +31,7 @@ public class TelaProcessoController {
                 if (ok != JOptionPane.YES_OPTION) return;
 
                 int ID = Integer.parseInt(telaProcessosView.getTabelaProcessos().getValueAt(linha, 0).toString());
-                processoDAO.excluirProcesso(ID);
+                processoDAO.excluir(ID);
                 atualizarTabela();
                 exibirSucesso("Processo excluído com sucesso!");
 
@@ -46,7 +46,7 @@ public class TelaProcessoController {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaProcessosView.getTabelaProcessos().getModel();
         model.setRowCount(0);
-        for (ProcessoModel p : processoDAO.getListaProcessos()) {
+        for (ProcessoModel p : processoDAO.getLista()) {
             model.addRow(new Object[]{p.getID(), p.getNumero(), p.getArea(), p.getVara(), p.getDescricao(), p.getStatus(), p.getDataAbertura(), p.getIdCliente()});
         }
     }

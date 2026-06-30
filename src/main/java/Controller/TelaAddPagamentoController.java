@@ -38,8 +38,8 @@ public class TelaAddPagamentoController {
         comboC.removeAllItems();
         comboP.removeAllItems();
 
-        for (ClienteModel c : clienteDAO.getListaClientes()) comboC.addItem(c);
-        for (ProcessoModel p : processoDAO.getListaProcessos()) comboP.addItem(p);
+        for (ClienteModel c : clienteDAO.getLista()) comboC.addItem(c);
+        for (ProcessoModel p : processoDAO.getLista()) comboP.addItem(p);
 
         if (comboC.getItemCount() == 0)
             JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado. Cadastre um cliente antes de registrar um pagamento.", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -83,7 +83,7 @@ public class TelaAddPagamentoController {
             int idProcesso = (processoSelecionado != null) ? processoSelecionado.getID() : 0;
 
             PagamentoModel pagamento = new PagamentoModel(descricao, valor, data, tipo, formaPgto, status, clienteSelecionado.getID(), idProcesso);
-            pagamentoDAO.addPagamento(pagamento);
+            pagamentoDAO.inserir(pagamento);
             telaFinanceiroController.atualizarTabela();
             exibirSucesso("Pagamento de R$ " + String.format("%.2f", valor) + " cadastrado com sucesso!");
 
