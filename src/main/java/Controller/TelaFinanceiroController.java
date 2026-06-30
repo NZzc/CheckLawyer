@@ -7,6 +7,8 @@ import View.TelaFinanceiroView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Map;
+import java.util.Set;
 
 public class TelaFinanceiroController {
     private PagamentoDAO pagamentoDAO;
@@ -46,11 +48,22 @@ public class TelaFinanceiroController {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
         model.setRowCount(0);
-        for (PagamentoModel p : pagamentoDAO.getLista()) {
+        for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
             model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getFormaPagamento(), p.getStatus(), p.getIdCliente(), p.getIdProcesso() == 0 ? "-" : p.getIdProcesso()});
         }
+
         double saldo = pagamentoDAO.calcularSaldo();
-        telaFinanceiroView.getSaldoLabel().setText(String.format("Saldo: R$ %.2f", saldo));
+
+        // Map<String, Double>: total de receitas e despesas agrupados por tipo
+        Map<String, Double> totalPorTipo = pagamentoDAO.getTotalPorTipo();
+        double totalReceitas = totalPorTipo.getOrDefault("RECEITA", 0.0);
+        double totalDespesas = totalPorTipo.getOrDefault("DESPESA", 0.0);
+
+        // Set<String>: formas de pagamento distintas já utilizadas
+        Set<String> formasUtilizadas = pagamentoDAO.getFormasPagamentoUtilizadas();
+
+        String texto = String.format("Saldo: R$ %.2f | Receitas: R$ %.2f | Despesas: R$ %.2f | Formas de pagamento: %s", saldo, totalReceitas, totalDespesas, String.join(", ", formasUtilizadas));
+        telaFinanceiroView.getSaldoLabel().setText(texto);
     }
 
     public void exibirErro(String msg) {
