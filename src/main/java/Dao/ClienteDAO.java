@@ -4,7 +4,6 @@ import Model.ClienteModel;
 import Util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ClienteDAO implements PersistivelInterface<ClienteModel> {
@@ -64,6 +63,7 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
         }
     }
 
+    /*
     public ClienteModel buscarPorId(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -72,4 +72,6 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
             em.close();
         }
     }
+
+     */
 }
