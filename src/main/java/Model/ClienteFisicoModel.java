@@ -11,19 +11,10 @@ public class ClienteFisicoModel extends ClienteModel {
     @Column(unique = true)
     private String cpf;
 
-    public ClienteFisicoModel() {
-    }
+    public ClienteFisicoModel() {}
 
     public ClienteFisicoModel(String nome, String telefone, String email, String observacao, EnderecoModel endereco, String cpf) {
         super(nome, telefone, email, observacao, endereco);
-        this.cpf = cpf;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

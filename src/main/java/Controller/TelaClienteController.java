@@ -61,9 +61,10 @@ public class TelaClienteController {
     }
 
     private void popularTabela(List<ClienteModel> lista) {
-        DefaultTableModel model =
-                (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
-        model.setRowCount(0);
+        DefaultTableModel model = (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
+
+        model.setRowCount(0); //reseta tabela
+
         for (ClienteModel cliente : lista) {
             model.addRow(new Object[]{
                     cliente.getID(),
