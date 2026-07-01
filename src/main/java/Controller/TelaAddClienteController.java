@@ -5,6 +5,7 @@ import Model.ClienteFisicoModel;
 import Model.ClienteJuridicoModel;
 import Model.EnderecoModel;
 import View.TelaAddClienteView;
+import Exception.FormatoInvalidoException;
 
 import javax.swing.*;
 
@@ -48,14 +49,16 @@ public class TelaAddClienteController {
         }
     }
 
-    private void cadastrarPessoaFisica(EnderecoModel endereco) {
+    private void cadastrarPessoaFisica(EnderecoModel endereco){
         String nome = telaAddClienteView.getNomeInput().getText().trim();
         String cpf = telaAddClienteView.getCpfInput().getText().trim();
         String telefone = telaAddClienteView.getTelefonePFInput().getText().trim();
         String email = telaAddClienteView.getEmailPFInput().getText().trim();
         String observacao = telaAddClienteView.getObservacaoPFInput().getText().trim();
 
-        if (!verificaDadosPessoaFisica(nome, cpf, telefone, email)) return;
+        if (!verificaDadosPessoaFisica(nome, cpf, telefone, email)) {
+            return;
+        }
 
         if (clienteDAO.verificaCpfCnpjRepetido(cpf)) {
             exibirMensagem("CPF já cadastrado. Por favor, insira outro.");
@@ -76,6 +79,7 @@ public class TelaAddClienteController {
         String email = telaAddClienteView.getEmailPJInput().getText().trim();
         String observacao = telaAddClienteView.getObservacaoPJInput().getText().trim();
 
+
         if (!verificaDadosPessoaJuridica(cnpj, telefone, email)) return;
 
 
@@ -95,6 +99,7 @@ public class TelaAddClienteController {
         if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
             exibirMensagem("Preencha todos os campos de Pessoa Física.");
             return false;
+
         }
         if (!cpf.matches("\\d{11}$")) {
             exibirMensagem("CPF invalido! \n Padrão: 01234567890 11 digitos.");
