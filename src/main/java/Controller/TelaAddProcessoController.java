@@ -21,11 +21,11 @@ public class TelaAddProcessoController {
         clienteDAO = new ClienteDAO();
         this.telaProcessoController = telaProcessoController;
 
-        popularComboClientes();
-        configurarEventos();
+        ComboClientes();
+        BtnAddProcesso();
     }
 
-    private void popularComboClientes() {
+    private void ComboClientes() {
         JComboBox<ClienteModel> combo = telaAddProcessoView.getClienteCombo();
         combo.removeAllItems();
         for (ClienteModel c : clienteDAO.getLista()) {
@@ -36,7 +36,7 @@ public class TelaAddProcessoController {
         }
     }
 
-    public void configurarEventos() {
+    public void BtnAddProcesso() {
         telaAddProcessoView.getAddProcessoBTN().addActionListener(e -> cadastrarProcesso());
     }
 
@@ -61,7 +61,6 @@ public class TelaAddProcessoController {
 
             if (processoDAO.verificaNumeroRepetido(numero)) throw new RegistroDuplicadoException("número", numero);
 
-            // Passa o objeto ClienteModel diretamente — JPA cuida da FK cliente_id
             ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado);
             processoDAO.inserir(processo);
             telaProcessoController.atualizarTabela();

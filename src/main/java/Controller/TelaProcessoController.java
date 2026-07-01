@@ -16,10 +16,10 @@ public class TelaProcessoController {
         telaProcessosView = new TelaProcessosView();
         processoDAO = new ProcessoDAO();
         atualizarTabela();
-        configurarEventos();
+        BtnAddProcesso();
     }
 
-    private void configurarEventos() {
+    private void BtnAddProcesso() {
         telaProcessosView.getAddProcessoBTN().addActionListener(e -> new TelaAddProcessoController(this));
 
         telaProcessosView.getExcluirProcessoBTN().addActionListener(e -> {

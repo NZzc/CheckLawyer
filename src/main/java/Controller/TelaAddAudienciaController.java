@@ -21,14 +21,11 @@ public class TelaAddAudienciaController {
         processoDAO = new ProcessoDAO();
         this.telaAudienciaController = telaAudienciaController;
 
-        popularComboProcessos();
-        configurarEventos();
+        ComboProcessos();
+        BtnAddAudiencia();
     }
 
-    /**
-     * Carrega os processos cadastrados no JComboBox
-     */
-    private void popularComboProcessos() {
+    private void ComboProcessos() {
         JComboBox<ProcessoModel> combo = telaAddAudienciaView.getProcessoCombo();
         combo.removeAllItems();
         for (ProcessoModel p : processoDAO.getLista()) {
@@ -39,7 +36,7 @@ public class TelaAddAudienciaController {
         }
     }
 
-    public void configurarEventos() {
+    public void BtnAddAudiencia() {
         telaAddAudienciaView.getAddAudienciaBTN().addActionListener(e -> cadastrarAudiencia());
     }
 

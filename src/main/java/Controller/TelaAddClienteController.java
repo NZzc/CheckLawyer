@@ -20,10 +20,10 @@ public class TelaAddClienteController {
         clienteDAO = new ClienteDAO();
         this.telaClienteController = telaClienteController;
 
-        configurarEventos();
+        BtnAddCliente();
     }
 
-    public void configurarEventos() {
+    public void BtnAddCliente() {
         telaAddClienteView.getAddClienteBTN().addActionListener(e -> cadastrarCliente());
     }
 

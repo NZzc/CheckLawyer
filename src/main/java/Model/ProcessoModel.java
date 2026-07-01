@@ -2,11 +2,7 @@ package Model;
 
 import jakarta.persistence.*;
 
-/**
- * @Entity — mapeada para a tabela "processos"
- * @ManyToOne — muitos processos pertencem a um cliente.
- * Gera a coluna "cliente_id" como FK na tabela processos.
- */
+
 @Entity
 @Table(name = "processos")
 public class ProcessoModel {
@@ -33,12 +29,7 @@ public class ProcessoModel {
     @Column(name = "data_abertura", nullable = false)
     private String dataAbertura;
 
-    /**
-     * Relacionamento ManyToOne com ClienteModel.
-     * FetchType.LAZY — o cliente só é carregado do banco quando acessado.
-     *
-     * @JoinColumn — define o nome da FK na tabela processos.
-     */
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private ClienteModel cliente;

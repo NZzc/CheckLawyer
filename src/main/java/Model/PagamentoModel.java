@@ -7,9 +7,9 @@ public class PagamentoModel {
     private String descricao;
     private double valor;
     private String data;
-    private String tipo;          // "RECEITA" ou "DESPESA"
+    private String tipo;          // RECEITA ou DESPESA
     private String formaPagamento; // PIX, Boleto, Dinheiro, Transferência, Cartão
-    private String status;        // "PAGO", "PENDENTE", "ATRASADO"
+    private String status;        // PAGO, PENDENTE, ATRASADO
     private final int idCliente;
     private final int idProcesso;
 
