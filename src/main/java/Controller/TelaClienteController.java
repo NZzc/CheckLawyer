@@ -24,6 +24,7 @@ public class TelaClienteController {
     }
 
     private void configurarEventos() {
+
         telaClientesView.getAddClienteBTN().addActionListener(e -> {
             new TelaAddClienteController(this);
         });
