@@ -91,7 +91,7 @@ public class TelaAddPagamentoView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         return gbc;
     }
-
+    //Helper
     private int addField(JPanel p, GridBagConstraints gbc, int y, String txt, JTextField f, Font lf) {
         JLabel l = new JLabel(txt);
         l.setFont(lf);
@@ -102,7 +102,7 @@ public class TelaAddPagamentoView extends JFrame {
         p.add(f, gbc);
         return y + 1;
     }
-
+    //Helper
     private int addCombo(JPanel p, GridBagConstraints gbc, int y, String txt, JComboBox<?> c, Font lf) {
         JLabel l = new JLabel(txt);
         l.setFont(lf);
