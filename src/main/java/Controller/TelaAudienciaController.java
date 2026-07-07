@@ -2,11 +2,7 @@ package Controller;
 
 import Dao.AudienciaDAO;
 import Exception.SelecionarItemException;
-import Model.AudienciaModel;
 import View.TelaAudienciaView;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class TelaAudienciaController {
     private AudienciaDAO audienciaDAO;
@@ -24,13 +20,10 @@ public class TelaAudienciaController {
 
         telaAudienciaView.getExcluirAudienciaBTN().addActionListener(e -> {
             try {
-                int linha = telaAudienciaView.getTabelaAudiencias().getSelectedRow();
-                if (linha == -1) throw new SelecionarItemException("audiência");
+                int ID = telaAudienciaView.getIDlinhaSelecionada();
 
-                int ok = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta audiência?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-                if (ok != JOptionPane.YES_OPTION) return;
+                if (!telaAudienciaView.confirmarExclusao("Tem certeza que deseja excluir esta audiência?")) return;
 
-                int ID = Integer.parseInt(telaAudienciaView.getTabelaAudiencias().getValueAt(linha, 0).toString());
                 audienciaDAO.excluir(ID);
                 atualizarTabela();
                 exibirSucesso("Audiência excluída com sucesso!");
@@ -44,18 +37,14 @@ public class TelaAudienciaController {
     }
 
     public void atualizarTabela() {
-        DefaultTableModel model = (DefaultTableModel) telaAudienciaView.getTabelaAudiencias().getModel();
-        model.setRowCount(0);
-        for (AudienciaModel a : audienciaDAO.getLista()) {
-            model.addRow(new Object[]{a.getID(), a.getData(), a.getHora(), a.getLocal(), a.getTipo(), a.getDescricao(), a.getResultado(), a.getIdProcesso()});
-        }
+        telaAudienciaView.popularTabela(audienciaDAO.getLista());
     }
 
     public void exibirErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+        telaAudienciaView.exibirErro(msg);
     }
 
     public void exibirSucesso(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        telaAudienciaView.exibirSucesso(msg);
     }
 }

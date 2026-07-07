@@ -1,7 +1,13 @@
 package View;
 
+import Exception.SelecionarItemException;
+import Model.PagamentoModel;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
+import java.util.Set;
 
 public class TelaFinanceiroView extends JFrame {
 
@@ -63,19 +69,43 @@ public class TelaFinanceiroView extends JFrame {
         setContentPane(main);
     }
 
+    public void popularTabela(List<PagamentoModel> lista) {
+        DefaultTableModel model = (DefaultTableModel) tabelaPagamentos.getModel();
+        model.setRowCount(0);
+        for (PagamentoModel p : lista) {
+            model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getFormaPagamento(), p.getStatus(), p.getIdCliente(), p.getIdProcesso() == 0 ? "-" : p.getIdProcesso()});
+        }
+    }
+
+    public void atualizarResumo(double saldo, double totalReceitas, double totalDespesas, Set<String> formasUtilizadas) {
+        String texto = String.format("Saldo: R$ %.2f | Receitas: R$ %.2f | Despesas: R$ %.2f | Formas de pagamento: %s", saldo, totalReceitas, totalDespesas, String.join(", ", formasUtilizadas));
+        saldoLabel.setText(texto);
+    }
+
+    public int getIDlinhaSelecionada() throws SelecionarItemException {
+        int linha = tabelaPagamentos.getSelectedRow();
+        if (linha == -1) throw new SelecionarItemException("pagamento");
+        return Integer.parseInt(tabelaPagamentos.getValueAt(linha, 0).toString());
+    }
+
+    public boolean confirmarExclusao(String msg) {
+        int ok = JOptionPane.showConfirmDialog(null, msg, "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+        return ok == JOptionPane.YES_OPTION;
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public JButton getAddPagamentoBTN() {
         return addPagamentoBTN;
     }
 
     public JButton getExcluirPagamentoBTN() {
         return excluirPagamentoBTN;
-    }
-
-    public JTable getTabelaPagamentos() {
-        return tabelaPagamentos;
-    }
-
-    public JLabel getSaldoLabel() {
-        return saldoLabel;
     }
 }

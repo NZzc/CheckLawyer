@@ -4,8 +4,6 @@ import Dao.ClienteDAO;
 import Model.ClienteModel;
 import View.TelaClientesView;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,16 +28,7 @@ public class TelaClienteController {
         });
 
         telaClientesView.getExcluirClienteBTN().addActionListener(e -> {
-            int linha = telaClientesView.getTabelaClientes().getSelectedRow();
-
-            if (linha == -1) {
-                exibirMensagem("Selecione um cliente!");
-                return;
-            }
-
-            String IDstr = telaClientesView.getTabelaClientes().getValueAt(linha, 0).toString();
-            int ID = Integer.parseInt(IDstr);
-
+            int ID = telaClientesView.getIDlinhaSelecionada();
             clienteDAO.excluir(ID);
             atualizarTabela();
         });
@@ -62,30 +51,11 @@ public class TelaClienteController {
     }
 
     private void popularTabela(List<ClienteModel> lista) {
-        DefaultTableModel model = (DefaultTableModel) telaClientesView.getTabelaClientes().getModel();
-
-        model.setRowCount(0); //reseta tabela
-
-        for (ClienteModel cliente : lista) {
-            model.addRow(new Object[]{
-                    cliente.getID(),
-                    cliente.getNome(),
-                    cliente.getDocumento(),
-                    cliente.getTelefone(),
-                    cliente.getEmail(),
-                    cliente.getObservacao(),
-                    cliente.getEndereco().getRua(),
-                    cliente.getEndereco().getNumero(),
-                    cliente.getEndereco().getBairro(),
-                    cliente.getEndereco().getCidade(),
-                    cliente.getEndereco().getUf(),
-                    cliente.getEndereco().getCep()
-            });
-        }
+        telaClientesView.popularTabela(lista);
     }
 
     public void exibirMensagem(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+        telaClientesView.exibirMensagem(msg);
     }
 
 

@@ -2,11 +2,8 @@ package Controller;
 
 import Dao.PagamentoDAO;
 import Exception.SelecionarItemException;
-import Model.PagamentoModel;
 import View.TelaFinanceiroView;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,13 +23,10 @@ public class TelaFinanceiroController {
 
         telaFinanceiroView.getExcluirPagamentoBTN().addActionListener(e -> {
             try {
-                int linha = telaFinanceiroView.getTabelaPagamentos().getSelectedRow();
-                if (linha == -1) throw new SelecionarItemException("pagamento");
+                int ID = telaFinanceiroView.getIDlinhaSelecionada();
 
-                int ok = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este pagamento?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-                if (ok != JOptionPane.YES_OPTION) return;
+                if (!telaFinanceiroView.confirmarExclusao("Tem certeza que deseja excluir este pagamento?")) return;
 
-                int ID = Integer.parseInt(telaFinanceiroView.getTabelaPagamentos().getValueAt(linha, 0).toString());
                 pagamentoDAO.excluir(ID);
                 atualizarTabela();
                 exibirSucesso("Pagamento excluído com sucesso!");
@@ -46,11 +40,7 @@ public class TelaFinanceiroController {
     }
 
     public void atualizarTabela() {
-        DefaultTableModel model = (DefaultTableModel) telaFinanceiroView.getTabelaPagamentos().getModel();
-        model.setRowCount(0);
-        for (PagamentoModel p : pagamentoDAO.getListaPagamentos()) {
-            model.addRow(new Object[]{p.getID(), p.getDescricao(), String.format("%.2f", p.getValor()), p.getData(), p.getTipo(), p.getFormaPagamento(), p.getStatus(), p.getIdCliente(), p.getIdProcesso() == 0 ? "-" : p.getIdProcesso()});
-        }
+        telaFinanceiroView.popularTabela(pagamentoDAO.getListaPagamentos());
 
         double saldo = pagamentoDAO.calcularSaldo();
 
@@ -62,15 +52,14 @@ public class TelaFinanceiroController {
         // Set: formas de pagamento distintas já utilizadas
         Set<String> formasUtilizadas = pagamentoDAO.getFormasPagamentoUtilizadas();
 
-        String texto = String.format("Saldo: R$ %.2f | Receitas: R$ %.2f | Despesas: R$ %.2f | Formas de pagamento: %s", saldo, totalReceitas, totalDespesas, String.join(", ", formasUtilizadas));
-        telaFinanceiroView.getSaldoLabel().setText(texto);
+        telaFinanceiroView.atualizarResumo(saldo, totalReceitas, totalDespesas, formasUtilizadas);
     }
 
     public void exibirErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+        telaFinanceiroView.exibirErro(msg);
     }
 
     public void exibirSucesso(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        telaFinanceiroView.exibirSucesso(msg);
     }
 }

@@ -5,6 +5,7 @@ import Model.ProcessoModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TelaAddPagamentoView extends JFrame {
 
@@ -114,40 +115,67 @@ public class TelaAddPagamentoView extends JFrame {
         return y + 1;
     }
 
-    // ===== GETTERS =====
+    // ===== POPULAÇÃO DE COMBOS =====
+    public void popularCombos(List<ClienteModel> clientes, List<ProcessoModel> processos) {
+        clienteCombo.removeAllItems();
+        processoCombo.removeAllItems();
+
+        for (ClienteModel c : clientes) clienteCombo.addItem(c);
+        for (ProcessoModel p : processos) processoCombo.addItem(p);
+
+        if (clienteCombo.getItemCount() == 0) {
+            exibirAviso("Nenhum cliente cadastrado. Cadastre um cliente antes de registrar um pagamento.");
+        }
+    }
+
+    // ===== MENSAGENS =====
+    public void exibirAviso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Atenção", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // ===== LEITURA DE DADOS =====
+    public String getDescricao() {
+        return descricaoInput.getText().trim();
+    }
+
+    public String getValor() {
+        return valorInput.getText().trim();
+    }
+
+    public String getData() {
+        return dataInput.getText().trim();
+    }
+
+    public String getTipo() {
+        return (String) tipoCombo.getSelectedItem();
+    }
+
+    public String getFormaPagamento() {
+        return (String) formaPagamentoCombo.getSelectedItem();
+    }
+
+    public String getStatus() {
+        return (String) statusCombo.getSelectedItem();
+    }
+
+    public ClienteModel getClienteSelecionado() {
+        return (ClienteModel) clienteCombo.getSelectedItem();
+    }
+
+    public ProcessoModel getProcessoSelecionado() {
+        return (ProcessoModel) processoCombo.getSelectedItem();
+    }
+
+    // ===== GETTER — BOTAO =====
     public JButton getAddPagamentoBTN() {
         return addPagamentoBTN;
-    }
-
-    public JTextField getDescricaoInput() {
-        return descricaoInput;
-    }
-
-    public JTextField getValorInput() {
-        return valorInput;
-    }
-
-    public JTextField getDataInput() {
-        return dataInput;
-    }
-
-    public JComboBox<String> getTipoCombo() {
-        return tipoCombo;
-    }
-
-    public JComboBox<String> getFormaPagamentoCombo() {
-        return formaPagamentoCombo;
-    }
-
-    public JComboBox<String> getStatusCombo() {
-        return statusCombo;
-    }
-
-    public JComboBox<ClienteModel> getClienteCombo() {
-        return clienteCombo;
-    }
-
-    public JComboBox<ProcessoModel> getProcessoCombo() {
-        return processoCombo;
     }
 }

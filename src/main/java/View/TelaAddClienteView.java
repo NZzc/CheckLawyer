@@ -285,11 +285,29 @@ public class TelaAddClienteView extends JFrame {
         gbc.gridwidth = 1;
     }
 
+    //===================================================================
+    public void exibirMensagem(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
+
+
+
+
+
+
+    //===================================================================
+
+
+
     private void aplicarFonteInputs(JTextField... campos) {
         for (JTextField campo : campos) {
             campo.setFont(FONT_INPUT);
         }
     }
+
+
+
+
 
     // GETTERS — TIPO
 

@@ -1,7 +1,12 @@
 package View;
 
+import Exception.SelecionarItemException;
+import Model.AudienciaModel;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class TelaAudienciaView extends JFrame {
 
@@ -52,15 +57,40 @@ public class TelaAudienciaView extends JFrame {
         setContentPane(main);
     }
 
+    //=========================================================
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+    }
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void popularTabela(List<AudienciaModel> lista) {
+        DefaultTableModel model = (DefaultTableModel) tabelaAudiencias.getModel();
+        model.setRowCount(0);
+        for (AudienciaModel a : lista) {
+            model.addRow(new Object[]{a.getID(), a.getData(), a.getHora(), a.getLocal(), a.getTipo(), a.getDescricao(), a.getResultado(), a.getIdProcesso()});
+        }
+    }
+
+    public int getIDlinhaSelecionada() throws SelecionarItemException {
+        int linha = tabelaAudiencias.getSelectedRow();
+        if (linha == -1) throw new SelecionarItemException("audiência");
+        return Integer.parseInt(tabelaAudiencias.getValueAt(linha, 0).toString());
+    }
+
+    public boolean confirmarExclusao(String msg) {
+        int ok = JOptionPane.showConfirmDialog(null, msg, "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+        return ok == JOptionPane.YES_OPTION;
+    }
+
+    //=========================================================
+
     public JButton getAddAudienciaBTN() {
         return addAudienciaBTN;
     }
 
     public JButton getExcluirAudienciaBTN() {
         return excluirAudienciaBTN;
-    }
-
-    public JTable getTabelaAudiencias() {
-        return tabelaAudiencias;
     }
 }

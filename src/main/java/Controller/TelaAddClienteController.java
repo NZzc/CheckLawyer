@@ -5,9 +5,6 @@ import Model.ClienteFisicoModel;
 import Model.ClienteJuridicoModel;
 import Model.EnderecoModel;
 import View.TelaAddClienteView;
-import Exception.FormatoInvalidoException;
-
-import javax.swing.*;
 
 public class TelaAddClienteController {
 
@@ -20,22 +17,25 @@ public class TelaAddClienteController {
         clienteDAO = new ClienteDAO();
         this.telaClienteController = telaClienteController;
 
-        BtnAddCliente();
+        configurarEventos();
     }
 
-    public void BtnAddCliente() {
-        telaAddClienteView.getAddClienteBTN().addActionListener(e -> cadastrarCliente());
+    public void configurarEventos(){
+        telaAddClienteView.getAddClienteBTN().addActionListener(e -> {
+            cadastrarCliente();
+        });
+
     }
 
     public void cadastrarCliente() {
 
         //Endereço (comum aos dois tipos)
-        String rua = telaAddClienteView.getRuaInput().getText().trim();
-        String numero = telaAddClienteView.getNumeroInput().getText().trim();
-        String bairro = telaAddClienteView.getBairroInput().getText().trim();
-        String cidade = telaAddClienteView.getCidadeInput().getText().trim();
-        String uf = telaAddClienteView.getUfInput().getText().trim();
-        String cep = telaAddClienteView.getCepInput().getText().trim();
+        String rua = telaAddClienteView.getRuaInput().getText();
+        String numero = telaAddClienteView.getNumeroInput().getText();
+        String bairro = telaAddClienteView.getBairroInput().getText();
+        String cidade = telaAddClienteView.getCidadeInput().getText();
+        String uf = telaAddClienteView.getUfInput().getText();
+        String cep = telaAddClienteView.getCepInput().getText();
 
         if (!verificaDadosEndereco(rua, numero, bairro, cidade, uf, cep)) return;
 
@@ -50,11 +50,11 @@ public class TelaAddClienteController {
     }
 
     private void cadastrarPessoaFisica(EnderecoModel endereco){
-        String nome = telaAddClienteView.getNomeInput().getText().trim();
-        String cpf = telaAddClienteView.getCpfInput().getText().trim();
-        String telefone = telaAddClienteView.getTelefonePFInput().getText().trim();
-        String email = telaAddClienteView.getEmailPFInput().getText().trim();
-        String observacao = telaAddClienteView.getObservacaoPFInput().getText().trim();
+        String nome = telaAddClienteView.getNomeInput().getText();
+        String cpf = telaAddClienteView.getCpfInput().getText();
+        String telefone = telaAddClienteView.getTelefonePFInput().getText();
+        String email = telaAddClienteView.getEmailPFInput().getText();
+        String observacao = telaAddClienteView.getObservacaoPFInput().getText();
 
         if (!verificaDadosPessoaFisica(nome, cpf, telefone, email)) {
             return;
@@ -150,6 +150,6 @@ public class TelaAddClienteController {
     }
 
     public void exibirMensagem(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+        telaAddClienteView.exibirMensagem(msg);
     }
 }

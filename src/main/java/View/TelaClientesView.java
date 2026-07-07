@@ -1,7 +1,11 @@
 package View;
 
+import Model.ClienteModel;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class TelaClientesView extends JFrame {
 
@@ -92,6 +96,51 @@ public class TelaClientesView extends JFrame {
 
         setContentPane(main);
     }
+
+    //=========================================================
+    public void exibirMensagem(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
+
+    public void popularTabela(List<ClienteModel> lista) {
+        DefaultTableModel model = (DefaultTableModel) getTabelaClientes().getModel();
+
+        model.setRowCount(0); //reseta tabela
+
+        for (ClienteModel cliente : lista) {
+            model.addRow(new Object[]{
+                    cliente.getID(),
+                    cliente.getNome(),
+                    cliente.getDocumento(),
+                    cliente.getTelefone(),
+                    cliente.getEmail(),
+                    cliente.getObservacao(),
+                    cliente.getEndereco().getRua(),
+                    cliente.getEndereco().getNumero(),
+                    cliente.getEndereco().getBairro(),
+                    cliente.getEndereco().getCidade(),
+                    cliente.getEndereco().getUf(),
+                    cliente.getEndereco().getCep()
+            });
+        }
+    }
+
+
+    public int getIDlinhaSelecionada() {
+        int linha = getTabelaClientes().getSelectedRow();
+
+        if (linha == -1) {
+            exibirMensagem("Selecione um cliente!");
+            return -1;
+        }
+
+        String IDstr = getTabelaClientes().getValueAt(linha, 0).toString();
+        int ID = Integer.parseInt(IDstr);
+
+        return ID;
+    }
+    //=========================================================
+
 
     // ================= GETTERS =================
     public JButton getAddClienteBTN() {

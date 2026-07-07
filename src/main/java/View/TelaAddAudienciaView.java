@@ -4,6 +4,7 @@ import Model.ProcessoModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TelaAddAudienciaView extends JFrame {
 
@@ -110,36 +111,61 @@ public class TelaAddAudienciaView extends JFrame {
         return y + 1;
     }
 
-    // ===== GETTERS =====
+    // ===== POPULAÇÃO DE COMBOS =====
+    public void popularProcessos(List<ProcessoModel> lista) {
+        processoCombo.removeAllItems();
+        for (ProcessoModel p : lista) {
+            processoCombo.addItem(p);
+        }
+        if (processoCombo.getItemCount() == 0) {
+            exibirAviso("Nenhum processo cadastrado.\nCadastre um processo antes de adicionar uma audiência.");
+        }
+    }
+
+    // ===== MENSAGENS =====
+    public void exibirAviso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Atenção", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // ===== LEITURA DE DADOS =====
+    public String getData() {
+        return dataInput.getText().trim();
+    }
+
+    public String getHora() {
+        return horaInput.getText().trim();
+    }
+
+    public String getLocal() {
+        return localInput.getText().trim();
+    }
+
+    public String getTipo() {
+        return (String) tipoCombo.getSelectedItem();
+    }
+
+    public String getDescricao() {
+        return descricaoInput.getText().trim();
+    }
+
+    public String getResultado() {
+        return resultadoInput.getText().trim();
+    }
+
+    public ProcessoModel getProcessoSelecionado() {
+        return (ProcessoModel) processoCombo.getSelectedItem();
+    }
+
+    // ===== GETTER — BOTAO =====
     public JButton getAddAudienciaBTN() {
         return addAudienciaBTN;
-    }
-
-    public JTextField getDataInput() {
-        return dataInput;
-    }
-
-    public JTextField getHoraInput() {
-        return horaInput;
-    }
-
-    public JTextField getLocalInput() {
-        return localInput;
-    }
-
-    public JComboBox<String> getTipoCombo() {
-        return tipoCombo;
-    }
-
-    public JTextField getDescricaoInput() {
-        return descricaoInput;
-    }
-
-    public JTextField getResultadoInput() {
-        return resultadoInput;
-    }
-
-    public JComboBox<ProcessoModel> getProcessoCombo() {
-        return processoCombo;
     }
 }

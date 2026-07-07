@@ -7,8 +7,6 @@ import Model.ClienteModel;
 import Model.ProcessoModel;
 import View.TelaAddProcessoView;
 
-import javax.swing.*;
-
 public class TelaAddProcessoController {
     private TelaAddProcessoView telaAddProcessoView;
     private ProcessoDAO processoDAO;
@@ -26,14 +24,7 @@ public class TelaAddProcessoController {
     }
 
     private void ComboClientes() {
-        JComboBox<ClienteModel> combo = telaAddProcessoView.getClienteCombo();
-        combo.removeAllItems();
-        for (ClienteModel c : clienteDAO.getLista()) {
-            combo.addItem(c);
-        }
-        if (combo.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado.\nCadastre um cliente antes de adicionar um processo.", "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
+        telaAddProcessoView.popularClientes(clienteDAO.getLista());
     }
 
     public void BtnAddProcesso() {
@@ -42,13 +33,13 @@ public class TelaAddProcessoController {
 
     public void cadastrarProcesso() {
         try {
-            String numero = telaAddProcessoView.getNumeroInput().getText().trim();
-            String area = (String) telaAddProcessoView.getAreaCombo().getSelectedItem();
-            String vara = telaAddProcessoView.getVaraInput().getText().trim();
-            String descricao = telaAddProcessoView.getDescricaoInput().getText().trim();
-            String status = (String) telaAddProcessoView.getStatusCombo().getSelectedItem();
-            String dataAbertura = telaAddProcessoView.getDataAberturaInput().getText().trim();
-            ClienteModel clienteSelecionado = (ClienteModel) telaAddProcessoView.getClienteCombo().getSelectedItem();
+            String numero = telaAddProcessoView.getNumero();
+            String area = telaAddProcessoView.getArea();
+            String vara = telaAddProcessoView.getVara();
+            String descricao = telaAddProcessoView.getDescricao();
+            String status = telaAddProcessoView.getStatus();
+            String dataAbertura = telaAddProcessoView.getDataAbertura();
+            ClienteModel clienteSelecionado = telaAddProcessoView.getClienteSelecionado();
 
             if (numero.isEmpty()) throw new CampoVazioException("Número do Processo");
             if (vara.isEmpty()) throw new CampoVazioException("Vara / Tribunal");
@@ -74,10 +65,10 @@ public class TelaAddProcessoController {
     }
 
     public void exibirErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+        telaAddProcessoView.exibirErro(msg);
     }
 
     public void exibirSucesso(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        telaAddProcessoView.exibirSucesso(msg);
     }
 }

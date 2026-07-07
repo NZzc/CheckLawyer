@@ -9,8 +9,6 @@ import Model.PagamentoModel;
 import Model.ProcessoModel;
 import View.TelaAddPagamentoView;
 
-import javax.swing.*;
-
 public class TelaAddPagamentoController {
     private TelaAddPagamentoView telaAddPagamentoView;
     private PagamentoDAO pagamentoDAO;
@@ -30,19 +28,10 @@ public class TelaAddPagamentoController {
     }
 
     /**
-     * Carrega clientes e processos nos JComboBoxes
+     * Carrega clientes e processos nos combos
      */
     private void popularCombos() {
-        JComboBox<ClienteModel> comboC = telaAddPagamentoView.getClienteCombo();
-        JComboBox<ProcessoModel> comboP = telaAddPagamentoView.getProcessoCombo();
-        comboC.removeAllItems();
-        comboP.removeAllItems();
-
-        for (ClienteModel c : clienteDAO.getLista()) comboC.addItem(c);
-        for (ProcessoModel p : processoDAO.getLista()) comboP.addItem(p);
-
-        if (comboC.getItemCount() == 0)
-            JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado. Cadastre um cliente antes de registrar um pagamento.", "Atenção", JOptionPane.WARNING_MESSAGE);
+        telaAddPagamentoView.popularCombos(clienteDAO.getLista(), processoDAO.getLista());
     }
 
     public void BtnAddPagamento() {
@@ -51,14 +40,14 @@ public class TelaAddPagamentoController {
 
     public void cadastrarPagamento() {
         try {
-            String descricao = telaAddPagamentoView.getDescricaoInput().getText().trim();
-            String valorStr = telaAddPagamentoView.getValorInput().getText().trim();
-            String data = telaAddPagamentoView.getDataInput().getText().trim();
-            String tipo = (String) telaAddPagamentoView.getTipoCombo().getSelectedItem();
-            String formaPgto = (String) telaAddPagamentoView.getFormaPagamentoCombo().getSelectedItem();
-            String status = (String) telaAddPagamentoView.getStatusCombo().getSelectedItem();
-            ClienteModel clienteSelecionado = (ClienteModel) telaAddPagamentoView.getClienteCombo().getSelectedItem();
-            ProcessoModel processoSelecionado = (ProcessoModel) telaAddPagamentoView.getProcessoCombo().getSelectedItem();
+            String descricao = telaAddPagamentoView.getDescricao();
+            String valorStr = telaAddPagamentoView.getValor();
+            String data = telaAddPagamentoView.getData();
+            String tipo = telaAddPagamentoView.getTipo();
+            String formaPgto = telaAddPagamentoView.getFormaPagamento();
+            String status = telaAddPagamentoView.getStatus();
+            ClienteModel clienteSelecionado = telaAddPagamentoView.getClienteSelecionado();
+            ProcessoModel processoSelecionado = telaAddPagamentoView.getProcessoSelecionado();
 
             if (descricao.isEmpty()) throw new CampoVazioException("Descrição / Honorário");
             if (valorStr.isEmpty()) throw new CampoVazioException("Valor");
@@ -95,10 +84,10 @@ public class TelaAddPagamentoController {
     }
 
     public void exibirErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+        telaAddPagamentoView.exibirErro(msg);
     }
 
     public void exibirSucesso(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        telaAddPagamentoView.exibirSucesso(msg);
     }
 }

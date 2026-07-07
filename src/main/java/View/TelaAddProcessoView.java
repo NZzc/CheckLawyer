@@ -4,6 +4,7 @@ import Model.ClienteModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TelaAddProcessoView extends JFrame {
 
@@ -112,36 +113,61 @@ public class TelaAddProcessoView extends JFrame {
         return y + 1;
     }
 
-    // ===== GETTERS =====
+    // ===== POPULAÇÃO DE COMBOS =====
+    public void popularClientes(List<ClienteModel> lista) {
+        clienteCombo.removeAllItems();
+        for (ClienteModel c : lista) {
+            clienteCombo.addItem(c);
+        }
+        if (clienteCombo.getItemCount() == 0) {
+            exibirAviso("Nenhum cliente cadastrado.\nCadastre um cliente antes de adicionar um processo.");
+        }
+    }
+
+    // ===== MENSAGENS =====
+    public void exibirAviso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Atenção", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // ===== LEITURA DE DADOS =====
+    public String getNumero() {
+        return numeroInput.getText().trim();
+    }
+
+    public String getArea() {
+        return (String) areaCombo.getSelectedItem();
+    }
+
+    public String getVara() {
+        return varaInput.getText().trim();
+    }
+
+    public String getDescricao() {
+        return descricaoInput.getText().trim();
+    }
+
+    public String getStatus() {
+        return (String) statusCombo.getSelectedItem();
+    }
+
+    public String getDataAbertura() {
+        return dataAberturaInput.getText().trim();
+    }
+
+    public ClienteModel getClienteSelecionado() {
+        return (ClienteModel) clienteCombo.getSelectedItem();
+    }
+
+    // ===== GETTER — BOTAO =====
     public JButton getAddProcessoBTN() {
         return addProcessoBTN;
-    }
-
-    public JTextField getNumeroInput() {
-        return numeroInput;
-    }
-
-    public JComboBox<String> getAreaCombo() {
-        return areaCombo;
-    }
-
-    public JTextField getVaraInput() {
-        return varaInput;
-    }
-
-    public JTextField getDescricaoInput() {
-        return descricaoInput;
-    }
-
-    public JComboBox<String> getStatusCombo() {
-        return statusCombo;
-    }
-
-    public JTextField getDataAberturaInput() {
-        return dataAberturaInput;
-    }
-
-    public JComboBox<ClienteModel> getClienteCombo() {
-        return clienteCombo;
     }
 }

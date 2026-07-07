@@ -1,7 +1,12 @@
 package View;
 
+import Exception.SelecionarItemException;
+import Model.ProcessoModel;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class TelaProcessosView extends JFrame {
 
@@ -52,15 +57,38 @@ public class TelaProcessosView extends JFrame {
         setContentPane(main);
     }
 
+    public void popularTabela(List<ProcessoModel> lista) {
+        DefaultTableModel model = (DefaultTableModel) tabelaProcessos.getModel();
+        model.setRowCount(0);
+        for (ProcessoModel p : lista) {
+            model.addRow(new Object[]{p.getID(), p.getNumero(), p.getArea(), p.getVara(), p.getDescricao(), p.getStatus(), p.getDataAbertura(), p.getIdCliente()});
+        }
+    }
+
+    public int getIDlinhaSelecionada() throws SelecionarItemException {
+        int linha = tabelaProcessos.getSelectedRow();
+        if (linha == -1) throw new SelecionarItemException("processo");
+        return Integer.parseInt(tabelaProcessos.getValueAt(linha, 0).toString());
+    }
+
+    public boolean confirmarExclusao(String msg) {
+        int ok = JOptionPane.showConfirmDialog(null, msg, "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+        return ok == JOptionPane.YES_OPTION;
+    }
+
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public JButton getAddProcessoBTN() {
         return addProcessoBTN;
     }
 
     public JButton getExcluirProcessoBTN() {
         return excluirProcessoBTN;
-    }
-
-    public JTable getTabelaProcessos() {
-        return tabelaProcessos;
     }
 }

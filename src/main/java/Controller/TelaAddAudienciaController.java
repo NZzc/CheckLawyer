@@ -7,8 +7,6 @@ import Model.AudienciaModel;
 import Model.ProcessoModel;
 import View.TelaAddAudienciaView;
 
-import javax.swing.*;
-
 public class TelaAddAudienciaController {
     private TelaAddAudienciaView telaAddAudienciaView;
     private AudienciaDAO audienciaDAO;
@@ -22,33 +20,26 @@ public class TelaAddAudienciaController {
         this.telaAudienciaController = telaAudienciaController;
 
         ComboProcessos();
-        BtnAddAudiencia();
+        configurarEventos();
     }
 
     private void ComboProcessos() {
-        JComboBox<ProcessoModel> combo = telaAddAudienciaView.getProcessoCombo();
-        combo.removeAllItems();
-        for (ProcessoModel p : processoDAO.getLista()) {
-            combo.addItem(p);
-        }
-        if (combo.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhum processo cadastrado.\nCadastre um processo antes de adicionar uma audiência.", "Atenção", JOptionPane.WARNING_MESSAGE);
-        }
+        telaAddAudienciaView.popularProcessos(processoDAO.getLista());
     }
 
-    public void BtnAddAudiencia() {
+    public void configurarEventos() {
         telaAddAudienciaView.getAddAudienciaBTN().addActionListener(e -> cadastrarAudiencia());
     }
 
     public void cadastrarAudiencia() {
         try {
-            String data = telaAddAudienciaView.getDataInput().getText().trim();
-            String hora = telaAddAudienciaView.getHoraInput().getText().trim();
-            String local = telaAddAudienciaView.getLocalInput().getText().trim();
-            String tipo = (String) telaAddAudienciaView.getTipoCombo().getSelectedItem();
-            String descricao = telaAddAudienciaView.getDescricaoInput().getText().trim();
-            String resultado = telaAddAudienciaView.getResultadoInput().getText().trim();
-            ProcessoModel processoSelecionado = (ProcessoModel) telaAddAudienciaView.getProcessoCombo().getSelectedItem();
+            String data = telaAddAudienciaView.getData();
+            String hora = telaAddAudienciaView.getHora();
+            String local = telaAddAudienciaView.getLocal();
+            String tipo = telaAddAudienciaView.getTipo();
+            String descricao = telaAddAudienciaView.getDescricao();
+            String resultado = telaAddAudienciaView.getResultado();
+            ProcessoModel processoSelecionado = telaAddAudienciaView.getProcessoSelecionado();
 
             if (data.isEmpty()) throw new CampoVazioException("Data");
             if (hora.isEmpty()) throw new CampoVazioException("Hora");
@@ -80,10 +71,10 @@ public class TelaAddAudienciaController {
     }
 
     public void exibirErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+        telaAddAudienciaView.exibirErro(msg);
     }
 
     public void exibirSucesso(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        telaAddAudienciaView.exibirSucesso(msg);
     }
 }
