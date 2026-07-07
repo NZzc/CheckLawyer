@@ -132,8 +132,8 @@ Não é necessária nenhuma configuração manual: o arquivo `checklawyer.db` (S
 
 Projeto desenvolvido em grupo:
 
-- [@nicollasmoura0102]([https://github.com/usuario](https://github.com/nicollasmoura0102)).*</sub>
-- [@Nicolas Zanella](https://github.com/NZzc).*</sub>
+- [@Nicollas de Moura](https://github.com/nicollasmoura0102)).</sub>
+- [@Nicolas Zanella](https://github.com/NZzc).</sub>
 
 ---
 
