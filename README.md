@@ -11,7 +11,7 @@
 
 ---
 
-## 📌 Sobre o projeto
+##  Sobre o projeto
 
 O **CheckLawyer** é uma aplicação desktop desenvolvida em **Java** que centraliza a rotina administrativa de um escritório de advocacia. A proposta é substituir controles manuais (planilhas e anotações avulsas) por um sistema único que organiza clientes, processos, audiências e o fluxo financeiro, com validação de dados e persistência em banco.
 
@@ -19,7 +19,7 @@ O projeto foi construído como trabalho acadêmico da disciplina de **Desenvolvi
 
 ---
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
 - **Gestão de Clientes** — cadastro de **Pessoa Física** e **Pessoa Jurídica** em um mesmo fluxo, com endereço completo e validação de CPF/CNPJ, e-mail e telefone.
 - **Gestão de Processos** — vínculo de processos a clientes, com área do direito, vara/tribunal, status (em andamento, encerrado, arquivado) e data de abertura.
@@ -30,7 +30,7 @@ O projeto foi construído como trabalho acadêmico da disciplina de **Desenvolvi
 
 ---
 
-## 🏗️ Arquitetura
+##  Arquitetura
 
 O sistema segue o padrão **MVC (Model–View–Controller)** combinado com o padrão **DAO (Data Access Object)** para isolar o acesso ao banco de dados.
 
@@ -50,7 +50,7 @@ flowchart LR
 - **Controller** — recebe os eventos da View, **captura e trata as exceptions**, aciona os DAOs e coordena a atualização das telas.
 - **DAO** — encapsula toda a persistência (inserir, excluir, listar, verificar duplicidade) por meio de uma interface genérica `PersistivelInterface<T>`.
 
-### 🎯 Tratamento de exceções
+###  Tratamento de exceções
 
 Um dos destaques do projeto é o fluxo padronizado de erros: **a View lança, o Controller trata.**
 
@@ -60,7 +60,7 @@ Um dos destaques do projeto é o fluxo padronizado de erros: **a View lança, o 
 
 ---
 
-## 🧠 Conceitos de POO aplicados
+##  Conceitos de POO aplicados
 
 - **Herança e Polimorfismo** — `ClienteFisicoModel` e `ClienteJuridicoModel` estendem `ClienteModel`, tratados de forma unificada nas listagens.
 - **Interfaces e Generics** — `PersistivelInterface<T>` define o contrato de persistência reutilizado por todos os DAOs.
@@ -71,7 +71,7 @@ Um dos destaques do projeto é o fluxo padronizado de erros: **a View lança, o 
 
 ---
 
-## 🛠️ Tecnologias
+##  Tecnologias
 
 | Categoria | Tecnologia |
 |---|---|
@@ -83,7 +83,7 @@ Um dos destaques do projeto é o fluxo padronizado de erros: **a View lança, o 
 
 ---
 
-## 📂 Estrutura do projeto
+##  Estrutura do projeto
 
 ```
 CheckLawyer/
@@ -121,14 +121,14 @@ mvn clean package
 java -jar target/CheckLawyer-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-> 💡 Também é possível abrir o projeto diretamente em uma IDE (IntelliJ IDEA / Eclipse) e executar a classe `Main.Main`.
+>  Também é possível abrir o projeto diretamente em uma IDE (IntelliJ IDEA / Eclipse) e executar a classe `Main.Main`.
 
 ### Banco de dados
 Não é necessária nenhuma configuração manual: o arquivo `checklawyer.db` (SQLite) é **criado e atualizado automaticamente** na primeira execução, via `hibernate.hbm2ddl.auto = update`.
 
 ---
 
-## 👥 Equipe
+##  Equipe
 
 Projeto desenvolvido em grupo:
 
@@ -139,7 +139,7 @@ Projeto desenvolvido em grupo:
 
 ---
 
-## 🎓 Contexto acadêmico
+##  Contexto acadêmico
 
 Trabalho desenvolvido para a disciplina **Desenvolvimento Orientado a Objetos II (DOO2)** — Curso de **Engenharia de Software**, **UDESC**.
 
