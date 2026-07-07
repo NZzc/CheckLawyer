@@ -271,10 +271,6 @@ public class TelaAddClienteView extends JFrame {
         return y + 1;
     }
 
-    /**
-     * Adiciona um componente invisível que empurra os campos para cima,
-     * evitando que fiquem centralizados verticalmente quando há espaço sobrando.
-     */
     private void preencherEspaco(JPanel painel, GridBagConstraints gbc, int y) {
         gbc.gridx = 0;
         gbc.gridy = y;
@@ -317,70 +313,70 @@ public class TelaAddClienteView extends JFrame {
     }
 
     //GETTERS — PESSOA FÍSICA
-    public JTextField getNomeInput() {
-        return nomeInput;
+    public String getNomeInput() {
+        return nomeInput.getText();
     }
 
-    public JTextField getCpfInput() {
-        return cpfInput;
+    public String getCpfInput() {
+        return cpfInput.getText();
     }
 
-    public JTextField getTelefonePFInput() {
-        return telefonePFInput;
+    public String getTelefonePFInput() {
+        return telefonePFInput.getText();
     }
 
-    public JTextField getEmailPFInput() {
-        return emailPFInput;
+    public String getEmailPFInput() {
+        return emailPFInput.getText();
     }
 
-    public JTextField getObservacaoPFInput() {
-        return observacaoPFInput;
+    public String getObservacaoPFInput() {
+        return observacaoPFInput.getText();
     }
 
     //GETTERS — PESSOA JURÍDICA
-    public JTextField getNomeEmpresaInput() {
-        return NomeEmpresaInput;
+    public String getNomeEmpresaInput() {
+        return NomeEmpresaInput.getText();
     }
 
-    public JTextField getCnpjInput() {
-        return cnpjInput;
+    public String getCnpjInput() {
+        return cnpjInput.getText();
     }
 
-    public JTextField getTelefonePJInput() {
-        return telefonePJInput;
+    public String getTelefonePJInput() {
+        return telefonePJInput.getText();
     }
 
-    public JTextField getEmailPJInput() {
-        return emailPJInput;
+    public String getEmailPJInput() {
+        return emailPJInput.getText();
     }
 
-    public JTextField getObservacaoPJInput() {
-        return observacaoPJInput;
+    public String getObservacaoPJInput() {
+        return observacaoPJInput.getText();
     }
 
     //GETTERS — ENDERECO
-    public JTextField getRuaInput() {
-        return ruaInput;
+    public String getRuaInput() {
+        return ruaInput.getText();
     }
 
-    public JTextField getNumeroInput() {
-        return numeroInput;
+    public String getNumeroInput() {
+        return numeroInput.getText();
     }
 
-    public JTextField getBairroInput() {
-        return bairroInput;
+    public String getBairroInput() {
+        return bairroInput.getText();
     }
 
-    public JTextField getCidadeInput() {
-        return cidadeInput;
+    public String getCidadeInput() {
+        return cidadeInput.getText();
     }
 
-    public JTextField getUfInput() {
-        return ufInput;
+    public String getUfInput() {
+        return ufInput.getText();
     }
 
-    public JTextField getCepInput() {
-        return cepInput;
+    public String getCepInput() {
+        return cepInput.getText();
     }
 
     //GETTER — BOTAO

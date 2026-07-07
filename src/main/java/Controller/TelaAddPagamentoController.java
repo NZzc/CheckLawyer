@@ -27,9 +27,6 @@ public class TelaAddPagamentoController {
         BtnAddPagamento();
     }
 
-    /**
-     * Carrega clientes e processos nos combos
-     */
     private void popularCombos() {
         telaAddPagamentoView.popularCombos(clienteDAO.getLista(), processoDAO.getLista());
     }

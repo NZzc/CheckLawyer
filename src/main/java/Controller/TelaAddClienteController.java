@@ -30,12 +30,12 @@ public class TelaAddClienteController {
     public void cadastrarCliente() {
 
         //Endereço (comum aos dois tipos)
-        String rua = telaAddClienteView.getRuaInput().getText();
-        String numero = telaAddClienteView.getNumeroInput().getText();
-        String bairro = telaAddClienteView.getBairroInput().getText();
-        String cidade = telaAddClienteView.getCidadeInput().getText();
-        String uf = telaAddClienteView.getUfInput().getText();
-        String cep = telaAddClienteView.getCepInput().getText();
+        String rua = telaAddClienteView.getRuaInput();
+        String numero = telaAddClienteView.getNumeroInput();
+        String bairro = telaAddClienteView.getBairroInput();
+        String cidade = telaAddClienteView.getCidadeInput();
+        String uf = telaAddClienteView.getUfInput();
+        String cep = telaAddClienteView.getCepInput();
 
         if (!verificaDadosEndereco(rua, numero, bairro, cidade, uf, cep)) return;
 
@@ -50,11 +50,11 @@ public class TelaAddClienteController {
     }
 
     private void cadastrarPessoaFisica(EnderecoModel endereco){
-        String nome = telaAddClienteView.getNomeInput().getText();
-        String cpf = telaAddClienteView.getCpfInput().getText();
-        String telefone = telaAddClienteView.getTelefonePFInput().getText();
-        String email = telaAddClienteView.getEmailPFInput().getText();
-        String observacao = telaAddClienteView.getObservacaoPFInput().getText();
+        String nome = telaAddClienteView.getNomeInput();
+        String cpf = telaAddClienteView.getCpfInput();
+        String telefone = telaAddClienteView.getTelefonePFInput();
+        String email = telaAddClienteView.getEmailPFInput();
+        String observacao = telaAddClienteView.getObservacaoPFInput();
 
         if (!verificaDadosPessoaFisica(nome, cpf, telefone, email)) {
             return;
@@ -73,11 +73,11 @@ public class TelaAddClienteController {
     }
 
     private void cadastrarPessoaJuridica(EnderecoModel endereco) {
-        String nomeFantasia = telaAddClienteView.getNomeEmpresaInput().getText().trim();
-        String cnpj = telaAddClienteView.getCnpjInput().getText().trim();
-        String telefone = telaAddClienteView.getTelefonePJInput().getText().trim();
-        String email = telaAddClienteView.getEmailPJInput().getText().trim();
-        String observacao = telaAddClienteView.getObservacaoPJInput().getText().trim();
+        String nomeFantasia = telaAddClienteView.getNomeEmpresaInput().trim();
+        String cnpj = telaAddClienteView.getCnpjInput().trim();
+        String telefone = telaAddClienteView.getTelefonePJInput().trim();
+        String email = telaAddClienteView.getEmailPJInput().trim();
+        String observacao = telaAddClienteView.getObservacaoPJInput().trim();
 
 
         if (!verificaDadosPessoaJuridica(cnpj, telefone, email)) return;
