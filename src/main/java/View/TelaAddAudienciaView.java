@@ -1,6 +1,7 @@
 package View;
 
 import Model.ProcessoModel;
+import Exception.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -135,33 +136,52 @@ public class TelaAddAudienciaView extends JFrame {
         JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ===== LEITURA DE DADOS =====
-    public String getData() {
-        return dataInput.getText().trim();
+    // ===== LEITURA DE DADOS (a View valida e lança as exceções) =====
+    public String getData() throws CampoVazioException, FormatoInvalidoException {
+        String data = dataInput.getText().trim();
+        if (data.isEmpty()) throw new CampoVazioException("Data");
+        if (!data.matches("\\d{2}/\\d{2}/\\d{4}")) throw new FormatoInvalidoException("Data", "DD/MM/AAAA");
+        int dia = Integer.parseInt(data.split("/")[0]);
+        int mes = Integer.parseInt(data.split("/")[1]);
+        if (dia < 1 || dia > 31 || mes < 1 || mes > 12)
+            throw new FormatoInvalidoException("Data", "data válida DD/MM/AAAA");
+        return data;
     }
 
-    public String getHora() {
-        return horaInput.getText().trim();
+    public String getHora() throws CampoVazioException, FormatoInvalidoException {
+        String hora = horaInput.getText().trim();
+        if (hora.isEmpty()) throw new CampoVazioException("Hora");
+        if (!hora.matches("\\d{2}:\\d{2}")) throw new FormatoInvalidoException("Hora", "HH:MM");
+        int hh = Integer.parseInt(hora.split(":")[0]);
+        int mm = Integer.parseInt(hora.split(":")[1]);
+        if (hh > 23 || mm > 59) throw new FormatoInvalidoException("Hora", "entre 00:00 e 23:59");
+        return hora;
     }
 
-    public String getLocal() {
-        return localInput.getText().trim();
+    public String getLocal() throws CampoVazioException {
+        String local = localInput.getText().trim();
+        if (local.isEmpty()) throw new CampoVazioException("Local");
+        return local;
     }
 
     public String getTipo() {
         return (String) tipoCombo.getSelectedItem();
     }
 
-    public String getDescricao() {
-        return descricaoInput.getText().trim();
+    public String getDescricao() throws CampoVazioException {
+        String descricao = descricaoInput.getText().trim();
+        if (descricao.isEmpty()) throw new CampoVazioException("Pauta / Descrição");
+        return descricao;
     }
 
     public String getResultado() {
         return resultadoInput.getText().trim();
     }
 
-    public ProcessoModel getProcessoSelecionado() {
-        return (ProcessoModel) processoCombo.getSelectedItem();
+    public ProcessoModel getProcessoSelecionado() throws CampoVazioException {
+        ProcessoModel processo = (ProcessoModel) processoCombo.getSelectedItem();
+        if (processo == null) throw new CampoVazioException("Processo");
+        return processo;
     }
 
     // ===== GETTER — BOTAO =====

@@ -1,6 +1,7 @@
 package View;
 
 import Model.ClienteModel;
+import Exception.SelecionarItemException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -126,18 +127,12 @@ public class TelaClientesView extends JFrame {
     }
 
 
-    public int getIDlinhaSelecionada() {
+    public int getIDlinhaSelecionada() throws SelecionarItemException {
         int linha = getTabelaClientes().getSelectedRow();
-
-        if (linha == -1) {
-            exibirMensagem("Selecione um cliente!");
-            return -1;
-        }
+        if (linha == -1) throw new SelecionarItemException("cliente");
 
         String IDstr = getTabelaClientes().getValueAt(linha, 0).toString();
-        int ID = Integer.parseInt(IDstr);
-
-        return ID;
+        return Integer.parseInt(IDstr);
     }
     //=========================================================
 

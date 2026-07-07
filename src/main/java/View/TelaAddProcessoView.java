@@ -1,6 +1,7 @@
 package View;
 
 import Model.ClienteModel;
+import Exception.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -137,33 +138,45 @@ public class TelaAddProcessoView extends JFrame {
         JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ===== LEITURA DE DADOS =====
-    public String getNumero() {
-        return numeroInput.getText().trim();
+    // ===== LEITURA DE DADOS (a View valida e lança as exceções) =====
+    public String getNumero() throws CampoVazioException {
+        String numero = numeroInput.getText().trim();
+        if (numero.isEmpty()) throw new CampoVazioException("Número do Processo");
+        return numero;
     }
 
     public String getArea() {
         return (String) areaCombo.getSelectedItem();
     }
 
-    public String getVara() {
-        return varaInput.getText().trim();
+    public String getVara() throws CampoVazioException {
+        String vara = varaInput.getText().trim();
+        if (vara.isEmpty()) throw new CampoVazioException("Vara / Tribunal");
+        return vara;
     }
 
-    public String getDescricao() {
-        return descricaoInput.getText().trim();
+    public String getDescricao() throws CampoVazioException {
+        String descricao = descricaoInput.getText().trim();
+        if (descricao.isEmpty()) throw new CampoVazioException("Descrição");
+        return descricao;
     }
 
     public String getStatus() {
         return (String) statusCombo.getSelectedItem();
     }
 
-    public String getDataAbertura() {
-        return dataAberturaInput.getText().trim();
+    public String getDataAbertura() throws CampoVazioException, FormatoInvalidoException {
+        String data = dataAberturaInput.getText().trim();
+        if (data.isEmpty()) throw new CampoVazioException("Data de Abertura");
+        if (!data.matches("\\d{2}/\\d{2}/\\d{4}"))
+            throw new FormatoInvalidoException("Data de Abertura", "DD/MM/AAAA");
+        return data;
     }
 
-    public ClienteModel getClienteSelecionado() {
-        return (ClienteModel) clienteCombo.getSelectedItem();
+    public ClienteModel getClienteSelecionado() throws CampoVazioException {
+        ClienteModel cliente = (ClienteModel) clienteCombo.getSelectedItem();
+        if (cliente == null) throw new CampoVazioException("Cliente");
+        return cliente;
     }
 
     // ===== GETTER — BOTAO =====

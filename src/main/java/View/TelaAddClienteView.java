@@ -1,5 +1,7 @@
 package View;
 
+import Exception.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -282,8 +284,12 @@ public class TelaAddClienteView extends JFrame {
     }
 
     //===================================================================
-    public void exibirMensagem(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+    public void exibirErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Erro de validação", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void exibirSucesso(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
@@ -312,71 +318,108 @@ public class TelaAddClienteView extends JFrame {
         return pessoaFisicaRB.isSelected();
     }
 
-    //GETTERS — PESSOA FÍSICA
-    public String getNomeInput() {
-        return nomeInput.getText();
+    //GETTERS — PESSOA FÍSICA (validam e lançam as exceções)
+    public String getNomeInput() throws CampoVazioException {
+        String nome = nomeInput.getText().trim();
+        if (nome.isEmpty()) throw new CampoVazioException("Nome");
+        return nome;
     }
 
-    public String getCpfInput() {
-        return cpfInput.getText();
+    public String getCpfInput() throws CampoVazioException, FormatoInvalidoException {
+        String cpf = cpfInput.getText().trim();
+        if (cpf.isEmpty()) throw new CampoVazioException("CPF");
+        if (!cpf.matches("^\\d{11}$")) throw new FormatoInvalidoException("CPF", "11 dígitos (ex: 01234567890)");
+        return cpf;
     }
 
-    public String getTelefonePFInput() {
-        return telefonePFInput.getText();
+    public String getTelefonePFInput() throws CampoVazioException, FormatoInvalidoException {
+        String telefone = telefonePFInput.getText().trim();
+        if (telefone.isEmpty()) throw new CampoVazioException("Telefone");
+        if (!telefone.matches("^\\d{10,11}$")) throw new FormatoInvalidoException("Telefone", "10 ou 11 dígitos");
+        return telefone;
     }
 
-    public String getEmailPFInput() {
-        return emailPFInput.getText();
+    public String getEmailPFInput() throws CampoVazioException, FormatoInvalidoException {
+        String email = emailPFInput.getText().trim();
+        if (email.isEmpty()) throw new CampoVazioException("Email");
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))
+            throw new FormatoInvalidoException("Email", "xxxxx@xxxxx.com");
+        return email;
     }
 
     public String getObservacaoPFInput() {
-        return observacaoPFInput.getText();
+        return observacaoPFInput.getText().trim();
     }
 
-    //GETTERS — PESSOA JURÍDICA
-    public String getNomeEmpresaInput() {
-        return NomeEmpresaInput.getText();
+    //GETTERS — PESSOA JURÍDICA (validam e lançam as exceções)
+    public String getNomeEmpresaInput() throws CampoVazioException {
+        String nome = NomeEmpresaInput.getText().trim();
+        if (nome.isEmpty()) throw new CampoVazioException("Nome Fantasia");
+        return nome;
     }
 
-    public String getCnpjInput() {
-        return cnpjInput.getText();
+    public String getCnpjInput() throws CampoVazioException, FormatoInvalidoException {
+        String cnpj = cnpjInput.getText().trim();
+        if (cnpj.isEmpty()) throw new CampoVazioException("CNPJ");
+        if (!cnpj.matches("^\\d{14}$")) throw new FormatoInvalidoException("CNPJ", "14 dígitos");
+        return cnpj;
     }
 
-    public String getTelefonePJInput() {
-        return telefonePJInput.getText();
+    public String getTelefonePJInput() throws CampoVazioException, FormatoInvalidoException {
+        String telefone = telefonePJInput.getText().trim();
+        if (telefone.isEmpty()) throw new CampoVazioException("Telefone");
+        if (!telefone.matches("^\\d{10,11}$")) throw new FormatoInvalidoException("Telefone", "10 ou 11 dígitos");
+        return telefone;
     }
 
-    public String getEmailPJInput() {
-        return emailPJInput.getText();
+    public String getEmailPJInput() throws CampoVazioException, FormatoInvalidoException {
+        String email = emailPJInput.getText().trim();
+        if (email.isEmpty()) throw new CampoVazioException("Email");
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))
+            throw new FormatoInvalidoException("Email", "xxxxx@xxxxx.com");
+        return email;
     }
 
     public String getObservacaoPJInput() {
-        return observacaoPJInput.getText();
+        return observacaoPJInput.getText().trim();
     }
 
-    //GETTERS — ENDERECO
-    public String getRuaInput() {
-        return ruaInput.getText();
+    //GETTERS — ENDERECO (validam e lançam as exceções)
+    public String getRuaInput() throws CampoVazioException {
+        String rua = ruaInput.getText().trim();
+        if (rua.isEmpty()) throw new CampoVazioException("Rua");
+        return rua;
     }
 
-    public String getNumeroInput() {
-        return numeroInput.getText();
+    public String getNumeroInput() throws CampoVazioException {
+        String numero = numeroInput.getText().trim();
+        if (numero.isEmpty()) throw new CampoVazioException("Número");
+        return numero;
     }
 
-    public String getBairroInput() {
-        return bairroInput.getText();
+    public String getBairroInput() throws CampoVazioException {
+        String bairro = bairroInput.getText().trim();
+        if (bairro.isEmpty()) throw new CampoVazioException("Bairro");
+        return bairro;
     }
 
-    public String getCidadeInput() {
-        return cidadeInput.getText();
+    public String getCidadeInput() throws CampoVazioException {
+        String cidade = cidadeInput.getText().trim();
+        if (cidade.isEmpty()) throw new CampoVazioException("Cidade");
+        return cidade;
     }
 
-    public String getUfInput() {
-        return ufInput.getText();
+    public String getUfInput() throws CampoVazioException {
+        String uf = ufInput.getText().trim();
+        if (uf.isEmpty()) throw new CampoVazioException("UF");
+        return uf;
     }
 
-    public String getCepInput() {
-        return cepInput.getText();
+    public String getCepInput() throws CampoVazioException, FormatoInvalidoException {
+        String cep = cepInput.getText().trim();
+        if (cep.isEmpty()) throw new CampoVazioException("CEP");
+        if (!cep.matches("^\\d{8}$")) throw new FormatoInvalidoException("CEP", "8 dígitos (ex: 00000000)");
+        return cep;
     }
 
     //GETTER — BOTAO

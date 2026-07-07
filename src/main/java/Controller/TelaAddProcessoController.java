@@ -33,6 +33,7 @@ public class TelaAddProcessoController {
 
     public void cadastrarProcesso() {
         try {
+            // A View lê e valida cada campo, lançando a exceção correspondente
             String numero = telaAddProcessoView.getNumero();
             String area = telaAddProcessoView.getArea();
             String vara = telaAddProcessoView.getVara();
@@ -41,15 +42,7 @@ public class TelaAddProcessoController {
             String dataAbertura = telaAddProcessoView.getDataAbertura();
             ClienteModel clienteSelecionado = telaAddProcessoView.getClienteSelecionado();
 
-            if (numero.isEmpty()) throw new CampoVazioException("Número do Processo");
-            if (vara.isEmpty()) throw new CampoVazioException("Vara / Tribunal");
-            if (descricao.isEmpty()) throw new CampoVazioException("Descrição");
-            if (dataAbertura.isEmpty()) throw new CampoVazioException("Data de Abertura");
-            if (clienteSelecionado == null) throw new CampoVazioException("Cliente");
-
-            if (!dataAbertura.matches("\\d{2}/\\d{2}/\\d{4}"))
-                throw new FormatoInvalidoException("Data de Abertura", "DD/MM/AAAA");
-
+            // Regra que depende do banco continua no Controller (a View não acessa o DAO)
             if (processoDAO.verificaNumeroRepetido(numero)) throw new RegistroDuplicadoException("número", numero);
 
             ProcessoModel processo = new ProcessoModel(numero, area, vara, descricao, status, dataAbertura, clienteSelecionado);

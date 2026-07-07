@@ -1,6 +1,7 @@
 package Controller;
 
 import Dao.ClienteDAO;
+import Exception.SelecionarItemException;
 import Model.ClienteModel;
 import View.TelaClientesView;
 
@@ -28,9 +29,15 @@ public class TelaClienteController {
         });
 
         telaClientesView.getExcluirClienteBTN().addActionListener(e -> {
-            int ID = telaClientesView.getIDlinhaSelecionada();
-            clienteDAO.excluir(ID);
-            atualizarTabela();
+            try {
+                int ID = telaClientesView.getIDlinhaSelecionada();
+                clienteDAO.excluir(ID);
+                atualizarTabela();
+            } catch (SelecionarItemException ex) {
+                exibirMensagem(ex.getMessage());
+            } catch (Exception ex) {
+                exibirMensagem("Erro inesperado: " + ex.getMessage());
+            }
         });
 
         telaClientesView.getOrdenarNomeBTN().addActionListener(e -> {

@@ -2,6 +2,7 @@ package View;
 
 import Model.ClienteModel;
 import Model.ProcessoModel;
+import Exception.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -141,17 +142,36 @@ public class TelaAddPagamentoView extends JFrame {
         JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ===== LEITURA DE DADOS =====
-    public String getDescricao() {
-        return descricaoInput.getText().trim();
+    // ===== LEITURA DE DADOS (a View valida e lança as exceções) =====
+    public String getDescricao() throws CampoVazioException {
+        String descricao = descricaoInput.getText().trim();
+        if (descricao.isEmpty()) throw new CampoVazioException("Descrição / Honorário");
+        return descricao;
     }
 
-    public String getValor() {
-        return valorInput.getText().trim();
+    public double getValor() throws CampoVazioException, FormatoInvalidoException, ValorNegativoException {
+        String valorStr = valorInput.getText().trim();
+        if (valorStr.isEmpty()) throw new CampoVazioException("Valor");
+
+        double valor;
+        try {
+            valor = Double.parseDouble(valorStr.replace(",", "."));
+        } catch (NumberFormatException ex) {
+            throw new FormatoInvalidoException("Valor", "número decimal (ex: 150.00 ou 150,00)");
+        }
+        if (valor <= 0) throw new ValorNegativoException("Valor");
+        return valor;
     }
 
-    public String getData() {
-        return dataInput.getText().trim();
+    public String getData() throws CampoVazioException, FormatoInvalidoException {
+        String data = dataInput.getText().trim();
+        if (data.isEmpty()) throw new CampoVazioException("Data");
+        if (!data.matches("\\d{2}/\\d{2}/\\d{4}")) throw new FormatoInvalidoException("Data", "DD/MM/AAAA");
+        int dia = Integer.parseInt(data.split("/")[0]);
+        int mes = Integer.parseInt(data.split("/")[1]);
+        if (dia < 1 || dia > 31 || mes < 1 || mes > 12)
+            throw new FormatoInvalidoException("Data", "data válida DD/MM/AAAA");
+        return data;
     }
 
     public String getTipo() {
@@ -166,8 +186,10 @@ public class TelaAddPagamentoView extends JFrame {
         return (String) statusCombo.getSelectedItem();
     }
 
-    public ClienteModel getClienteSelecionado() {
-        return (ClienteModel) clienteCombo.getSelectedItem();
+    public ClienteModel getClienteSelecionado() throws CampoVazioException {
+        ClienteModel cliente = (ClienteModel) clienteCombo.getSelectedItem();
+        if (cliente == null) throw new CampoVazioException("Cliente");
+        return cliente;
     }
 
     public ProcessoModel getProcessoSelecionado() {

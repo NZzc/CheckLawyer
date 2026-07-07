@@ -33,6 +33,7 @@ public class TelaAddAudienciaController {
 
     public void cadastrarAudiencia() {
         try {
+            // A View lê e valida cada campo, lançando a exceção correspondente
             String data = telaAddAudienciaView.getData();
             String hora = telaAddAudienciaView.getHora();
             String local = telaAddAudienciaView.getLocal();
@@ -40,23 +41,6 @@ public class TelaAddAudienciaController {
             String descricao = telaAddAudienciaView.getDescricao();
             String resultado = telaAddAudienciaView.getResultado();
             ProcessoModel processoSelecionado = telaAddAudienciaView.getProcessoSelecionado();
-
-            if (data.isEmpty()) throw new CampoVazioException("Data");
-            if (hora.isEmpty()) throw new CampoVazioException("Hora");
-            if (local.isEmpty()) throw new CampoVazioException("Local");
-            if (descricao.isEmpty()) throw new CampoVazioException("Pauta / Descrição");
-            if (processoSelecionado == null) throw new CampoVazioException("Processo");
-
-            if (!data.matches("\\d{2}/\\d{2}/\\d{4}")) throw new FormatoInvalidoException("Data", "DD/MM/AAAA");
-            int dia = Integer.parseInt(data.split("/")[0]);
-            int mes = Integer.parseInt(data.split("/")[1]);
-            if (dia < 1 || dia > 31 || mes < 1 || mes > 12)
-                throw new FormatoInvalidoException("Data", "data válida DD/MM/AAAA");
-
-            if (!hora.matches("\\d{2}:\\d{2}")) throw new FormatoInvalidoException("Hora", "HH:MM");
-            int hh = Integer.parseInt(hora.split(":")[0]);
-            int mm = Integer.parseInt(hora.split(":")[1]);
-            if (hh > 23 || mm > 59) throw new FormatoInvalidoException("Hora", "entre 00:00 e 23:59");
 
             AudienciaModel audiencia = new AudienciaModel(data, hora, local, tipo, descricao, resultado, processoSelecionado.getID());
             audienciaDAO.inserir(audiencia);

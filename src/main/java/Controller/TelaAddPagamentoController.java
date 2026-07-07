@@ -37,33 +37,15 @@ public class TelaAddPagamentoController {
 
     public void cadastrarPagamento() {
         try {
+            // A View lê e valida cada campo, lançando a exceção correspondente
             String descricao = telaAddPagamentoView.getDescricao();
-            String valorStr = telaAddPagamentoView.getValor();
+            double valor = telaAddPagamentoView.getValor();
             String data = telaAddPagamentoView.getData();
             String tipo = telaAddPagamentoView.getTipo();
             String formaPgto = telaAddPagamentoView.getFormaPagamento();
             String status = telaAddPagamentoView.getStatus();
             ClienteModel clienteSelecionado = telaAddPagamentoView.getClienteSelecionado();
             ProcessoModel processoSelecionado = telaAddPagamentoView.getProcessoSelecionado();
-
-            if (descricao.isEmpty()) throw new CampoVazioException("Descrição / Honorário");
-            if (valorStr.isEmpty()) throw new CampoVazioException("Valor");
-            if (data.isEmpty()) throw new CampoVazioException("Data");
-            if (clienteSelecionado == null) throw new CampoVazioException("Cliente");
-
-            if (!data.matches("\\d{2}/\\d{2}/\\d{4}")) throw new FormatoInvalidoException("Data", "DD/MM/AAAA");
-            int dia = Integer.parseInt(data.split("/")[0]);
-            int mes = Integer.parseInt(data.split("/")[1]);
-            if (dia < 1 || dia > 31 || mes < 1 || mes > 12)
-                throw new FormatoInvalidoException("Data", "data válida DD/MM/AAAA");
-
-            double valor;
-            try {
-                valor = Double.parseDouble(valorStr.replace(",", "."));
-            } catch (NumberFormatException ex) {
-                throw new FormatoInvalidoException("Valor", "número decimal (ex: 150.00 ou 150,00)");
-            }
-            if (valor <= 0) throw new ValorNegativoException("Valor");
 
             // idProcesso = 0 quando não há processo associado
             int idProcesso = (processoSelecionado != null) ? processoSelecionado.getID() : 0;
