@@ -28,6 +28,25 @@ public class TelaClienteController {
             new TelaAddClienteController(this);
         });
 
+        telaClientesView.getEditarClienteBTN().addActionListener(e -> {
+            try {
+                int ID = telaClientesView.getIDlinhaSelecionada();
+                ClienteModel cliente = clienteDAO.buscarPorId(ID);
+
+                if (cliente == null) {
+                    exibirMensagem("Cliente não encontrado.");
+                    return;
+                }
+
+                new TelaEditClienteController(this, cliente);
+
+            } catch (SelecionarItemException ex) {
+                exibirMensagem(ex.getMessage());
+            } catch (Exception ex) {
+                exibirMensagem("Erro inesperado: " + ex.getMessage());
+            }
+        });
+
         telaClientesView.getExcluirClienteBTN().addActionListener(e -> {
             try {
                 int ID = telaClientesView.getIDlinhaSelecionada();

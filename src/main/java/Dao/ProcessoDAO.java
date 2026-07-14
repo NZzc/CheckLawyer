@@ -48,6 +48,21 @@ public class ProcessoDAO implements PersistivelInterface <ProcessoModel> {
         }
     }
 
+    @Override
+    public void editar(ProcessoModel entidade) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(entidade);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean verificaNumeroRepetido(String numero) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -61,7 +76,11 @@ public class ProcessoDAO implements PersistivelInterface <ProcessoModel> {
     public ProcessoModel buscarPorId(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            return em.find(ProcessoModel.class, id);
+            List<ProcessoModel> processos = em.createQuery(
+                    "SELECT p FROM ProcessoModel p JOIN FETCH p.cliente WHERE p.id = :id",
+                    ProcessoModel.class
+            ).setParameter("id", id).getResultList();
+            return processos.isEmpty() ? null : processos.get(0);
         } finally {
             em.close();
         }

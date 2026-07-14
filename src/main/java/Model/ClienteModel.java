@@ -65,6 +65,26 @@ public abstract class ClienteModel implements Comparable<ClienteModel>{
         return endereco;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome.toUpperCase();
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao.toUpperCase();
+    }
+
+    public void setEndereco(EnderecoModel endereco) {
+        this.endereco = endereco;
+    }
+
     public abstract String getDocumento();
 
     @Override

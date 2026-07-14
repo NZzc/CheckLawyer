@@ -52,6 +52,32 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
         }
     }
 
+    @Override
+    public void editar(ClienteModel entidade) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(entidade);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public ClienteModel buscarPorId(int id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.find(ClienteModel.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean verificaCpfCnpjRepetido(String cpfCnpj) {
         EntityManager em = JPAUtil.getEntityManager();
         try {

@@ -2,6 +2,7 @@ package Controller;
 
 import Dao.AudienciaDAO;
 import Exception.SelecionarItemException;
+import Model.AudienciaModel;
 import View.TelaAudienciaView;
 
 public class TelaAudienciaController {
@@ -17,6 +18,25 @@ public class TelaAudienciaController {
 
     private void configurarEventos() {
         telaAudienciaView.getAddAudienciaBTN().addActionListener(e -> new TelaAddAudienciaController(this));
+
+        telaAudienciaView.getEditarAudienciaBTN().addActionListener(e -> {
+            try {
+                int ID = telaAudienciaView.getIDlinhaSelecionada();
+                AudienciaModel audiencia = audienciaDAO.buscarPorId(ID);
+
+                if (audiencia == null) {
+                    exibirErro("Audiência não encontrada.");
+                    return;
+                }
+
+                new TelaEditAudienciaController(this, audiencia);
+
+            } catch (SelecionarItemException ex) {
+                exibirErro(ex.getMessage());
+            } catch (Exception ex) {
+                exibirErro("Erro inesperado: " + ex.getMessage());
+            }
+        });
 
         telaAudienciaView.getExcluirAudienciaBTN().addActionListener(e -> {
             try {

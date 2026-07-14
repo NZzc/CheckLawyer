@@ -6,4 +6,5 @@ public interface PersistivelInterface <T>{
     public void inserir(T entidade);
     public void excluir(int id);
     public List<T> getLista();
+    public void editar(T entidade);
 }

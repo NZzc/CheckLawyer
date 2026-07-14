@@ -12,6 +12,7 @@ public class TelaAudienciaView extends JFrame {
 
     private JTable tabelaAudiencias;
     private JButton addAudienciaBTN;
+    private JButton editarAudienciaBTN;
     private JButton excluirAudienciaBTN;
 
     public TelaAudienciaView() {
@@ -40,15 +41,20 @@ public class TelaAudienciaView extends JFrame {
         JScrollPane scrollTabela = new JScrollPane(tabelaAudiencias);
 
         addAudienciaBTN = new JButton("Adicionar Audiência");
+        editarAudienciaBTN = new JButton("Editar Audiência");
         excluirAudienciaBTN = new JButton("Excluir Audiência");
         addAudienciaBTN.setFont(buttonFont);
+        editarAudienciaBTN.setFont(buttonFont);
         excluirAudienciaBTN.setFont(buttonFont);
-        addAudienciaBTN.setPreferredSize(new Dimension(210, 40));
-        excluirAudienciaBTN.setPreferredSize(new Dimension(210, 40));
+        Dimension tamanhoBotaoAcao = new Dimension(210, 40);
+        addAudienciaBTN.setPreferredSize(tamanhoBotaoAcao);
+        editarAudienciaBTN.setPreferredSize(tamanhoBotaoAcao);
+        excluirAudienciaBTN.setPreferredSize(tamanhoBotaoAcao);
 
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        painelBotoes.add(excluirAudienciaBTN);
         painelBotoes.add(addAudienciaBTN);
+        painelBotoes.add(editarAudienciaBTN);
+        painelBotoes.add(excluirAudienciaBTN);
 
         JPanel main = new JPanel(new BorderLayout());
         main.add(painelTitulo, BorderLayout.NORTH);
@@ -92,5 +98,9 @@ public class TelaAudienciaView extends JFrame {
 
     public JButton getExcluirAudienciaBTN() {
         return excluirAudienciaBTN;
+    }
+
+    public JButton getEditarAudienciaBTN() {
+        return editarAudienciaBTN;
     }
 }

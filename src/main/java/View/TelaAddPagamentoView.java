@@ -1,6 +1,7 @@
 package View;
 
 import Model.ClienteModel;
+import Model.PagamentoModel;
 import Model.ProcessoModel;
 import Exception.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class TelaAddPagamentoView extends JFrame {
 
     private JButton addPagamentoBTN;
+    private JLabel tituloLabel;
 
     private JTextField descricaoInput;
     private JTextField valorInput;
@@ -42,10 +44,10 @@ public class TelaAddPagamentoView extends JFrame {
         Font inputFont = new Font("Arial", Font.PLAIN, 13);
         Font buttonFont = new Font("Arial", Font.BOLD, 15);
 
-        JLabel titulo = new JLabel("Adicionar Pagamento");
-        titulo.setFont(tituloFont);
+        tituloLabel = new JLabel("Adicionar Pagamento");
+        tituloLabel.setFont(tituloFont);
         JPanel painelTitulo = new JPanel();
-        painelTitulo.add(titulo);
+        painelTitulo.add(tituloLabel);
 
         // ===== INPUTS =====
         descricaoInput = new JTextField(18);
@@ -131,6 +133,49 @@ public class TelaAddPagamentoView extends JFrame {
 
         if (clienteCombo.getItemCount() == 0) {
             exibirAviso("Nenhum cliente cadastrado. Cadastre um cliente antes de registrar um pagamento.");
+        }
+    }
+
+    public void configurarModoEdicao() {
+        setTitle("Editar Pagamento");
+        tituloLabel.setText("Editar Pagamento");
+        addPagamentoBTN.setText("Salvar Alterações");
+    }
+
+    public void preencherPagamento(PagamentoModel pagamento) {
+        descricaoInput.setText(pagamento.getDescricao());
+        valorInput.setText(pagamento.getValor().toPlainString());
+        dataInput.setText(pagamento.getData().format(FORMATO_BR));
+        tipoCombo.setSelectedItem(pagamento.getTipo());
+        formaPagamentoCombo.setSelectedItem(pagamento.getFormaPagamento());
+        statusCombo.setSelectedItem(pagamento.getStatus());
+        selecionarCliente(pagamento.getIdCliente());
+
+        int idProcesso = pagamento.getIdProcesso();
+        if (idProcesso == 0) {
+            processoCombo.setSelectedIndex(-1);
+        } else {
+            selecionarProcesso(idProcesso);
+        }
+    }
+
+    private void selecionarCliente(int idCliente) {
+        for (int i = 0; i < clienteCombo.getItemCount(); i++) {
+            ClienteModel cliente = clienteCombo.getItemAt(i);
+            if (cliente.getID() == idCliente) {
+                clienteCombo.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
+    private void selecionarProcesso(int idProcesso) {
+        for (int i = 0; i < processoCombo.getItemCount(); i++) {
+            ProcessoModel processo = processoCombo.getItemAt(i);
+            if (processo.getID() == idProcesso) {
+                processoCombo.setSelectedIndex(i);
+                return;
+            }
         }
     }
 

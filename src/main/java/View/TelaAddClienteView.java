@@ -1,6 +1,10 @@
 package View;
 
 import Exception.*;
+import Model.ClienteFisicoModel;
+import Model.ClienteJuridicoModel;
+import Model.ClienteModel;
+import Model.EnderecoModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +46,7 @@ public class TelaAddClienteView extends JFrame {
 
     // ===== BOTÃO =====
     private JButton addClienteBTN;
+    private JLabel tituloLabel;
 
     // ===== FONTES =====
     private static final Font FONT_TITULO = new Font("Arial", Font.BOLD, 28);
@@ -78,10 +83,10 @@ public class TelaAddClienteView extends JFrame {
         painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
 
         // Título
-        JLabel titulo = new JLabel("Adicionar Cliente", SwingConstants.CENTER);
-        titulo.setFont(FONT_TITULO);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        painel.add(titulo);
+        tituloLabel = new JLabel("Adicionar Cliente", SwingConstants.CENTER);
+        tituloLabel.setFont(FONT_TITULO);
+        tituloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painel.add(tituloLabel);
 
         painel.add(Box.createVerticalStrut(8));
 
@@ -290,6 +295,48 @@ public class TelaAddClienteView extends JFrame {
 
     public void exibirSucesso(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void configurarModoEdicao() {
+        setTitle("Editar Cliente");
+        tituloLabel.setText("Editar Cliente");
+        addClienteBTN.setText("Salvar Alterações");
+    }
+
+    public void preencherCliente(ClienteModel cliente) {
+        if (cliente instanceof ClienteFisicoModel) {
+            pessoaFisicaRB.setSelected(true);
+            cardLayout.show(cardPanel, CARD_PF);
+            nomeInput.setText(cliente.getNome());
+            cpfInput.setText(cliente.getDocumento());
+        } else if (cliente instanceof ClienteJuridicoModel) {
+            pessoaJuridicaRB.setSelected(true);
+            cardLayout.show(cardPanel, CARD_PJ);
+            NomeEmpresaInput.setText(cliente.getNome());
+            cnpjInput.setText(cliente.getDocumento());
+        }
+
+        telefonePFInput.setText(cliente.getTelefone());
+        telefonePJInput.setText(cliente.getTelefone());
+        emailPFInput.setText(cliente.getEmail());
+        emailPJInput.setText(cliente.getEmail());
+        observacaoPFInput.setText(cliente.getObservacao());
+        observacaoPJInput.setText(cliente.getObservacao());
+
+        EnderecoModel endereco = cliente.getEndereco();
+        if (endereco != null) {
+            ruaInput.setText(endereco.getRua());
+            numeroInput.setText(endereco.getNumero());
+            bairroInput.setText(endereco.getBairro());
+            cidadeInput.setText(endereco.getCidade());
+            ufInput.setText(endereco.getUf());
+            cepInput.setText(endereco.getCep());
+        }
+
+        pessoaFisicaRB.setEnabled(false);
+        pessoaJuridicaRB.setEnabled(false);
+        cpfInput.setEnabled(false);
+        cnpjInput.setEnabled(false);
     }
 
 

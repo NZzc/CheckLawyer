@@ -112,4 +112,12 @@ public class PagamentoModel {
     public int getIdProcesso() {
         return (processo != null) ? processo.getID() : 0;
     }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setProcesso(ProcessoModel processo) {
+        this.processo = processo;
+    }
 }

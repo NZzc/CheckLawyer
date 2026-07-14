@@ -12,6 +12,7 @@ public class TelaProcessosView extends JFrame {
 
     private JTable tabelaProcessos;
     private JButton addProcessoBTN;
+    private JButton editarProcessoBTN;
     private JButton excluirProcessoBTN;
 
     public TelaProcessosView() {
@@ -40,15 +41,20 @@ public class TelaProcessosView extends JFrame {
         JScrollPane scrollTabela = new JScrollPane(tabelaProcessos);
 
         addProcessoBTN = new JButton("Adicionar Processo");
+        editarProcessoBTN = new JButton("Editar Processo");
         excluirProcessoBTN = new JButton("Excluir Processo");
         addProcessoBTN.setFont(buttonFont);
+        editarProcessoBTN.setFont(buttonFont);
         excluirProcessoBTN.setFont(buttonFont);
-        addProcessoBTN.setPreferredSize(new Dimension(200, 40));
-        excluirProcessoBTN.setPreferredSize(new Dimension(200, 40));
+        Dimension tamanhoBotaoAcao = new Dimension(200, 40);
+        addProcessoBTN.setPreferredSize(tamanhoBotaoAcao);
+        editarProcessoBTN.setPreferredSize(tamanhoBotaoAcao);
+        excluirProcessoBTN.setPreferredSize(tamanhoBotaoAcao);
 
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        painelBotoes.add(excluirProcessoBTN);
         painelBotoes.add(addProcessoBTN);
+        painelBotoes.add(editarProcessoBTN);
+        painelBotoes.add(excluirProcessoBTN);
 
         JPanel main = new JPanel(new BorderLayout());
         main.add(painelTitulo, BorderLayout.NORTH);
@@ -90,5 +96,9 @@ public class TelaProcessosView extends JFrame {
 
     public JButton getExcluirProcessoBTN() {
         return excluirProcessoBTN;
+    }
+
+    public JButton getEditarProcessoBTN() {
+        return editarProcessoBTN;
     }
 }

@@ -1,6 +1,7 @@
 package View;
 
 import Model.ClienteModel;
+import Model.ProcessoModel;
 import Exception.*;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.util.List;
 public class TelaAddProcessoView extends JFrame {
 
     private JButton addProcessoBTN;
+    private JLabel tituloLabel;
 
     private JTextField numeroInput;
     private JComboBox<String> areaCombo;
@@ -35,10 +37,10 @@ public class TelaAddProcessoView extends JFrame {
         Font inputFont = new Font("Arial", Font.PLAIN, 13);
         Font buttonFont = new Font("Arial", Font.BOLD, 15);
 
-        JLabel titulo = new JLabel("Adicionar Processo");
-        titulo.setFont(tituloFont);
+        tituloLabel = new JLabel("Adicionar Processo");
+        tituloLabel.setFont(tituloFont);
         JPanel painelTitulo = new JPanel();
-        painelTitulo.add(titulo);
+        painelTitulo.add(tituloLabel);
 
         // ===== INPUTS =====
         numeroInput = new JTextField(18);
@@ -122,6 +124,36 @@ public class TelaAddProcessoView extends JFrame {
         }
         if (clienteCombo.getItemCount() == 0) {
             exibirAviso("Nenhum cliente cadastrado.\nCadastre um cliente antes de adicionar um processo.");
+        }
+    }
+
+    public void configurarModoEdicao() {
+        setTitle("Editar Processo");
+        tituloLabel.setText("Editar Processo");
+        addProcessoBTN.setText("Salvar Alterações");
+    }
+
+    public void preencherProcesso(ProcessoModel processo) {
+        numeroInput.setText(processo.getNumero());
+        areaCombo.setSelectedItem(processo.getArea());
+        varaInput.setText(processo.getVara());
+        descricaoInput.setText(processo.getDescricao());
+        statusCombo.setSelectedItem(processo.getStatus());
+        dataAberturaInput.setText(processo.getDataAbertura());
+
+        ClienteModel cliente = processo.getCliente();
+        if (cliente != null) {
+            selecionarCliente(cliente.getID());
+        }
+    }
+
+    private void selecionarCliente(int idCliente) {
+        for (int i = 0; i < clienteCombo.getItemCount(); i++) {
+            ClienteModel cliente = clienteCombo.getItemAt(i);
+            if (cliente.getID() == idCliente) {
+                clienteCombo.setSelectedIndex(i);
+                return;
+            }
         }
     }
 

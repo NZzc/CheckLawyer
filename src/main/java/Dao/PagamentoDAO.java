@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class PagamentoDAO {
+public class PagamentoDAO implements PersistivelInterface<PagamentoModel> {
 
     public void inserir(PagamentoModel pagamento) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -46,7 +46,24 @@ public class PagamentoDAO {
         }
     }
 
-    public List<PagamentoModel> getListaPagamentos() {
+    @Override
+    public void editar(PagamentoModel pagamento) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(pagamento);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<PagamentoModel> getLista() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
@@ -63,7 +80,7 @@ public class PagamentoDAO {
 
     public BigDecimal calcularSaldo() {
         BigDecimal saldo = BigDecimal.ZERO;
-        for (PagamentoModel p : getListaPagamentos()) {
+        for (PagamentoModel p : getLista()) {
             if (p.getTipo().equals("RECEITA")) {
                 saldo = saldo.add(p.getValor());
             } else {
@@ -77,7 +94,7 @@ public class PagamentoDAO {
     // Usa um Map para somar os valores agrupados por tipo
     public Map<String, BigDecimal> getTotalPorTipo() {
         Map<String, BigDecimal> totalPorTipo = new HashMap<>();
-        for (PagamentoModel p : getListaPagamentos()) {
+        for (PagamentoModel p : getLista()) {
             totalPorTipo.merge(p.getTipo(), p.getValor(), BigDecimal::add);
         }
         return totalPorTipo;
@@ -87,9 +104,25 @@ public class PagamentoDAO {
     // Usa um Set para obter as formas de pagamento utilizadas, sem repetição e em ordem alfabética
     public Set<String> getFormasPagamentoUtilizadas() {
         Set<String> formas = new TreeSet<>();
-        for (PagamentoModel p : getListaPagamentos()) {
+        for (PagamentoModel p : getLista()) {
             formas.add(p.getFormaPagamento());
         }
         return formas;
+    }
+
+    public PagamentoModel buscarPorId(int id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            List<PagamentoModel> pagamentos = em.createQuery(
+                    "SELECT p FROM PagamentoModel p "
+                            + "JOIN FETCH p.cliente "
+                            + "LEFT JOIN FETCH p.processo "
+                            + "WHERE p.ID = :id",
+                    PagamentoModel.class
+            ).setParameter("id", id).getResultList();
+            return pagamentos.isEmpty() ? null : pagamentos.get(0);
+        } finally {
+            em.close();
+        }
     }
 }

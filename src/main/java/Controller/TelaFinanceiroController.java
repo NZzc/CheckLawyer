@@ -2,6 +2,7 @@ package Controller;
 
 import Dao.PagamentoDAO;
 import Exception.SelecionarItemException;
+import Model.PagamentoModel;
 import View.TelaFinanceiroView;
 
 import java.math.BigDecimal;
@@ -22,6 +23,25 @@ public class TelaFinanceiroController {
     private void BtnAddPagamento() {
         telaFinanceiroView.getAddPagamentoBTN().addActionListener(e -> new TelaAddPagamentoController(this));
 
+        telaFinanceiroView.getEditarPagamentoBTN().addActionListener(e -> {
+            try {
+                int ID = telaFinanceiroView.getIDlinhaSelecionada();
+                PagamentoModel pagamento = pagamentoDAO.buscarPorId(ID);
+
+                if (pagamento == null) {
+                    exibirErro("Pagamento não encontrado.");
+                    return;
+                }
+
+                new TelaEditPagamentoController(this, pagamento);
+
+            } catch (SelecionarItemException ex) {
+                exibirErro(ex.getMessage());
+            } catch (Exception ex) {
+                exibirErro("Erro inesperado: " + ex.getMessage());
+            }
+        });
+
         telaFinanceiroView.getExcluirPagamentoBTN().addActionListener(e -> {
             try {
                 int ID = telaFinanceiroView.getIDlinhaSelecionada();
@@ -41,7 +61,7 @@ public class TelaFinanceiroController {
     }
 
     public void atualizarTabela() {
-        telaFinanceiroView.popularTabela(pagamentoDAO.getListaPagamentos());
+        telaFinanceiroView.popularTabela(pagamentoDAO.getLista());
 
         BigDecimal saldo = pagamentoDAO.calcularSaldo();
 

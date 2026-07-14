@@ -1,6 +1,7 @@
 package View;
 
 import Model.ProcessoModel;
+import Model.AudienciaModel;
 import Exception.*;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.util.List;
 public class TelaAddAudienciaView extends JFrame {
 
     private JButton addAudienciaBTN;
+    private JLabel tituloLabel;
 
     private JTextField dataInput;
     private JTextField horaInput;
@@ -35,10 +37,10 @@ public class TelaAddAudienciaView extends JFrame {
         Font inputFont = new Font("Arial", Font.PLAIN, 13);
         Font buttonFont = new Font("Arial", Font.BOLD, 15);
 
-        JLabel titulo = new JLabel("Adicionar Audiência");
-        titulo.setFont(tituloFont);
+        tituloLabel = new JLabel("Adicionar Audiência");
+        tituloLabel.setFont(tituloFont);
         JPanel painelTitulo = new JPanel();
-        painelTitulo.add(titulo);
+        painelTitulo.add(tituloLabel);
 
         // ===== INPUTS =====
         dataInput = new JTextField(18);
@@ -120,6 +122,36 @@ public class TelaAddAudienciaView extends JFrame {
         }
         if (processoCombo.getItemCount() == 0) {
             exibirAviso("Nenhum processo cadastrado.\nCadastre um processo antes de adicionar uma audiência.");
+        }
+    }
+
+    public void configurarModoEdicao() {
+        setTitle("Editar Audiência");
+        tituloLabel.setText("Editar Audiência");
+        addAudienciaBTN.setText("Salvar Alterações");
+    }
+
+    public void preencherAudiencia(AudienciaModel audiencia) {
+        dataInput.setText(audiencia.getData());
+        horaInput.setText(audiencia.getHora());
+        localInput.setText(audiencia.getLocal());
+        tipoCombo.setSelectedItem(audiencia.getTipo());
+        descricaoInput.setText(audiencia.getDescricao());
+        resultadoInput.setText(audiencia.getResultado());
+
+        ProcessoModel processo = audiencia.getProcesso();
+        if (processo != null) {
+            selecionarProcesso(processo.getID());
+        }
+    }
+
+    private void selecionarProcesso(int idProcesso) {
+        for (int i = 0; i < processoCombo.getItemCount(); i++) {
+            ProcessoModel processo = processoCombo.getItemAt(i);
+            if (processo.getID() == idProcesso) {
+                processoCombo.setSelectedIndex(i);
+                return;
+            }
         }
     }
 

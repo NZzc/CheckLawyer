@@ -2,6 +2,7 @@ package Controller;
 
 import Dao.ProcessoDAO;
 import Exception.SelecionarItemException;
+import Model.ProcessoModel;
 import View.TelaProcessosView;
 
 public class TelaProcessoController {
@@ -17,6 +18,25 @@ public class TelaProcessoController {
 
     private void BtnAddProcesso() {
         telaProcessosView.getAddProcessoBTN().addActionListener(e -> new TelaAddProcessoController(this));
+
+        telaProcessosView.getEditarProcessoBTN().addActionListener(e -> {
+            try {
+                int ID = telaProcessosView.getIDlinhaSelecionada();
+                ProcessoModel processo = processoDAO.buscarPorId(ID);
+
+                if (processo == null) {
+                    exibirErro("Processo não encontrado.");
+                    return;
+                }
+
+                new TelaEditProcessoController(this, processo);
+
+            } catch (SelecionarItemException ex) {
+                exibirErro(ex.getMessage());
+            } catch (Exception ex) {
+                exibirErro("Erro inesperado: " + ex.getMessage());
+            }
+        });
 
         telaProcessosView.getExcluirProcessoBTN().addActionListener(e -> {
             try {

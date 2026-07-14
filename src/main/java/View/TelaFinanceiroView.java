@@ -14,6 +14,7 @@ public class TelaFinanceiroView extends JFrame {
 
     private JTable tabelaPagamentos;
     private JButton addPagamentoBTN;
+    private JButton editarPagamentoBTN;
     private JButton excluirPagamentoBTN;
     private JLabel saldoLabel;
 
@@ -49,15 +50,20 @@ public class TelaFinanceiroView extends JFrame {
         JScrollPane scrollTabela = new JScrollPane(tabelaPagamentos);
 
         addPagamentoBTN = new JButton("Adicionar Pagamento");
+        editarPagamentoBTN = new JButton("Editar Pagamento");
         excluirPagamentoBTN = new JButton("Excluir Pagamento");
         addPagamentoBTN.setFont(buttonFont);
+        editarPagamentoBTN.setFont(buttonFont);
         excluirPagamentoBTN.setFont(buttonFont);
-        addPagamentoBTN.setPreferredSize(new Dimension(220, 40));
-        excluirPagamentoBTN.setPreferredSize(new Dimension(220, 40));
+        Dimension tamanhoBotaoAcao = new Dimension(220, 40);
+        addPagamentoBTN.setPreferredSize(tamanhoBotaoAcao);
+        editarPagamentoBTN.setPreferredSize(tamanhoBotaoAcao);
+        excluirPagamentoBTN.setPreferredSize(tamanhoBotaoAcao);
 
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        painelBotoes.add(excluirPagamentoBTN);
         painelBotoes.add(addPagamentoBTN);
+        painelBotoes.add(editarPagamentoBTN);
+        painelBotoes.add(excluirPagamentoBTN);
 
         JPanel painelNorte = new JPanel(new BorderLayout());
         painelNorte.add(painelTitulo, BorderLayout.NORTH);
@@ -108,5 +114,9 @@ public class TelaFinanceiroView extends JFrame {
 
     public JButton getExcluirPagamentoBTN() {
         return excluirPagamentoBTN;
+    }
+
+    public JButton getEditarPagamentoBTN() {
+        return editarPagamentoBTN;
     }
 }

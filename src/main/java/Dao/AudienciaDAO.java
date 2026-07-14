@@ -52,4 +52,34 @@ public class AudienciaDAO implements PersistivelInterface <AudienciaModel> {
             em.close();
         }
     }
+
+    @Override
+    public void editar(AudienciaModel entidade) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(entidade);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public AudienciaModel buscarPorId(int id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            List<AudienciaModel> audiencias = em.createQuery(
+                    "SELECT a FROM AudienciaModel a JOIN FETCH a.processo WHERE a.ID = :id",
+                    AudienciaModel.class
+            ).setParameter("id", id).getResultList();
+            return audiencias.isEmpty() ? null : audiencias.get(0);
+        } finally {
+            em.close();
+        }
+    }
 }
