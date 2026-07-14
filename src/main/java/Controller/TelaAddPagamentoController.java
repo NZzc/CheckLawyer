@@ -9,6 +9,9 @@ import Model.PagamentoModel;
 import Model.ProcessoModel;
 import View.TelaAddPagamentoView;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 public class TelaAddPagamentoController {
     private TelaAddPagamentoView telaAddPagamentoView;
     private PagamentoDAO pagamentoDAO;
@@ -39,8 +42,8 @@ public class TelaAddPagamentoController {
         try {
             // A View lê e valida cada campo, lançando a exceção correspondente
             String descricao = telaAddPagamentoView.getDescricao();
-            double valor = telaAddPagamentoView.getValor();
-            String data = telaAddPagamentoView.getData();
+            BigDecimal valor = telaAddPagamentoView.getValor();
+            LocalDate data = telaAddPagamentoView.getData();
             String tipo = telaAddPagamentoView.getTipo();
             String formaPgto = telaAddPagamentoView.getFormaPagamento();
             String status = telaAddPagamentoView.getStatus();
@@ -48,9 +51,9 @@ public class TelaAddPagamentoController {
             ProcessoModel processoSelecionado = telaAddPagamentoView.getProcessoSelecionado();
 
             // idProcesso = 0 quando não há processo associado
-            int idProcesso = (processoSelecionado != null) ? processoSelecionado.getID() : 0;
+            //int idProcesso = (processoSelecionado != null) ? processoSelecionado.getID() : 0;
 
-            PagamentoModel pagamento = new PagamentoModel(descricao, valor, data, tipo, formaPgto, status, clienteSelecionado.getID(), idProcesso);
+            PagamentoModel pagamento = new PagamentoModel(descricao, valor, data, tipo, formaPgto, status, clienteSelecionado, processoSelecionado);
             pagamentoDAO.inserir(pagamento);
             telaFinanceiroController.atualizarTabela();
             exibirSucesso("Pagamento de R$ " + String.format("%.2f", valor) + " cadastrado com sucesso!");

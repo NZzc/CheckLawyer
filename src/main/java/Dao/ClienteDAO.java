@@ -28,8 +28,8 @@ public class ClienteDAO implements PersistivelInterface<ClienteModel> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            ClienteModel c = em.find(ClienteModel.class, id);
-            if (c != null) em.remove(c);
+            ClienteModel cliente = em.find(ClienteModel.class, id);
+            if (cliente != null) em.remove(cliente);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

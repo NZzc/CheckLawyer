@@ -20,7 +20,7 @@ public class ProcessoModel {
     @Column(nullable = false)
     private String vara;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
     @Column(nullable = false)

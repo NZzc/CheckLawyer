@@ -24,7 +24,7 @@ public abstract class ClienteModel implements Comparable<ClienteModel>{
     @Column(nullable = false)
     private String email;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String observacao;
 
     //classe endereco fica direto na tabela cliente

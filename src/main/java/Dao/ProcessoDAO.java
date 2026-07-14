@@ -27,8 +27,8 @@ public class ProcessoDAO implements PersistivelInterface <ProcessoModel> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            ProcessoModel p = em.find(ProcessoModel.class, id);
-            if (p != null) em.remove(p);
+            ProcessoModel processo = em.find(ProcessoModel.class, id);
+            if (processo != null) em.remove(processo);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();

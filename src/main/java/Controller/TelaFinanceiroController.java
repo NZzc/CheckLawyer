@@ -4,6 +4,7 @@ import Dao.PagamentoDAO;
 import Exception.SelecionarItemException;
 import View.TelaFinanceiroView;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,12 +43,12 @@ public class TelaFinanceiroController {
     public void atualizarTabela() {
         telaFinanceiroView.popularTabela(pagamentoDAO.getListaPagamentos());
 
-        double saldo = pagamentoDAO.calcularSaldo();
+        BigDecimal saldo = pagamentoDAO.calcularSaldo();
 
         // Map: total de receitas e despesas agrupados por tipo
-        Map<String, Double> totalPorTipo = pagamentoDAO.getTotalPorTipo();
-        double totalReceitas = totalPorTipo.getOrDefault("RECEITA", 0.0);
-        double totalDespesas = totalPorTipo.getOrDefault("DESPESA", 0.0);
+        Map<String, BigDecimal> totalPorTipo = pagamentoDAO.getTotalPorTipo();
+        BigDecimal totalReceitas = totalPorTipo.getOrDefault("RECEITA", BigDecimal.valueOf(0.0));
+        BigDecimal totalDespesas = totalPorTipo.getOrDefault("DESPESA", BigDecimal.valueOf(0.0));
 
         // Set: formas de pagamento distintas já utilizadas
         Set<String> formasUtilizadas = pagamentoDAO.getFormasPagamentoUtilizadas();

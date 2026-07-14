@@ -9,11 +9,12 @@
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Apenas as entidades que usam JPA -->
         <class>Model.ClienteModel</class>
         <class>Model.ClienteFisicoModel</class>
         <class>Model.ClienteJuridicoModel</class>
         <class>Model.ProcessoModel</class>
+        <class>Model.AudienciaModel</class>
+        <class>Model.PagamentoModel</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

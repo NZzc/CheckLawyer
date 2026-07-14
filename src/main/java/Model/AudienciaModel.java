@@ -1,26 +1,47 @@
 package Model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Audiencias")
 public class AudienciaModel {
-    private final int ID;
-    private static int geraID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int ID;
 
+    @Column(nullable = false)
     private String data;
-    private String hora;
-    private String local;
-    private String tipo;       // Instrução, Conciliação, Julgamento, etc.
-    private String descricao;
-    private String resultado;  // preenchido após a audiência ocorrer
-    private final int idProcesso;
 
-    public AudienciaModel(String data, String hora, String local, String tipo, String descricao, String resultado, int idProcesso) {
-        this.ID = ++geraID;
+    @Column(nullable = false)
+    private String hora;
+
+    @Column(nullable = false)
+    private String local;
+
+    @Column(nullable = false)
+    private String tipo;       // Instrução, Conciliação, Julgamento, etc.
+
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column()
+    private String resultado;  // preenchido após a audiência ocorrer
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Processo_id", nullable = false)
+    private ProcessoModel processo;
+
+
+    public AudienciaModel() {}
+
+    public AudienciaModel(String data, String hora, String local, String tipo, String descricao, String resultado, ProcessoModel processo) {
         this.data = data;
         this.hora = hora;
         this.local = local;
         this.tipo = tipo;
         this.descricao = descricao;
         this.resultado = resultado;
-        this.idProcesso = idProcesso;
+        this.processo = processo;
     }
 
     public int getID() {
@@ -76,6 +97,14 @@ public class AudienciaModel {
     }
 
     public int getIdProcesso() {
-        return idProcesso;
+        return (processo != null) ? processo.getID() : 0;
+    }
+
+    public ProcessoModel getProcesso() {
+        return processo;
+    }
+
+    public void setProcesso(ProcessoModel processo) {
+        this.processo = processo;
     }
 }

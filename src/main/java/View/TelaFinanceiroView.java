@@ -6,6 +6,7 @@ import Model.PagamentoModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -77,7 +78,7 @@ public class TelaFinanceiroView extends JFrame {
         }
     }
 
-    public void atualizarResumo(double saldo, double totalReceitas, double totalDespesas, Set<String> formasUtilizadas) {
+    public void atualizarResumo(BigDecimal saldo, BigDecimal totalReceitas, BigDecimal totalDespesas, Set<String> formasUtilizadas) {
         String texto = String.format("Saldo: R$ %.2f | Receitas: R$ %.2f | Despesas: R$ %.2f | Formas de pagamento: %s", saldo, totalReceitas, totalDespesas, String.join(", ", formasUtilizadas));
         saldoLabel.setText(texto);
     }

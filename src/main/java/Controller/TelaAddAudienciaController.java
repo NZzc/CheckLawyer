@@ -42,7 +42,7 @@ public class TelaAddAudienciaController {
             String resultado = telaAddAudienciaView.getResultado();
             ProcessoModel processoSelecionado = telaAddAudienciaView.getProcessoSelecionado();
 
-            AudienciaModel audiencia = new AudienciaModel(data, hora, local, tipo, descricao, resultado, processoSelecionado.getID());
+            AudienciaModel audiencia = new AudienciaModel(data, hora, local, tipo, descricao, resultado, processoSelecionado);
             audienciaDAO.inserir(audiencia);
             telaAudienciaController.atualizarTabela();
             exibirSucesso("Audiência cadastrada com sucesso!");

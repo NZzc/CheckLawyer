@@ -1,28 +1,56 @@
 package Model;
 
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "Pagamentos")
 public class PagamentoModel {
-    private final int ID;
-    private static int geraID;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer ID;                 // Integer, não int: null = ainda não persistido
+
+    @Column(nullable = false, length = 500)
     private String descricao;
-    private double valor;
-    private String data;
-    private String tipo;          // RECEITA ou DESPESA
-    private String formaPagamento; // PIX, Boleto, Dinheiro, Transferência, Cartão
-    private String status;        // PAGO, PENDENTE, ATRASADO
-    private final int idCliente;
-    private final int idProcesso;
 
-    public PagamentoModel(String descricao, double valor, String data, String tipo, String formaPagamento, String status, int idCliente, int idProcesso) {
-        this.ID = ++geraID;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal valor;
+
+    @Column(nullable = false)
+    private LocalDate data;
+
+    @Column(nullable = false, length = 20)
+    private String tipo;
+
+    @Column(name = "forma_pagamento", nullable = false, length = 30)
+    private String formaPagamento;
+
+    @Column(nullable = false, length = 20)
+    private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private ClienteModel cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)          // opcional → sem nullable=false
+    @JoinColumn(name = "processo_id")
+    private ProcessoModel processo;
+
+    protected PagamentoModel() {}               // exigido pelo JPA
+
+    public PagamentoModel(String descricao, BigDecimal valor, LocalDate data,
+                          String tipo, String formaPagamento, String status,
+                          ClienteModel cliente, ProcessoModel processo) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
-        this.tipo = tipo.toUpperCase();
+        this.tipo = tipo == null ? null : tipo.toUpperCase();
         this.formaPagamento = formaPagamento;
         this.status = status;
-        this.idCliente = idCliente;
-        this.idProcesso = idProcesso;
+        this.cliente = cliente;
+        this.processo = processo;               // pode ser null
     }
 
     public int getID() {
@@ -37,19 +65,19 @@ public class PagamentoModel {
         this.descricao = d;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double v) {
+    public void setValor(BigDecimal v) {
         this.valor = v;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String d) {
+    public void setData(LocalDate d) {
         this.data = d;
     }
 
@@ -78,10 +106,10 @@ public class PagamentoModel {
     }
 
     public int getIdCliente() {
-        return idCliente;
+        return cliente.getID();
     }
 
     public int getIdProcesso() {
-        return idProcesso;
+        return (processo != null) ? processo.getID() : 0;
     }
 }
