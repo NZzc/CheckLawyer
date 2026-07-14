@@ -6,8 +6,8 @@ import Model.ProcessoModel;
 import View.TelaProcessosView;
 
 public class TelaProcessoController {
-    private ProcessoDAO processoDAO;
-    private TelaProcessosView telaProcessosView;
+    private final ProcessoDAO processoDAO;
+    private final TelaProcessosView telaProcessosView;
 
     public TelaProcessoController() {
         telaProcessosView = new TelaProcessosView();
@@ -60,9 +60,11 @@ public class TelaProcessoController {
         telaProcessosView.popularTabela(processoDAO.getLista());
     }
 
+    /*
     public ProcessoDAO getProcessoDAO() {
         return processoDAO;
     }
+     */
 
     public void exibirErro(String msg) {
         telaProcessosView.exibirErro(msg);

@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class TelaClienteController {
-    private ClienteDAO clienteDAO;
-    private TelaClientesView telaClientesView;
+    private final ClienteDAO clienteDAO;
+    private final TelaClientesView telaClientesView;
     private List<ClienteModel> listaAtual;
 
     public TelaClienteController() {

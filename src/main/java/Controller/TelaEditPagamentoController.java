@@ -16,12 +16,12 @@ import java.time.LocalDate;
 
 public class TelaEditPagamentoController {
 
-    private TelaAddPagamentoView telaEditPagamentoView;
-    private PagamentoDAO pagamentoDAO;
-    private ClienteDAO clienteDAO;
-    private ProcessoDAO processoDAO;
-    private PagamentoModel pagamento;
-    private TelaFinanceiroController telaFinanceiroController;
+    private final TelaAddPagamentoView telaEditPagamentoView;
+    private final PagamentoDAO pagamentoDAO;
+    private final ClienteDAO clienteDAO;
+    private final ProcessoDAO processoDAO;
+    private final PagamentoModel pagamento;
+    private final TelaFinanceiroController telaFinanceiroController;
 
     public TelaEditPagamentoController(TelaFinanceiroController telaFinanceiroController, PagamentoModel pagamento) {
         this.telaFinanceiroController = telaFinanceiroController;

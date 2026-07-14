@@ -3,8 +3,8 @@ package Dao;
 import java.util.List;
 
 public interface PersistivelInterface <T>{
-    public void inserir(T entidade);
-    public void excluir(int id);
-    public List<T> getLista();
-    public void editar(T entidade);
+    void inserir(T entidade);
+    void excluir(int id);
+    List<T> getLista();
+    void editar(T entidade);
 }

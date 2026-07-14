@@ -11,11 +11,11 @@ import View.TelaAddProcessoView;
 
 public class TelaEditProcessoController {
 
-    private TelaAddProcessoView telaEditProcessoView;
-    private ProcessoDAO processoDAO;
-    private ClienteDAO clienteDAO;
-    private ProcessoModel processo;
-    private TelaProcessoController telaProcessoController;
+    private final TelaAddProcessoView telaEditProcessoView;
+    private final ProcessoDAO processoDAO;
+    private final ClienteDAO clienteDAO;
+    private final ProcessoModel processo;
+    private final TelaProcessoController telaProcessoController;
 
     public TelaEditProcessoController(TelaProcessoController telaProcessoController, ProcessoModel processo) {
         this.telaProcessoController = telaProcessoController;

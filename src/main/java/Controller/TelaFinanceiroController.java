@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class TelaFinanceiroController {
-    private PagamentoDAO pagamentoDAO;
-    private TelaFinanceiroView telaFinanceiroView;
+    private final PagamentoDAO pagamentoDAO;
+    private final TelaFinanceiroView telaFinanceiroView;
 
     public TelaFinanceiroController() {
         telaFinanceiroView = new TelaFinanceiroView();

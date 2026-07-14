@@ -10,11 +10,11 @@ import View.TelaAddAudienciaView;
 
 public class TelaEditAudienciaController {
 
-    private TelaAddAudienciaView telaEditAudienciaView;
-    private AudienciaDAO audienciaDAO;
-    private ProcessoDAO processoDAO;
-    private AudienciaModel audiencia;
-    private TelaAudienciaController telaAudienciaController;
+    private final TelaAddAudienciaView telaEditAudienciaView;
+    private final AudienciaDAO audienciaDAO;
+    private final ProcessoDAO processoDAO;
+    private final AudienciaModel audiencia;
+    private final TelaAudienciaController telaAudienciaController;
 
     public TelaEditAudienciaController(TelaAudienciaController telaAudienciaController, AudienciaModel audiencia) {
         this.telaAudienciaController = telaAudienciaController;

@@ -11,10 +11,10 @@ import View.TelaAddClienteView;
 
 public class TelaEditClienteController {
 
-    private TelaAddClienteView telaEditClienteView;
-    private ClienteDAO clienteDAO;
-    private ClienteModel cliente;
-    private TelaClienteController telaClienteController;
+    private final TelaAddClienteView telaEditClienteView;
+    private final ClienteDAO clienteDAO;
+    private final ClienteModel cliente;
+    private final TelaClienteController telaClienteController;
 
     public TelaEditClienteController(TelaClienteController telaClienteController, ClienteModel cliente) {
         this.telaClienteController = telaClienteController;

@@ -6,8 +6,8 @@ import Model.AudienciaModel;
 import View.TelaAudienciaView;
 
 public class TelaAudienciaController {
-    private AudienciaDAO audienciaDAO;
-    private TelaAudienciaView telaAudienciaView;
+    private final AudienciaDAO audienciaDAO;
+    private final TelaAudienciaView telaAudienciaView;
 
     public TelaAudienciaController() {
         telaAudienciaView = new TelaAudienciaView();
